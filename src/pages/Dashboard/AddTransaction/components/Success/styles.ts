@@ -1,36 +1,5 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  width: 90%;
-  height: 100%;
-  margin-inline: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const Header = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 90%;
-
-  h1 {
-    font-size: 1.125rem;
-    line-height: 2rem;
-    margin-left: 1rem;
-  }
-  button {
-    cursor: pointer;
-  }
-  svg {
-    color: #fff;
-  }
-`;
-
-export const FormTransaction = styled.form``;
-
 export const Button = styled.button`
   box-shadow: none;
   text-transform: none;
@@ -64,14 +33,5 @@ export const Button = styled.button`
   &:disabled {
     opacity: 0.7;
     cursor: pointer;
-  }
-`;
-
-export const ContainerCategorys = styled.div`
-  width: 100%;
-  div {
-    width: 30%;
-    display: flex;
-    flex-direction: row;
   }
 `;

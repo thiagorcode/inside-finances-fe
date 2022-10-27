@@ -1,7 +1,8 @@
-import { Input } from '../../../components/Form';
-import { FormTransaction, Button } from './styles';
+import { Input } from '../../../../../components/Form';
+import { FormTransaction, Button } from '../../styles';
 import { format } from 'date-fns';
-import { Categorys } from './components/categorys';
+import { Categorys } from '../Categorys';
+import React from 'react';
 interface FormProps {
   setStep: (value: 0 | 1) => void;
 }
