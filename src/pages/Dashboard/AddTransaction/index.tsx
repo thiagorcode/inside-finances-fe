@@ -1,9 +1,9 @@
 import { Close } from '@mui/icons-material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
-import { Form } from './form';
-import { Container, Header } from './styles';
-import { Success } from './success';
+import * as S from './styles';
+import { Form } from './components/Form';
+import { Success } from './components/Success';
 
 interface AddTransactionProps {
   setIsVisibleModal: (bol: boolean) => void;
@@ -43,16 +43,17 @@ export const AddTransaction = ({ setIsVisibleModal }: AddTransactionProps) => {
           mb: 2,
           borderRadius: 6,
         }}
+        height="90%"
       >
-        <Container>
-          <Header>
+        <S.Container>
+          <S.Header>
             <button type="button" onClick={() => setIsVisibleModal(false)}>
               <Close />
             </button>
             <h1>Adicionar Transação</h1>
-          </Header>
+          </S.Header>
           {Components[step]}
-        </Container>
+        </S.Container>
       </Box>
     </Box>
   );
