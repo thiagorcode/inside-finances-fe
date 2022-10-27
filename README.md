@@ -1,1 +1,2 @@
-# inside_finances-FE
+# template_react
+Template React with Vite, ESLINT, Prettier and Typescript
