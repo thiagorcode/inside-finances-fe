@@ -1,6 +1,5 @@
 import { Box } from '@mui/system';
-import { Button } from './styles';
-
+import * as S from './styles';
 interface SuccessProps {
   setStep: (value: 0 | 1) => void;
 }
@@ -8,20 +7,31 @@ interface SuccessProps {
 export const Success = ({ setStep }: SuccessProps) => {
   return (
     <Box
-      component="div"
       sx={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+        height:'100%',
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'center',
+        alignItems:'center',
+        textAlign:'center',
+        alignSelf: 'center',
       }}
     >
-      <img src="assets/svg/savetransaction.svg" alt="Transação salva" />
+      <Box sx={{
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'space-around',
+        height: '100%',
+        marginTop: '25px'
+      }} > 
+      <Box sx={{display:'flex', flexDirection:'column', justifyContent:'center'}}>
+      <S.Image src="assets/svg/savetransaction.svg" alt="Transação salva" />
       <h2>Transação salva com sucesso.</h2>
-      <Button type="button" onClick={() => setStep(0)}>
+      </Box>
+      <S.Button type="button" onClick={() => setStep(0)}>
         Adicionar Novo
-      </Button>
+      </S.Button>
+      </Box>
     </Box>
   );
 };

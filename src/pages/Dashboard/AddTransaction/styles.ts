@@ -1,21 +1,16 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  width: 90%;
   height: 100%;
   margin-inline: auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
 `;
 
 export const Header = styled.header`
-  display: flex;
-  align-items: center;
+  display:flex;
   justify-content: space-between;
-  width: 90%;
-
+  width: 80%;
   h1 {
     font-size: 1.125rem;
     line-height: 2rem;
