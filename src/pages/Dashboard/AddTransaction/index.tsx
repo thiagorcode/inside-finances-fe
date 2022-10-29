@@ -1,20 +1,26 @@
+import { useState } from 'react';
 import { Close } from '@mui/icons-material';
 import { Box } from '@mui/system';
-import { useState } from 'react';
 import * as S from './styles';
 import { Form } from './components/Form';
 import { Success } from './components/Success';
+import { useModal } from '@/context/modal';
 
-interface AddTransactionProps {
-  setIsVisibleModal: (bol: boolean) => void;
-}
-
-export const AddTransaction = ({ setIsVisibleModal }: AddTransactionProps) => {
+export const AddTransaction = () => {
+  const { toggleModal } = useModal();
   const [step, setStep] = useState<0 | 1>(0);
 
   const Components = {
     0: <Form setStep={setStep} />,
     1: <Success setStep={setStep} />,
+  };
+
+  const handleCloseModal = () => {
+    toggleModal({
+      addTransaction: {
+        isOpen: false,
+      },
+    });
   };
 
   return (
@@ -49,7 +55,7 @@ export const AddTransaction = ({ setIsVisibleModal }: AddTransactionProps) => {
       >
         <S.Container>
           <S.Header>
-            <button type="button" onClick={() => setIsVisibleModal(false)}>
+            <button type="button" onClick={() => handleCloseModal()}>
               <Close />
             </button>
             <h1>Adicionar Transação</h1>

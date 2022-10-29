@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MobileMenu from '../../components/MobileMenu';
 
 import ServiceHttp from '../../services/TransactionService';
-
-import './checking.css';
 
 interface ITransaction {
   report: {
@@ -75,7 +73,11 @@ const Dashboard: React.FC = () => {
 
       <p>
         Feito com S2 por{' '}
-        <a href="https://www.linkedin.com/in/thiagorodrig/" target="_blank">
+        <a
+          href="https://www.linkedin.com/in/thiagorodrig/"
+          target="_blank"
+          rel="noreferrer"
+        >
           Thiago Rodrigues{' '}
         </a>
       </p>

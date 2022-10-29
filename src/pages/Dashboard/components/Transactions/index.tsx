@@ -1,4 +1,5 @@
 import Button from '@/components/Button';
+import { useModal } from '@/context/modal';
 import {
   Add,
   ArrowDownwardRounded,
@@ -10,6 +11,16 @@ import { Box } from '@mui/material';
 import * as S from './styles';
 
 export const Transactions = () => {
+  const { toggleModal } = useModal();
+
+  const handleOpenModal = () => {
+    toggleModal({
+      addTransaction: {
+        isOpen: true,
+      },
+    });
+  };
+
   return (
     <Box
       component="div"
@@ -33,7 +44,7 @@ export const Transactions = () => {
       >
         {/* Usar Typografh */}
         <h2>Controle de Gasto</h2>
-        <Button type="button" onClick={() => setOpenModal(true)} size="small">
+        <Button type="button" onClick={() => handleOpenModal()} size="small">
           <Add />
         </Button>
       </Box>

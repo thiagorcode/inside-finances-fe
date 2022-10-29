@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Box } from '@mui/system';
 
 import MobileMenu from '../../components/MobileMenu';
@@ -9,10 +8,10 @@ import { Modal } from '@mui/material';
 import { Transactions } from './components/Transactions';
 import { Investments } from './components/Investments';
 import { Cards } from './components/Cards';
+import { useModal } from '@/context/modal';
 
 const Dashboard = () => {
-  const [openModal, setOpenModal] = useState(false);
-
+  const { modal } = useModal();
   return (
     <Box component="div" sx={{ maxWidth: '1200px', ml: 'auto', mr: 'auto' }}>
       <Header />
@@ -28,9 +27,11 @@ const Dashboard = () => {
         <Cards />
       </Box>
       <MobileMenu />
-      <Modal open={openModal} sx={{ height: '100vh' }}>
-        <AddTransaction setIsVisibleModal={setOpenModal} />
-      </Modal>
+      {modal?.addTransaction?.isOpen && (
+        <Modal open sx={{ height: '100vh' }}>
+          <AddTransaction />
+        </Modal>
+      )}
     </Box>
   );
 };
