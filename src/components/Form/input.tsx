@@ -1,6 +1,6 @@
 import { cloneElement, InputHTMLAttributes, ReactElement } from 'react';
 
-import { Container } from './styles';
+import * as S from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -9,7 +9,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const Input = ({ label, id, children, ...props }: InputProps) => {
   return (
-    <Container>
+    <S.Container>
       {label && <label htmlFor={id}>{label}</label>}
       {children ? (
         cloneElement(children, {
@@ -19,6 +19,6 @@ export const Input = ({ label, id, children, ...props }: InputProps) => {
       ) : (
         <input className="class_input" {...props} />
       )}
-    </Container>
+    </S.Container>
   );
 };
