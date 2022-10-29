@@ -1,8 +1,8 @@
 import { Input } from '../../../../../components/Form';
-import { FormTransaction, Button } from '../../styles';
+import { FormTransaction } from '../../styles';
 import { format } from 'date-fns';
 import { Categorys } from '../Categorys';
-import React from 'react';
+import Button from '@/components/Button';
 interface FormProps {
   setStep: (value: 0 | 1) => void;
 }
@@ -24,7 +24,7 @@ export const Form = ({ setStep }: FormProps) => {
       <Input label="Valor:" placeholder="R$ 99,99" />
       <Input label="Data:" placeholder={format(new Date(), 'dd/MM/yyyy')} />
       {/* <Input label="Pagamento:" placeholder="Cartão ou Avista" /> */}
-      <Button>Salvar</Button>
+      <Button size="large">Salvar</Button>
     </FormTransaction>
   );
 };

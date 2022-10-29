@@ -66,7 +66,11 @@ const Dashboard = () => {
           >
             {/* Usar Typografh */}
             <h2>Controle de Gasto</h2>
-            <Button type="button" onClick={() => setOpenModal(true)}>
+            <Button
+              type="button"
+              onClick={() => setOpenModal(true)}
+              size="small"
+            >
               <Add />
             </Button>
           </Box>
