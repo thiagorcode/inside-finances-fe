@@ -8,9 +8,10 @@ export const Container = styled.div`
 `;
 
 export const Header = styled.header`
-  display:flex;
+  display: flex;
   justify-content: space-between;
   width: 80%;
+  margin-bottom: 15px;
   h1 {
     font-size: 1.125rem;
     line-height: 2rem;

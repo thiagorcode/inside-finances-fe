@@ -21,16 +21,16 @@ export const AddTransaction = ({ setIsVisibleModal }: AddTransactionProps) => {
     <Box
       component="div"
       sx={{
+        top: '10vh',
         maxWidth: '478px',
         ml: 'auto',
         mr: 'auto',
         backgroundColor: 'transparent',
         position: 'absolute',
-        bottom: 0,
         left: '50%',
         transform: 'translate(-50%, 0)',
-        height: '87vh',
         width: '100%',
+        height: '100vh',
       }}
     >
       <Box
@@ -38,12 +38,14 @@ export const AddTransaction = ({ setIsVisibleModal }: AddTransactionProps) => {
         bgcolor="#2B2E35"
         sx={{
           display: 'block',
-          px: 2.3,
-          py: 2,
+          px: 2.5,
           mb: 2,
           borderRadius: 6,
+          py: 2,
+          paddingBottom: 3,
+          height: '90%',
+          overflowX: 'scroll',
         }}
-        height="90%"
       >
         <S.Container>
           <S.Header>
