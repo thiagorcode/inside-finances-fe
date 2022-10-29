@@ -10,7 +10,7 @@ interface AddTransactionProps {
 }
 
 export const AddTransaction = ({ setIsVisibleModal }: AddTransactionProps) => {
-  const [step, setStep] = useState<0 | 1>(1);
+  const [step, setStep] = useState<0 | 1>(0);
 
   const Components = {
     0: <Form setStep={setStep} />,

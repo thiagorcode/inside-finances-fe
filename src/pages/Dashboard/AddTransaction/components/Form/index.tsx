@@ -12,7 +12,7 @@ export const Form = ({ setStep }: FormProps) => {
       {/** TODO: Alterar o placeholder quando ele for despesa ou receita */}
       <Input label="Descrição:" placeholder="Alimentação, Salário, Conta" />
       <Input label="Tipo:" placeholder="Alimentação, Salário, Conta">
-        <select>
+        <select className="class_input">
           <option value="">Selecione</option>
           <option value="+">Receita</option>
           <option value="-">Despesa</option>

@@ -12,13 +12,11 @@ export const Container = styled.div`
 
   .class_input {
     margin-top: 0.25rem;
-    border-radius: 0.25rem;
     width: 100%;
     padding-top: 0.5rem;
     padding-right: 0.75rem;
     padding-bottom: 0.5rem;
     padding-left: 0.75rem;
-    font-size: 1rem;
     line-height: 1.5rem;
     background: rgba(11, 11, 12, 0.8);
     border: 0.031rem solid #343438;
@@ -26,7 +24,6 @@ export const Container = styled.div`
     font-size: 1rem;
     font-weight: bold;
     border-radius: 0.375rem;
-    font-size: 0.875rem;
 
     &::placeholder {
       color: #888888;

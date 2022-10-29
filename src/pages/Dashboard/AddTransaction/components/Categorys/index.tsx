@@ -11,7 +11,6 @@ const ButtonStyled = styled(Button)(() => ({
   flexDirection: 'column',
   padding: '6px',
   margin: '0.625rem 0',
-  borderRadius: '1rem',
   width: '30%',
   border: '1px solid',
   lineHeight: 1.5,
