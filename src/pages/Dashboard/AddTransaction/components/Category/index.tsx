@@ -1,7 +1,19 @@
+import { FormikErrors } from 'formik';
+import { useMemo } from 'react';
 import { FlightTakeoff, DirectionsCar, School } from '@mui/icons-material';
-import { Button, ButtonGroup, IconButton } from '@mui/material';
+import { Button, ButtonGroup } from '@mui/material';
 import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
+import { ErrorForm } from '@/components/Form/errorForm';
+
+type DataType = {
+  [x: string]: string;
+};
+
+interface CategoryProps {
+  name: string;
+  error: FormikErrors<DataType>;
+}
 
 const ButtonStyled = styled(Button)(() => ({
   boxShadow: 'none',
@@ -94,7 +106,8 @@ const buttons = [
   </ButtonStyled>,
 ];
 
-export const Categorys = () => {
+export const Category = ({ name, error }: CategoryProps) => {
+  const isError = useMemo(() => (error ? error[name] : ''), [error, name]);
   return (
     <Box component="div" sx={{ width: '100%' }}>
       <ButtonGroup
@@ -106,6 +119,7 @@ export const Categorys = () => {
       >
         {buttons}
       </ButtonGroup>
+      <ErrorForm errorMessage={isError} />
     </Box>
   );
 };
