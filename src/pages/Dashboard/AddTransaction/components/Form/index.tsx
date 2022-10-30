@@ -1,8 +1,9 @@
 import { format } from 'date-fns';
-import { useFormik } from 'formik';
+import { FormikHelpers, useFormik } from 'formik';
 import { Input } from '../../../../../components/Form';
 import { FormTransaction } from '../../styles';
-import { Categorys } from '../Categorys';
+import * as Yup from 'yup';
+import { Category } from '../Category';
 import Button from '@/components/Button';
 interface FormProps {
   setStep: (value: 0 | 1) => void;
@@ -16,40 +17,73 @@ const initialValues = {
   date: null,
 };
 
+const validationSchema = Yup.object().shape({
+  type: Yup.string().required('Campo obrigatório'),
+  description: Yup.string().required('Campo obrigatório'),
+  category: Yup.string().required('Campo obrigatório'),
+  value: Yup.number().required('Campo obrigatório'),
+  date: Yup.string().required('Campo obrigatório'),
+});
+
 export const Form = ({ setStep }: FormProps) => {
-  const onSubmit = (event: React.FormEvent<HTMLFormElement> | undefined) => {
-    console.log(onSubmit);
+  const onSubmit = (
+    values: typeof initialValues,
+    helper: FormikHelpers<typeof initialValues>,
+  ) => {
+    console.log(values);
   };
 
   const formik = useFormik({
     initialValues,
-    handleSubmit: onSubmit,
+    validationSchema,
+    onSubmit: onSubmit,
   });
 
+  console.log(formik);
+
   return (
-    <FormTransaction>
-      {/** TODO: Alterar o placeholder quando ele for despesa ou receita */}
-      <Input
-        label="Descrição:"
-        placeholder="Alimentação, Salário, Conta"
-        name="description"
-      />
+    <FormTransaction onSubmit={formik.handleSubmit}>
       <Input
         label="Tipo:"
-        placeholder="Alimentação, Salário, Conta"
         name="type"
+        error={formik.errors}
+        onChange={formik.handleChange}
       >
-        <select className="class_input">
+        <select>
           <option value="">Selecione</option>
           <option value="+">Receita</option>
           <option value="-">Despesa</option>
         </select>
       </Input>
-      <Categorys />
+
+      {/** TODO: Alterar o placeholder quando ele for despesa ou receita */}
+      <Input
+        label="Descrição:"
+        placeholder="Alimentação, Salário, Conta"
+        name="description"
+        error={formik.errors}
+        onChange={formik.handleChange}
+      />
+
+      {/* ALterar o type para uma tela inicial com dois botões um de despesa outro de receita */}
+
+      <Category name="category" error={formik.errors} />
       {/** TODO: Create sugest Value - 20,00 / MED */}
 
-      <Input label="Valor:" placeholder="R$ 99,99" />
-      <Input label="Data:" placeholder={format(new Date(), 'dd/MM/yyyy')} />
+      <Input
+        label="Valor:"
+        placeholder="R$ 99,99"
+        name="value"
+        error={formik.errors}
+        onChange={formik.handleChange}
+      />
+      <Input
+        label="Data:"
+        name="date"
+        placeholder={format(new Date(), 'dd/MM/yyyy')}
+        error={formik.errors}
+        onChange={formik.handleChange}
+      />
       {/* <Input label="Pagamento:" placeholder="Cartão ou Avista" /> */}
       <Button size="large">Salvar</Button>
     </FormTransaction>
