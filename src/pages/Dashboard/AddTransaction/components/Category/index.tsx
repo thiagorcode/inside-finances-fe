@@ -1,4 +1,4 @@
-import { FormikErrors } from 'formik';
+import { FormikErrors, FormikValues } from 'formik';
 import { useMemo } from 'react';
 import { FlightTakeoff, DirectionsCar, School } from '@mui/icons-material';
 import { Button, ButtonGroup } from '@mui/material';
@@ -13,9 +13,15 @@ type DataType = {
 interface CategoryProps {
   name: string;
   error: FormikErrors<DataType>;
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined,
+  ) => Promise<FormikErrors<DataType>> | Promise<void>;
+  values: FormikValues;
 }
 
-const ButtonStyled = styled(Button)(() => ({
+const ButtonStyled = styled(Button)(({ value }) => ({
   boxShadow: 'none',
   textTransform: 'none',
   fontSize: '0.75rem',
@@ -25,6 +31,7 @@ const ButtonStyled = styled(Button)(() => ({
   margin: '0.625rem 0',
   width: '30%',
   border: '1px solid',
+  backgroundColor: value ? '#2644D8' : '',
   lineHeight: 1.5,
   color: '#fff',
   borderRightColor: '#fff !important',
@@ -56,68 +63,52 @@ const ButtonStyled = styled(Button)(() => ({
 }));
 
 const buttons = [
-  <ButtonStyled key="one">
-    <FlightTakeoff />
-    <span>Viagem</span>
-  </ButtonStyled>,
-  <ButtonStyled key="two">
-    <DirectionsCar />
-    <span>Transporte</span>
-  </ButtonStyled>,
-  <ButtonStyled key="three">
-    <School />
-    <span>Estudos</span>
-  </ButtonStyled>,
-  <ButtonStyled key="one">
-    <FlightTakeoff />
-    <span>Viagem</span>
-  </ButtonStyled>,
-  <ButtonStyled key="two">
-    <DirectionsCar />
-    <span>Transporte</span>
-  </ButtonStyled>,
-  <ButtonStyled key="three">
-    <School />
-    <span>Estudos</span>
-  </ButtonStyled>,
-  <ButtonStyled key="one">
-    <FlightTakeoff />
-    <span>Viagem</span>
-  </ButtonStyled>,
-  <ButtonStyled key="two">
-    <DirectionsCar />
-    <span>Transporte</span>
-  </ButtonStyled>,
-  <ButtonStyled key="three">
-    <School />
-    <span>Estudos</span>
-  </ButtonStyled>,
-  <ButtonStyled key="one">
-    <FlightTakeoff />
-    <span>Viagem</span>
-  </ButtonStyled>,
-  <ButtonStyled key="two">
-    <DirectionsCar />
-    <span>Transporte</span>
-  </ButtonStyled>,
-  <ButtonStyled key="three">
-    <School />
-    <span>Estudos</span>
-  </ButtonStyled>,
+  'Viagem',
+  'Educação',
+  'Alimentação',
+  'Outros',
+  ' Vestuário',
+  'Contas',
 ];
 
-export const Category = ({ name, error }: CategoryProps) => {
+export const Category = ({
+  name,
+  error,
+  setFieldValue,
+  values,
+}: CategoryProps) => {
   const isError = useMemo(() => (error ? error[name] : ''), [error, name]);
   return (
     <Box component="div" sx={{ width: '100%' }}>
+      <label
+        htmlFor="form-category"
+        style={{
+          color: '#fff',
+          fontSize: '1rem',
+          fontWeight: 'bold',
+          marginBottom: '0.35rem',
+        }}
+      >
+        Selecione a categoria
+      </label>
       <ButtonGroup
         sx={{
           display: 'flex',
           justifyContent: 'space-around',
           flexWrap: 'wrap',
         }}
+        id=""
       >
-        {buttons}
+        {buttons.map(buttonName => (
+          <ButtonStyled
+            key="one"
+            onClick={() => setFieldValue(name, buttonName)}
+            value={values[name] === buttonName ? values[name] : ''}
+          >
+            <FlightTakeoff />
+            <span>{buttonName}</span>
+          </ButtonStyled>
+        ))}
       </ButtonGroup>
       <ErrorForm errorMessage={isError} />
     </Box>

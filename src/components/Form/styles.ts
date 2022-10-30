@@ -14,6 +14,10 @@ export const Container = styled.div`
     margin-bottom: 0.35rem;
   }
 
+  .validate-error {
+    border-color: #d32f2f !important;
+  }
+
   .class_input {
     margin-top: 0.25rem;
     width: 100%;

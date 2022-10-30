@@ -26,17 +26,15 @@ export const Input = ({
   error,
   ...props
 }: InputProps) => {
-  console.log(error);
-
   const isError = useMemo(() => (error ? error[name] : ''), [error, name]);
   const newId = useMemo(() => (id ? id : `form-${name}`), [id, name]);
-
+  console.log(isError);
   return (
     <S.Container>
       {label && <label htmlFor={id}>{label}</label>}
       {children ? (
         cloneElement(children, {
-          className: 'class_input',
+          className: `class_input ${isError && 'validate-error'}`,
           id: newId,
           name,
           ...props,

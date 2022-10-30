@@ -19,8 +19,8 @@ const initialValues = {
 
 const validationSchema = Yup.object().shape({
   type: Yup.string().required('Campo obrigatório'),
-  description: Yup.string().required('Campo obrigatório'),
-  category: Yup.string().required('Campo obrigatório'),
+  description: Yup.string(),
+  category: Yup.string().required('Seleção obrigatória'),
   value: Yup.number().required('Campo obrigatório'),
   date: Yup.string().required('Campo obrigatório'),
 });
@@ -43,6 +43,8 @@ export const Form = ({ setStep }: FormProps) => {
 
   return (
     <FormTransaction onSubmit={formik.handleSubmit}>
+      {/* ALterar o type para uma tela inicial com dois botões um de despesa outro de receita */}
+      {/** Separa cada inout em uma etapa do form */}
       <Input
         label="Tipo:"
         name="type"
@@ -65,9 +67,12 @@ export const Form = ({ setStep }: FormProps) => {
         onChange={formik.handleChange}
       />
 
-      {/* ALterar o type para uma tela inicial com dois botões um de despesa outro de receita */}
-
-      <Category name="category" error={formik.errors} />
+      <Category
+        name="category"
+        error={formik.errors}
+        setFieldValue={formik.setFieldValue}
+        values={formik.values}
+      />
       {/** TODO: Create sugest Value - 20,00 / MED */}
 
       <Input
