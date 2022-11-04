@@ -1,14 +1,12 @@
+import { useMemo, useCallback } from 'react';
 import { FormikErrors, FormikValues } from 'formik';
-import { useMemo } from 'react';
-import { FlightTakeoff, DirectionsCar, School } from '@mui/icons-material';
+import * as I from '@mui/icons-material';
 import { Button, ButtonGroup } from '@mui/material';
 import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
 import { ErrorForm } from '@/components/Form/errorForm';
-
-type DataType = {
-  [x: string]: string;
-};
+import { DataType } from '@/components/Form/DataType.type';
+import { TransactionCategory } from '@/interface/transactionCategory.interface';
 
 interface CategoryProps {
   name: string;
@@ -19,6 +17,7 @@ interface CategoryProps {
     shouldValidate?: boolean | undefined,
   ) => Promise<FormikErrors<DataType>> | Promise<void>;
   values: FormikValues;
+  category: TransactionCategory[];
 }
 
 const ButtonStyled = styled(Button)(({ value }) => ({
@@ -32,6 +31,7 @@ const ButtonStyled = styled(Button)(({ value }) => ({
   width: '30%',
   border: '1px solid',
   backgroundColor: value ? '#2644D8' : '',
+  borderColor: value ? '#2644D8' : '',
   lineHeight: 1.5,
   color: '#fff',
   borderRightColor: '#fff !important',
@@ -62,22 +62,18 @@ const ButtonStyled = styled(Button)(({ value }) => ({
   },
 }));
 
-const buttons = [
-  'Viagem',
-  'Educação',
-  'Alimentação',
-  'Outros',
-  ' Vestuário',
-  'Contas',
-];
-
 export const Category = ({
   name,
   error,
   setFieldValue,
   values,
+  category,
 }: CategoryProps) => {
   const isError = useMemo(() => (error ? error[name] : ''), [error, name]);
+  const Icon = useCallback(({ icon }) => {
+    const RenderIcon = I[icon];
+    return <RenderIcon />;
+  }, []);
   return (
     <Box component="div" sx={{ width: '100%' }}>
       <label
@@ -99,14 +95,14 @@ export const Category = ({
         }}
         id=""
       >
-        {buttons.map(buttonName => (
+        {category.map(_category => (
           <ButtonStyled
-            key="one"
-            onClick={() => setFieldValue(name, buttonName)}
-            value={values[name] === buttonName ? values[name] : ''}
+            key={_category.id}
+            onClick={() => setFieldValue(name, _category.id)}
+            value={values[name] === _category.id ? values[name] : ''}
           >
-            <FlightTakeoff />
-            <span>{buttonName}</span>
+            <Icon icon={_category.icon} />
+            <span>{_category.name}</span>
           </ButtonStyled>
         ))}
       </ButtonGroup>
