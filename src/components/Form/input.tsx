@@ -1,3 +1,4 @@
+import { Dayjs } from 'dayjs';
 import { FormikErrors, useFormikContext } from 'formik';
 import {
   cloneElement,
@@ -5,12 +6,9 @@ import {
   ReactElement,
   useMemo,
 } from 'react';
+import { DataType } from './DataType.type';
 
 import * as S from './styles';
-
-interface DataType {
-  [x: string]: string;
-}
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -28,7 +26,6 @@ export const Input = ({
 }: InputProps) => {
   const isError = useMemo(() => (error ? error[name] : ''), [error, name]);
   const newId = useMemo(() => (id ? id : `form-${name}`), [id, name]);
-  console.log(isError);
   return (
     <S.Container>
       {label && <label htmlFor={id}>{label}</label>}
