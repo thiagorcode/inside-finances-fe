@@ -141,7 +141,7 @@ export const Form = ({ setStep }: FormProps) => {
         error={formik.errors}
         onChange={formik.handleChange}
       />
-      {categoryFiltered.length && (
+      {!!categoryFiltered.length && (
         <Category
           name="category"
           error={formik.errors}
