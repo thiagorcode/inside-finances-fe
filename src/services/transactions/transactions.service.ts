@@ -25,12 +25,14 @@ interface Transactions {
 }
 
 interface ResponseTransactionsByParams {
-  transactions: Transactions[];
-  total: number;
-  page: number;
-  totalPages: number;
-  hasNext: boolean;
-  hasPrev: boolean;
+  transactions: {
+    transactions: Transactions[];
+    total: number;
+    page: number;
+    totalPages: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  };
 }
 
 export const getTransactionsByParams = ({

@@ -9,7 +9,7 @@ import {
   KeyboardArrowDownRounded,
 } from '@mui/icons-material';
 import { Box, CircularProgress } from '@mui/material';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import * as S from './styles';
 
@@ -33,16 +33,21 @@ export const Transactions = () => {
       const { data } = await getTransactionsByParams({
         limit: 50,
         page,
-        userId: '',
+        userId: 'fff',
       });
+      console.log(data);
 
-      setTransactions(value => [...value, ...data.transactions]);
-      setHasNext(data.hasNext);
+      setTransactions(value => [...value, ...data.transactions.transactions]);
+      setHasNext(data.transactions.hasNext);
       setPage(value => value + 1);
     } catch (error) {
       console.log(error);
     }
   }, [page]);
+
+  useEffect(() => {
+    loadTransactions();
+  }, []);
 
   return (
     <Box
