@@ -12,8 +12,8 @@ import {
   KeyboardArrowDownRounded,
 } from '@mui/icons-material';
 
-import MobileMenu from '../../components/MobileMenu';
-import Button from '../../components/Button';
+import MobileMenu from '../../../components/MobileMenu';
+import Button from '../../../components/Button';
 
 import {
   Spiral,
@@ -27,7 +27,7 @@ import {
   ResumeCardBox,
   ResumeTypeBuy,
 } from './styles';
-import Header from '../../components/Header';
+import Header from '../../../components/Header';
 import { AddTransaction } from './AddTransaction';
 import { Modal } from '@mui/material';
 
@@ -35,7 +35,7 @@ const Dashboard = () => {
   const [openModal, setOpenModal] = useState(false);
 
   return (
-    <Box component="div" sx={{ maxWidth: '1200px', ml: 'auto', mr: 'auto' }}>
+    <>
       <Header />
       <Box
         component="div"
@@ -274,7 +274,7 @@ const Dashboard = () => {
       <Modal open={openModal} sx={{ height: '100vh' }}>
         <AddTransaction setIsVisibleModal={setOpenModal} />
       </Modal>
-    </Box>
+    </>
   );
 };
 

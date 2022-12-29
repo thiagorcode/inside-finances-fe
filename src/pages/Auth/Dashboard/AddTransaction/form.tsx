@@ -1,4 +1,4 @@
-import { Input } from '../../../components/Form';
+import { Input } from '../../../../components/Form';
 import { FormTransaction, Button } from './styles';
 import { format } from 'date-fns';
 import { Categorys } from './components/categorys';
