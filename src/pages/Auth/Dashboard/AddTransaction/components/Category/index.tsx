@@ -101,7 +101,7 @@ export const Category = ({
             onClick={() => setFieldValue(name, _category.id)}
             value={values[name] === _category.id ? values[name] : ''}
           >
-            <Icon icon={_category.icon} />
+            {/* <Icon icon={_category.icon} /> */}
             <span>{_category.name}</span>
           </ButtonStyled>
         ))}

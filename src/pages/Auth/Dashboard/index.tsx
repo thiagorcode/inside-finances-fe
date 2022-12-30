@@ -1,6 +1,5 @@
 import { Box } from '@mui/system';
 
-
 import Header from '../../../components/Header';
 import MobileMenu from '../../../components/MobileMenu';
 import Button from '../../../components/Button';

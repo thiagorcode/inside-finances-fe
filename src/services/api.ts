@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // * URL da API
 export default axios.create({
-  baseURL: 'http://localhost:3333/',
+  baseURL: 'http://localhost:3333/api',
   headers: {
     'Content-type': 'application/json',
   },

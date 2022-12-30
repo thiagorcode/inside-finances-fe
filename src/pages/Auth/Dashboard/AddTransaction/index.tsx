@@ -10,7 +10,7 @@ export const AddTransaction = () => {
   const { toggleModal } = useModal();
   const [step, setStep] = useState<0 | 1>(0);
 
-  const Components = {
+  const components = {
     0: <Form setStep={setStep} />,
     1: <Success setStep={setStep} />,
   };
@@ -60,7 +60,7 @@ export const AddTransaction = () => {
             </button>
             <h1>Adicionar Transação</h1>
           </S.Header>
-          {Components[step]}
+          {components[step]}
         </S.Container>
       </Box>
     </Box>

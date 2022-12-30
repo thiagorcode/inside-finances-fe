@@ -13,9 +13,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Box component="div" sx={style}>
-      <AppProvider>
-        <Routes />
-      </AppProvider>
+        <AppProvider>
+          <Routes />
+        </AppProvider>
       </Box>
     </BrowserRouter>
   );

@@ -1,6 +1,6 @@
-import { format } from 'date-fns';
+import { useCallback, useEffect, useState } from 'react';
 import { FormikHelpers, useFormik } from 'formik';
-import { Input } from '../../../../../components/Form';
+import { Input } from '../../../../../../components/Form';
 import { FormTransaction } from '../../styles';
 import * as Yup from 'yup';
 import { Category } from '../Category';
@@ -13,7 +13,6 @@ import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { validateMoney } from '@/utils/validateMoney';
 import { TextField } from '@mui/material';
 import styled from 'styled-components';
-import { useCallback, useEffect, useMemo, useState } from 'react';
 import transactionCategoryService from '@/services/transactionCategory/transactionCategory.service';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
 
@@ -110,7 +109,7 @@ export const Form = ({ setStep }: FormProps) => {
     );
 
     setCategoryFiltered(categoryByType);
-  }, [formik.values.type, category]);
+  }, [formik, category]);
 
   useEffect(() => {
     filterCategory();
@@ -118,7 +117,7 @@ export const Form = ({ setStep }: FormProps) => {
 
   return (
     <FormTransaction onSubmit={formik.handleSubmit}>
-      {/* ALterar o type para uma tela inicial com dois botões um de despesa outro de receita */}
+      {/* Alterar o type para uma tela inicial com dois botões um de despesa outro de receita */}
       {/** Separa cada inout em uma etapa do form */}
       <Input
         label="Tipo:"
@@ -173,8 +172,8 @@ export const Form = ({ setStep }: FormProps) => {
             renderInput={params => <TextField {...params} />}
           />
         </LocalizationProvider>
-        {/* Inseri erro do YUP */}
       </DateInput>
+      {/* Inseri erro do YUP */}
 
       {/* <Input label="Pagamento:" placeholder="Cartão ou Avista" /> */}
       <Button size="large" type="submit">

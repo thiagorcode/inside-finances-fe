@@ -13,9 +13,9 @@ import * as S from './styles';
 export const Transactions = () => {
   const { toggleModal } = useModal();
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (key: string) => {
     toggleModal({
-      addTransaction: {
+      [key]: {
         isOpen: true,
       },
     });
@@ -44,7 +44,11 @@ export const Transactions = () => {
       >
         {/* Usar Typografh */}
         <h2>Controle de Gasto</h2>
-        <Button type="button" onClick={() => handleOpenModal()} size="small">
+        <Button
+          type="button"
+          onClick={() => handleOpenModal('addTransaction')}
+          size="small"
+        >
           <Add />
         </Button>
       </Box>
