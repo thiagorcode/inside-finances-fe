@@ -13,7 +13,7 @@ import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { validateMoney } from '@/utils/validateMoney';
 import { TextField } from '@mui/material';
 import styled from 'styled-components';
-import transactionCategoryService from '@/services/transactionCategory/transactionCategory.service';
+import transactionCategoryService from '@/api/transactionCategory/transactionCategory.service';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
 
 const DateInput = styled.div`

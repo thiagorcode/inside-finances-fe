@@ -1,5 +1,5 @@
 import { useUser } from '@/hooks/useUser';
-import authService from '@/services/auth/auth.service';
+import authService from '@/api/auth/auth.service';
 import {
   createContext,
   ReactNode,

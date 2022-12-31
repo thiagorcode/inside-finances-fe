@@ -1,4 +1,4 @@
-import { ResponseDefault } from '../services/responseDefault.interface';
+import { ResponseDefault } from '../api/responseDefault.interface';
 
 export type TransactionCategory = {
   id: string;
