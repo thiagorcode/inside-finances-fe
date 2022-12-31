@@ -1,4 +1,4 @@
-import api from '../api';
+import api from '../../services/api';
 
 interface RequestTransactions {
   limit: number;
@@ -40,7 +40,8 @@ export const getTransactionsByParams = ({
   page,
   userId,
 }: RequestTransactions) => {
-  return api.get<ResponseTransactionsByParams>(
-    `transactions/user/${userId}/all?limit=${limit}&page=${page}`,
-  );
+  // return api.get<ResponseTransactionsByParams>(
+  //   `transactions/user/${userId}/all?limit=${limit}&page=${page}`,
+  // );
+  return api.get<ResponseTransactionsByParams>(`transactions/user/${userId}`);
 };

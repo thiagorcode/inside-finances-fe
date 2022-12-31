@@ -1,4 +1,4 @@
-import api from '../api';
+import api from '../../services/api';
 import { AxiosResponse } from 'axios';
 import { ResponseTransactionCategory } from '../../interface/transactionCategory.interface';
 
