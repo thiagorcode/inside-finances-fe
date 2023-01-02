@@ -39,7 +39,7 @@ export const columns: ColumnsType<Transactions> = [
     dataIndex: 'type',
     key: 'type',
     render(value) {
-      const typeFormat = value === '+' ? 'Entrada' : 'Despesa';
+      const typeFormat = value === '+' ? 'Receita' : 'Despesa';
       return typeFormat;
     },
   },
