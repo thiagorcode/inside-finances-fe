@@ -30,7 +30,6 @@ export const Transactions = () => {
         px: 2.3,
         py: 2,
         mb: 2,
-
         borderRadius: 6,
       }}
     >
