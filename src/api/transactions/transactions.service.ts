@@ -1,9 +1,16 @@
+import { queryStringBuilder } from '@/utils/queryStringBuilder';
 import api from '../../services/api';
 
+type QueryTransactions = {
+  categoryId?: number;
+  date?: string;
+  type?: string;
+};
 interface RequestTransactions {
   limit: number;
   page: number;
   userId: string;
+  query: QueryTransactions;
 }
 
 interface Transactions {
@@ -39,9 +46,15 @@ export const getTransactionsByParams = ({
   limit,
   page,
   userId,
+  query,
 }: RequestTransactions) => {
   // return api.get<ResponseTransactionsByParams>(
   //   `transactions/user/${userId}/all?limit=${limit}&page=${page}`,
   // );
-  return api.get<ResponseTransactionsByParams>(`transactions/user/${userId}`);
+
+  const queryString = queryStringBuilder(query);
+
+  return api.get<ResponseTransactionsByParams>(
+    `transactions/user/${userId}?${queryString}`,
+  );
 };

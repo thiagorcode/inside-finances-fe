@@ -1,7 +1,7 @@
 import { ResponseDefault } from '../api/responseDefault.interface';
 
 export type TransactionCategory = {
-  id: string;
+  id: number;
   name: string;
   type: '+' | '-';
   icon: string;

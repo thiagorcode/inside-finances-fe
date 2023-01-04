@@ -19,7 +19,7 @@ import {
 const initialValueForm = {
   type: '',
   date: dayjs(new Date()),
-  category: '',
+  categoryId: 0,
   dateFormatted: '',
 };
 
@@ -49,12 +49,18 @@ export const TransactionsGeneral = () => {
 
   const loadTransactions = useCallback(async () => {
     setLoading(true);
+    const { categoryId, dateFormatted, type } = valueForm;
     try {
       const { data } = await getTransactionsByParams({
         limit: 50,
         page,
         // TODO; Alterar
         userId: 'fac56249-feaf-460d-9aa5-37dd6412cdb9',
+        query: {
+          ...(categoryId && { categoryId }),
+          ...(dateFormatted && { date: dateFormatted }),
+          ...(type && { type }),
+        },
       });
       console.log(data);
 
@@ -66,7 +72,7 @@ export const TransactionsGeneral = () => {
     } finally {
       setLoading(false);
     }
-  }, [page]);
+  }, [page, valueForm]);
 
   // está sendo utilizado no add transaction
   const loadCategory = useCallback(async () => {
@@ -99,7 +105,7 @@ export const TransactionsGeneral = () => {
   useEffect(() => {
     loadCategory();
     loadTransactions();
-  }, []);
+  }, [valueForm]);
 
   const handleChangeForm = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,13 +158,13 @@ export const TransactionsGeneral = () => {
           {!!valueForm.type && (
             <Input
               label="Categoria:"
-              name="category"
+              name="categoryId"
               onChange={handleChangeForm}
             >
               <select>
                 <option value="">Selecione</option>
                 {categoryFiltered.map(_category => (
-                  <option key={_category.id} value={_category.name}>
+                  <option key={_category.id} value={_category.id}>
                     {_category.name}
                   </option>
                 ))}
