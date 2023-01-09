@@ -1,4 +1,4 @@
-import { ResponseDefault } from '../api/responseDefault.interface';
+import { ResponseDefault } from './responseDefault.interface';
 
 export type TransactionCategory = {
   id: number;
@@ -6,7 +6,3 @@ export type TransactionCategory = {
   type: '+' | '-';
   icon: string;
 };
-
-export interface ResponseTransactionCategory extends ResponseDefault {
-  category: TransactionCategory[];
-}

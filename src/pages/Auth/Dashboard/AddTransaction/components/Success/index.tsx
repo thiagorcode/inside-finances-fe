@@ -1,4 +1,5 @@
 import Button from '@/components/Button';
+import { useModal } from '@/context/modal';
 import { Box } from '@mui/system';
 import * as S from './styles';
 interface SuccessProps {
@@ -6,6 +7,15 @@ interface SuccessProps {
 }
 
 export const Success = ({ setStep }: SuccessProps) => {
+  const { toggleModal } = useModal();
+
+  const handleCloseModal = () => {
+    toggleModal({
+      addTransaction: {
+        isOpen: false,
+      },
+    });
+  };
   return (
     <Box
       sx={{
@@ -37,9 +47,14 @@ export const Success = ({ setStep }: SuccessProps) => {
           <S.Image src="assets/svg/savetransaction.svg" alt="Transação salva" />
           <h2>Transação salva com sucesso.</h2>
         </Box>
-        <Button type="button" onClick={() => setStep(0)} size="large">
-          Adicionar Novo
-        </Button>
+        <S.GroupButton>
+          <Button type="button" onClick={() => setStep(0)} size="large">
+            Adicionar Novo
+          </Button>
+          <Button type="button" onClick={handleCloseModal} size="large">
+            Fechar
+          </Button>
+        </S.GroupButton>
       </Box>
     </Box>
   );

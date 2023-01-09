@@ -27,7 +27,7 @@ export const TransactionsGeneral = () => {
   const { toggleModal } = useModal();
 
   const [transactions, setTransactions] = useState<any[]>([]);
-  const [hasNext, setHasNext] = useState(false);
+  // const [hasNext, setHasNext] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
 
@@ -37,7 +37,7 @@ export const TransactionsGeneral = () => {
   >([]);
   const [valueForm, setValueForm] = useState(initialValueForm);
 
-  const [isHideFilter, setIsHideFilter] = useState(true);
+  const [isHideFilter, setIsHideFilter] = useState(false);
 
   const handleOpenModal = () => {
     toggleModal({
@@ -65,7 +65,7 @@ export const TransactionsGeneral = () => {
       console.log(data);
 
       setTransactions(data.transactions);
-      setHasNext(data.transactions.hasNext);
+      // setHasNext(data.transactions.hasNext);
       setPage(value => value + 1);
     } catch (error) {
       console.log(error);

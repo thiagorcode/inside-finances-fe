@@ -1,39 +1,25 @@
 import { useCallback, useEffect, useState } from 'react';
 import { FormikHelpers, useFormik } from 'formik';
-import { Input } from '../../../../../../components/Form';
-import { FormTransaction } from '../../styles';
-import * as Yup from 'yup';
-import { Category } from '../Category';
-import Button from '@/components/Button';
-import * as dayjs from 'dayjs';
 import * as ptBr from 'dayjs/locale/pt-br';
+import * as dayjs from 'dayjs';
+import * as Yup from 'yup';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { TextField } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
+import { message } from 'antd';
+
+import { Input } from '../../../../../../components/Form';
+import { FormTransaction } from '../../styles';
+import { Category } from '../Category';
+import Button from '@/components/Button';
 import { validateMoney } from '@/utils/validateMoney';
-import { TextField } from '@mui/material';
-import styled from 'styled-components';
 import transactionCategoryService from '@/api/transactionCategory/transactionCategory.service';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
+import { DateInput } from './styles';
+import { postCreateTransaction } from '@/api/transactions/transactions.service';
+import { useModal } from '@/context/modal';
 
-const DateInput = styled.div`
-  .MuiPickerStaticWrapper-content {
-    background-color: #2b2e35;
-  }
-  .MuiButtonBase-root {
-    background-color: #2b2e35;
-    color: #fff;
-    font-weight: bold;
-  }
-  .MuiTypography-root {
-    color: #fff;
-    font-weight: bold;
-  }
-
-  .Mui-selected {
-    background-color: #233dc7 !important;
-  }
-`;
 interface FormProps {
   setStep: (value: 0 | 1) => void;
 }
@@ -41,15 +27,17 @@ interface FormProps {
 const initialValues = {
   type: '',
   description: '',
-  category: '',
+  category: 0,
   value: null,
-  date: dayjs('2022-10-07'),
+  date: dayjs(new Date()),
+  bank: '',
 };
 
 const validationSchema = Yup.object().shape({
   type: Yup.string().required('Campo obrigatório'),
   description: Yup.string(),
   category: Yup.string().required('Seleção obrigatória'),
+  bank: Yup.string(),
   value: Yup.string()
     .test({
       name: 'isMoney',
@@ -66,13 +54,20 @@ export const Form = ({ setStep }: FormProps) => {
     TransactionCategory[]
   >([]);
 
-  const onSubmit = (
+  const onSubmit = async (
     values: typeof initialValues,
     helper: FormikHelpers<typeof initialValues>,
   ) => {
-    console.log(values);
+    try {
+      const response = await postCreateTransaction(values);
 
-    setStep(1);
+      if (response.status !== 201) throw new Error('Erro ao criar transação!');
+
+      helper.resetForm();
+      setStep(1);
+    } catch (error) {
+      message.error(String(error));
+    }
   };
 
   const loadCategory = useCallback(async () => {
@@ -80,13 +75,13 @@ export const Form = ({ setStep }: FormProps) => {
       const response = await transactionCategoryService.findAll();
 
       if (response.status !== 200) {
-        console.log('error');
+        message.error('Erro ao carregar as categorias!');
         return;
       }
 
       setCategory(response.data.category);
     } catch (error) {
-      console.log(error);
+      message.error('Erro ao carregar as categorias!');
     }
   }, []);
 
@@ -118,7 +113,7 @@ export const Form = ({ setStep }: FormProps) => {
   return (
     <FormTransaction onSubmit={formik.handleSubmit}>
       {/* Alterar o type para uma tela inicial com dois botões um de despesa outro de receita */}
-      {/** Separa cada inout em uma etapa do form */}
+      {/** Separa cada input em uma etapa do form */}
       <Input
         label="Tipo:"
         name="type"
@@ -156,6 +151,13 @@ export const Form = ({ setStep }: FormProps) => {
         label="Valor:"
         placeholder="R$ 99,99"
         name="value"
+        error={formik.errors}
+        onChange={formik.handleChange}
+      />
+      <Input
+        label="Banco:"
+        placeholder="Inter"
+        name="bank"
         error={formik.errors}
         onChange={formik.handleChange}
       />
