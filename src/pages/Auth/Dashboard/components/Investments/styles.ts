@@ -5,7 +5,7 @@ export const VariableIncome = styled.div`
     margin-left: 12px;
   }
   svg {
-    color: #ff0404;
+    color: var(--color-expense);
   }
   h5 {
     font-size: 12px;
@@ -22,7 +22,7 @@ export const FixedIncome = styled.div`
     margin-left: 12px;
   }
   svg {
-    color: #00c614;
+    color: var(--color-recipe);
   }
   h5 {
     font-size: 12px;

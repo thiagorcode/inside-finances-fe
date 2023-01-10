@@ -5,7 +5,7 @@ export const ContainerFilters = styled.section`
   align-items: stretch;
   justify-content: center;
   flex-direction: column;
-  background-color: #2b2e35;
+  background-color: var(--secondary-bg-color);
   border-radius: 14px;
   max-width: 476px;
   margin: 10px auto;

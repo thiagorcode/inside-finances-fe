@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 export const DateInput = styled.div`
   .MuiPickerStaticWrapper-content {
-    background-color: #2b2e35;
+    background-color: var(--secondary-bg-color);
   }
   .MuiButtonBase-root {
-    background-color: #2b2e35;
+    background-color: var(--secondary-bg-color);
     color: #fff;
     font-weight: bold;
   }
