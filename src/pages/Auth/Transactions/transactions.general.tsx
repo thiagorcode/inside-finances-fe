@@ -5,16 +5,16 @@ import MobileMenu from '../../../components/MobileMenu';
 import { columns } from './columns';
 import { useCallback, useEffect, useState } from 'react';
 import { useModal } from '@/context/modal';
-import { getTransactionsByParams } from '@/api/transactions/transactions.service';
 import { Input } from '@/components/Form';
 import * as dayjs from 'dayjs';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
-import transactionCategoryService from '@/api/transactionCategory/transactionCategory.service';
 import * as S from './styles';
 import {
   KeyboardArrowDownRounded,
   KeyboardArrowUpRounded,
 } from '@mui/icons-material';
+import { transactionsService } from '@/api/transactions/service';
+import { transactionCategoryService } from '@/api/transactionCategory/service';
 
 const initialValueForm = {
   type: '',
@@ -51,7 +51,7 @@ export const TransactionsGeneral = () => {
     setLoading(true);
     const { categoryId, dateFormatted, type } = valueForm;
     try {
-      const { data } = await getTransactionsByParams({
+      const { data } = await transactionsService.listTransactionsByParams({
         limit: 50,
         page,
         // TODO; Alterar
@@ -77,7 +77,7 @@ export const TransactionsGeneral = () => {
   // está sendo utilizado no add transaction
   const loadCategory = useCallback(async () => {
     try {
-      const response = await transactionCategoryService.findAll();
+      const response = await transactionCategoryService.listCategory();
 
       if (response.status !== 200) {
         console.log('error');
@@ -119,7 +119,6 @@ export const TransactionsGeneral = () => {
 
   const handleChangeDateForm = useCallback(
     (date: dayjs.Dayjs, dateString: string) => {
-      console.log(dateString);
       setValueForm(value => ({
         ...value,
         date: date,

@@ -1,4 +1,4 @@
-import { ResponseDefault } from '../../interface/responseDefault.interface';
+import { ResponseDefault } from '../../../interface/responseDefault.interface';
 
 export interface AuthLogin extends ResponseDefault {
   user: {

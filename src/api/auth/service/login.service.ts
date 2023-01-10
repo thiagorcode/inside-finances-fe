@@ -1,8 +1,8 @@
-import api from '../../services/api';
+import api from '../../../services/api';
 import { AxiosResponse } from 'axios';
-import { AuthLogin } from './auth.interface';
+import { AuthLogin } from '../interface/auth.interface';
 
-const login = (
+export const login = (
   login: string,
   password: string,
 ): Promise<AxiosResponse<AuthLogin>> => {
@@ -11,5 +11,3 @@ const login = (
     password,
   });
 };
-
-export default { login };

@@ -1,5 +1,8 @@
+import { lastTransactions } from '@/api/transactions/service/lastTransactions.service';
 import Button from '@/components/Button';
 import { useModal } from '@/context/modal';
+import { Transactions as TransactionsProps } from '@/interface/transactions.interface';
+import { formatMoney } from '@/utils/formatMoney';
 import {
   Add,
   ArrowDownwardRounded,
@@ -8,10 +11,14 @@ import {
   KeyboardArrowDownRounded,
 } from '@mui/icons-material';
 import { Box } from '@mui/material';
+import { message } from 'antd';
+import { format, parse } from 'date-fns';
+import { useCallback, useEffect, useState } from 'react';
 import * as S from './styles';
 
 export const Transactions = () => {
   const { toggleModal } = useModal();
+  const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
 
   const handleOpenModal = (key: string) => {
     toggleModal({
@@ -20,6 +27,30 @@ export const Transactions = () => {
       },
     });
   };
+
+  const loadTransactions = useCallback(async () => {
+    try {
+      const response = await lastTransactions({
+        userId: 'fac56249-feaf-460d-9aa5-37dd6412cdb9',
+      });
+
+      if (response.status !== 200)
+        throw new Error('Erro ao carregas as últimas transações');
+
+      setTransactions(response.data.transactions);
+    } catch (error) {
+      message.error('Erro ao buscar as últimas transações');
+    }
+  }, []);
+
+  useEffect(() => {
+    loadTransactions();
+  }, []);
+
+  const defineColorValue = useCallback(
+    (type: '+' | '-') => (type === '+' ? 'color-recipe' : 'color-expense'),
+    [],
+  );
 
   return (
     <Box
@@ -41,7 +72,6 @@ export const Transactions = () => {
           alignItems: 'center',
         }}
       >
-        {/* Usar Typografh */}
         <h2>Controle de Gasto</h2>
         <Button
           type="button"
@@ -75,55 +105,25 @@ export const Transactions = () => {
         </div>
       </S.BoxTypeValues>
       <S.Resume>
-        <div>
-          <FastfoodRounded />
-          <span>Comida</span>
-          <span>08/10/2021</span>
-          <span>R$ 50,00</span>
-        </div>
-        <div>
-          <FastfoodRounded />
-          <span>Comida</span>
-          <span>08/10/2021</span>
-          <span>R$ 50,00</span>
-        </div>
-        <div>
-          <FastfoodRounded />
-          <span>Comida</span>
-          <span>08/10/2021</span>
-          <span>R$ 50,00</span>
-        </div>
-        <div>
-          <FastfoodRounded />
-          <span>Comida</span>
-          <span>08/10/2021</span>
-          <span>R$ 50,00</span>
-        </div>
-        <div>
-          <FastfoodRounded />
-          <span>Comida</span>
-          <span>08/10/2021</span>
-          <span>R$ 50,00</span>
-        </div>
-        <div>
-          <FastfoodRounded />
-          <span>Comida</span>
-          <span>08/10/2021</span>
-          <span>R$ 50,00</span>
-        </div>
-        <div>
-          <FastfoodRounded />
-          <span>Comida</span>
-          <span>08/10/2021</span>
-          <span>R$ 50,00</span>
-        </div>
-        <div>
-          <FastfoodRounded />
-          <span>Comida</span>
-          <span>08/10/2021</span>
-          <span>R$ 50,00</span>
-        </div>
-        <button>
+        {transactions.map(transaction => (
+          <div key={transaction.id}>
+            <FastfoodRounded />
+            <span className="text-category">{transaction.category.name}</span>
+            <S.Details>
+              <span className={defineColorValue(transaction.type)}>
+                {formatMoney(transaction.value)}
+              </span>
+              <span className="box-date">
+                {format(
+                  parse(transaction.date, 'yyyy-MM-dd', new Date()),
+                  'dd/MM/yyyy',
+                )}
+              </span>
+            </S.Details>
+          </div>
+        ))}
+
+        <button type="button">
           <KeyboardArrowDownRounded />
         </button>
       </S.Resume>

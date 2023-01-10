@@ -1,6 +1,19 @@
+import { TransactionCategory } from './transactionCategory.interface';
+
 export interface Transactions {
-  category: string;
-  date: string;
+  id: string;
+  description: string;
   value: number;
-  type: '-' | '+';
+  category: Partial<TransactionCategory>;
+  year: number;
+  month: number;
+  day: number;
+  yearMonth: string;
+  date: string;
+  dtCreate: Date;
+  isPaid: boolean;
+  originCreate?: 'web' | 'telegram';
+  type: '+' | '-';
+  specification?: string;
+  bank?: string;
 }

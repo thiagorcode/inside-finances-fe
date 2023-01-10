@@ -1,26 +1,10 @@
+import { Transactions } from '@/interface/transactions.interface';
+
 type QueryTransactions = {
   categoryId?: number;
   date?: string;
   type?: string;
 };
-
-interface Transactions {
-  id: string;
-  description: string;
-  value: number;
-  // category: Partial<TransactionsCategoryDTO>;
-  year: number;
-  // month: number;
-  // day: number;
-  yearMonth: string;
-  date: Date;
-  dtCreate: Date;
-  isPaid: boolean;
-  originCreate?: 'web' | 'telegram';
-  type: '+' | '-';
-  specification?: string;
-  bank?: string;
-}
 
 // export interface ResponseTransactionsByParams {
 //   transactions: {

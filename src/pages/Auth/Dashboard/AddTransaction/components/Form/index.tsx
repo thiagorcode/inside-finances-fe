@@ -14,11 +14,10 @@ import { FormTransaction } from '../../styles';
 import { Category } from '../Category';
 import Button from '@/components/Button';
 import { validateMoney } from '@/utils/validateMoney';
-import transactionCategoryService from '@/api/transactionCategory/transactionCategory.service';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
 import { DateInput } from './styles';
-import { postCreateTransaction } from '@/api/transactions/transactions.service';
-import { useModal } from '@/context/modal';
+import { transactionsService } from '@/api/transactions/service';
+import { transactionCategoryService } from '@/api/transactionCategory/service';
 
 interface FormProps {
   setStep: (value: 0 | 1) => void;
@@ -59,7 +58,7 @@ export const Form = ({ setStep }: FormProps) => {
     helper: FormikHelpers<typeof initialValues>,
   ) => {
     try {
-      const response = await postCreateTransaction(values);
+      const response = await transactionsService.createTransaction(values);
 
       if (response.status !== 201) throw new Error('Erro ao criar transação!');
 
@@ -72,7 +71,7 @@ export const Form = ({ setStep }: FormProps) => {
 
   const loadCategory = useCallback(async () => {
     try {
-      const response = await transactionCategoryService.findAll();
+      const response = await transactionCategoryService.listCategory();
 
       if (response.status !== 200) {
         message.error('Erro ao carregar as categorias!');

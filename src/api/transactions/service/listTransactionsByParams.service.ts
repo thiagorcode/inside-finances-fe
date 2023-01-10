@@ -5,7 +5,7 @@ import {
   ResponseTransactionsByParams,
 } from '../interface/listTransactionByParamns';
 
-export const getTransactionsByParams = ({
+export const listTransactionsByParams = ({
   limit,
   page,
   userId,
