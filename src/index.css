@@ -1,3 +1,13 @@
+:root {
+  /* --main-bg-color: ; */
+  --secondary-bg-color: #2b2e35;
+  /* --main-text-color: ; */
+  /* --main-secondary-color: ; */
+  --main-bg-button-color: #233DC7;
+  --color-recipe: #00c614;
+  --color-expense: #ff0404;
+}
+
 * {
   margin: 0;
   padding: 0;
