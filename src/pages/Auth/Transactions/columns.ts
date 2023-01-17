@@ -34,13 +34,13 @@ export const columns: ColumnsType<Transactions> = [
       return formatMoney(value);
     },
   },
-  {
-    title: 'Tipo',
-    dataIndex: 'type',
-    key: 'type',
-    render(value) {
-      const typeFormat = value === '+' ? 'Receita' : 'Despesa';
-      return typeFormat;
-    },
-  },
+  // {
+  //   title: 'Tipo',
+  //   dataIndex: 'type',
+  //   key: 'type',
+  //   render(value) {
+  //     const typeFormat = value === '+' ? 'Receita' : 'Despesa';
+  //     return typeFormat;
+  //   },
+  // },
 ];

@@ -6,7 +6,8 @@ export const Resume = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  div {
+
+  & > div {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -23,6 +24,29 @@ export const Resume = styled.div`
   }
   svg {
     color: #949499;
+  }
+
+  span.text-category {
+    min-width: 110px;
+  }
+
+  .color-recipe {
+    color: var(--color-recipe);
+  }
+
+  .color-expense {
+    color: var(--color-expense);
+  }
+`;
+
+export const Details = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 100px;
+
+  span.box-date {
+    font-size: 0.7rem;
   }
 `;
 
@@ -43,7 +67,7 @@ export const Spiral = styled.button`
   }
 
   span:last-child {
-    color: #00c614;
+    color: var(--color-recipe);
     font-weight: 400;
     font-size: 14px;
   }
@@ -53,6 +77,7 @@ export const BoxTypeValues = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   div {
     background-color: #3c404e;
     border-radius: 4px;
@@ -65,13 +90,10 @@ export const BoxTypeValues = styled.div`
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     }
     :first-child svg {
-      color: #00c614;
+      color: var(--color-recipe);
     }
     :last-child svg {
-      color: #ff0404;
+      color: var(--color-expense);
     }
-  }
-
-  svg {
   }
 `;

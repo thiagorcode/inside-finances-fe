@@ -1,6 +1,6 @@
 import Header from '../../../components/Header';
 import { Grid } from '@mui/material';
-import { DatePicker, Space, Table } from 'antd';
+import { Card, Col, DatePicker, Row, Space, Statistic, Table } from 'antd';
 import MobileMenu from '../../../components/MobileMenu';
 import { columns } from './columns';
 import { useCallback, useEffect, useState } from 'react';
@@ -10,11 +10,14 @@ import * as dayjs from 'dayjs';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
 import * as S from './styles';
 import {
+  ArrowDownwardOutlined,
+  ArrowUpwardOutlined,
   KeyboardArrowDownRounded,
   KeyboardArrowUpRounded,
 } from '@mui/icons-material';
 import { transactionsService } from '@/api/transactions/service';
 import { transactionCategoryService } from '@/api/transactionCategory/service';
+import { TransactionsCard } from './transactions.card';
 
 const initialValueForm = {
   type: '',
@@ -27,6 +30,7 @@ export const TransactionsGeneral = () => {
   const { toggleModal } = useModal();
 
   const [transactions, setTransactions] = useState<any[]>([]);
+  const [totalizers, setTotalizers] = useState<any>(null);
   // const [hasNext, setHasNext] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -66,7 +70,7 @@ export const TransactionsGeneral = () => {
 
       setTransactions(data.transactions);
       // setHasNext(data.transactions.hasNext);
-      setPage(value => value + 1);
+      // setPage(value => value + 1);
     } catch (error) {
       console.log(error);
     } finally {
@@ -74,6 +78,27 @@ export const TransactionsGeneral = () => {
     }
   }, [page, valueForm]);
 
+  const loadTotalizers = useCallback(async () => {
+    const { categoryId, dateFormatted, type } = valueForm;
+    try {
+      const { data } = await transactionsService.loadTotalizers({
+        limit: 0,
+        page: 0,
+        userId: 'fac56249-feaf-460d-9aa5-37dd6412cdb9',
+        query: {
+          ...(categoryId && { categoryId }),
+          ...(dateFormatted && { date: dateFormatted }),
+          ...(type && { type }),
+        },
+      });
+      console.log(data);
+      setTotalizers(data.totalizers);
+      // setHasNext(data.transactions.hasNext);
+      // setPage(value => value + 1);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [page, valueForm]);
   // está sendo utilizado no add transaction
   const loadCategory = useCallback(async () => {
     try {
@@ -105,6 +130,7 @@ export const TransactionsGeneral = () => {
   useEffect(() => {
     loadCategory();
     loadTransactions();
+    loadTotalizers();
   }, [valueForm]);
 
   const handleChangeForm = useCallback(
@@ -135,7 +161,12 @@ export const TransactionsGeneral = () => {
   return (
     <>
       <Header />
-
+      <TransactionsCard
+        loading={loading}
+        recipe={totalizers?.recipe}
+        expense={totalizers?.expense}
+        totalBalance={totalizers?.totalBalance}
+      />
       <S.ContainerFilters>
         <Space
           direction="vertical"

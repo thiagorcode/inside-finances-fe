@@ -26,3 +26,11 @@ export interface RequestTransactions {
   userId: string;
   query: QueryTransactions;
 }
+
+export interface ResponseTotalizer {
+  totalizers: {
+    recipe: number;
+    expense: number;
+    totalBalance: number;
+  };
+}

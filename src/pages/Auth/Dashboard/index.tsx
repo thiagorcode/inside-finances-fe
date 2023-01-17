@@ -24,8 +24,8 @@ const Dashboard = () => {
         }}
       >
         <Transactions />
-        {/* <Investments />
-        <Cards /> */}
+        <Investments />
+        {/* <Cards />  */}
       </Box>
       <MobileMenu />
       {modal?.addTransaction?.isOpen && (

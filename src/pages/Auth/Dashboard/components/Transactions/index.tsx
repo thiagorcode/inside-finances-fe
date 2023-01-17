@@ -14,6 +14,7 @@ import { Box } from '@mui/material';
 import { message } from 'antd';
 import { format, parse } from 'date-fns';
 import { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import * as S from './styles';
 
 export const Transactions = () => {
@@ -123,9 +124,9 @@ export const Transactions = () => {
           </div>
         ))}
 
-        <button type="button">
+        <Link to="transactions">
           <KeyboardArrowDownRounded />
-        </button>
+        </Link>
       </S.Resume>
     </Box>
   );

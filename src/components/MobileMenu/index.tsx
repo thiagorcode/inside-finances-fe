@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   AccountBalance,
@@ -13,22 +12,22 @@ const MobileMenu: React.FC = () => {
   return (
     <Nav>
       <ul>
-        <li>
+        {/* <li>
           <Link to="/controle">
             <Equalizer />
           </Link>
-        </li>
-        <li>
+        </li> */}
+        {/* <li>
           <Link to="/">
             <AccountBalance />
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link to="/">
             <DataUsage />
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/">
             <Language />
           </Link>
@@ -37,7 +36,7 @@ const MobileMenu: React.FC = () => {
           <Link to="/">
             <Logout />
           </Link>
-        </li>
+        </li> */}
       </ul>
     </Nav>
   );
