@@ -7,26 +7,31 @@ import {
   useContext,
   useMemo,
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface AuthContextProps {
-  login: (user: string, password: string) => void;
+  login: (user: string, password: string) => Promise<void>;
 }
 
 const AuthContext = createContext({} as AuthContextProps);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { increase } = useUser();
+  const navigate = useNavigate();
 
   const login = useCallback(async (user: string, password: string) => {
     try {
       const response = await authService.login(user, password);
 
-      if (response.status !== 200) {
+      if (response.status !== 202) {
         console.log('No Auth');
         return;
       }
 
       increase(response.data.user);
+      navigate('/');
+
+      return;
     } catch (error) {
       console.log(error);
     }
