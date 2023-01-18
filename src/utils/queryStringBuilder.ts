@@ -1,4 +1,4 @@
-export const queryStringBuilder = (obj: object) => {
+export const queryStringBuilder = (obj: any) => {
   const str = [];
   for (const p in obj)
     if (Object.keys(obj).length) {

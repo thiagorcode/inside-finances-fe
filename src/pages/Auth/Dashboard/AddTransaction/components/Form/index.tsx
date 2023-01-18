@@ -116,7 +116,7 @@ export const Form = ({ setStep }: FormProps) => {
       <Input
         label="Tipo:"
         name="type"
-        error={formik.errors}
+        error={formik.errors.type}
         onChange={formik.handleChange}
       >
         <select>
@@ -131,13 +131,13 @@ export const Form = ({ setStep }: FormProps) => {
         label="Descrição:"
         placeholder="Alimentação, Salário, Conta"
         name="description"
-        error={formik.errors}
+        error={formik.errors.description}
         onChange={formik.handleChange}
       />
       {!!categoryFiltered.length && (
         <Category
           name="category"
-          error={formik.errors}
+          error={formik.errors.category}
           setFieldValue={formik.setFieldValue}
           values={formik.values}
           category={categoryFiltered}
@@ -150,14 +150,14 @@ export const Form = ({ setStep }: FormProps) => {
         label="Valor:"
         placeholder="R$ 99,99"
         name="value"
-        error={formik.errors}
+        error={formik.errors.value}
         onChange={formik.handleChange}
       />
       <Input
         label="Banco:"
         placeholder="Inter"
         name="bank"
-        error={formik.errors}
+        error={formik.errors.bank}
         onChange={formik.handleChange}
       />
       <DateInput>

@@ -12,7 +12,7 @@ import * as S from './styles';
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   children?: ReactElement;
-  error?: FormikErrors<DataType>;
+  error?: string;
 }
 
 export const Input = ({
@@ -23,27 +23,19 @@ export const Input = ({
   error,
   ...props
 }: InputProps) => {
-  const isError = useMemo(() => {
-    console.log(error);
-    if (error === undefined) {
-      return '';
-    }
-
-    return error[name] ? error[name] : '';
-  }, [error, name]);
   const newId = useMemo(() => (id ? id : `form-${name}`), [id, name]);
   return (
     <S.Container>
       {label && <label htmlFor={id}>{label}</label>}
       {children ? (
         cloneElement(children, {
-          className: `class_input ${isError && 'validate-error'}`,
+          className: `class_input ${error && 'validate-error'}`,
           id: newId,
           name,
           ...props,
         })
       ) : (
-        <S.Input error={isError} name={name} id={newId} {...props} />
+        <S.Input error={error} name={name} id={newId} {...props} />
       )}
     </S.Container>
   );

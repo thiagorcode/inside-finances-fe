@@ -1,7 +1,10 @@
-import ButtonMui from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
+import styled from 'styled-components';
 
-const properties = (size: 'small' | 'medium' | 'large') => {
+interface ButtonProps {
+  size?: 'small' | 'medium' | 'large';
+}
+
+const properties = (size?: 'small' | 'medium' | 'large') => {
   switch (size) {
     case 'small':
       return {
@@ -23,38 +26,38 @@ const properties = (size: 'small' | 'medium' | 'large') => {
         borderRadius: '20px',
       };
     default:
-      break;
+      return {
+        width: 'inherit',
+        height: 'inherit',
+      };
   }
 };
 
-export const Button = styled(ButtonMui)(({ color, size }) => {
-  const propertiesSize = properties(size);
-
-  return {
-    boxShadow: 'none',
-    textTransform: 'none',
-    fontSize: 16,
-    padding: '6px',
-    border: '1px solid',
-    lineHeight: 1.5,
-    fontWeight: 'bold',
-    color: color || '#fff',
-    backgroundColor: '#233DC7',
-    borderColor: '#233DC7',
-    fontFamily: ['-apple-system', 'BlinkMacSystemFont', 'Poppins'].join(','),
-    '&:hover': {
-      backgroundColor: '#2644D8',
-      borderColor: '#2644D8',
-      boxShadow: 'none',
-    },
-    '&:active': {
-      boxShadow: 'none',
-      backgroundColor: '#2644D8',
-      borderColor: '#2644D8',
-    },
-    '&:focus': {
-      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
-    },
-    ...propertiesSize,
-  };
-});
+export const Button = styled.button<ButtonProps>`
+  box-shadow: none;
+  text-transform: none;
+  font-size: 16px;
+  font-family: 'Poppins';
+  width: ${props => properties(props?.size).width};
+  height: ${props => properties(props?.size).height};
+  padding: 6px;
+  border: 1px solid;
+  line-height: 1.5;
+  font-weight: bold;
+  color: ${props => props.color || '#fff'};
+  background-color: #233dc7;
+  border-color: #233dc7;
+  &:hover {
+    background-color: #2644d8;
+    border-color: #2644d8;
+    box-shadow: none;
+  }
+  &:active {
+    box-shadow: none;
+    background-color: #2644d8;
+    border-color: #2644d8;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+  }
+`;
