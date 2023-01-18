@@ -1,22 +1,19 @@
 import { FormEvent, useCallback, useState } from 'react';
 import { Bordes, HeaderLogin, Form } from './styles';
 import { useAuth } from '@/context/auth';
-import { useNavigate } from 'react-router-dom';
+
 export default function Login() {
   // TODO: Adicionar Formik
   const { login } = useAuth();
-  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleFormSubmit = useCallback(
-    (e: FormEvent) => {
+    async (e: FormEvent) => {
       e.preventDefault();
 
       try {
-        login(email, password);
-
-        navigate('/');
+        await login(email, password);
       } catch (error) {
         console.log(error);
       }
