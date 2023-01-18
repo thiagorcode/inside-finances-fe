@@ -23,7 +23,7 @@ export default function Login() {
 
   return (
     <>
-      <Bordes>
+      {/* <Bordes>
         <img
           className="triangle1"
           src="assets/img/Vector1.png"
@@ -42,8 +42,8 @@ export default function Login() {
           alt="triangledown"
           width="150px"
         />
-      </Bordes>
-      <HeaderLogin>
+      </Bordes> */}
+      {/* <HeaderLogin>
         <img
           className="triangle"
           src="assets/img/Vector2.png"
@@ -56,7 +56,7 @@ export default function Login() {
           alt="triangledown2"
           width="78px"
         />
-      </HeaderLogin>
+      </HeaderLogin> */}
       <Form onSubmit={handleFormSubmit}>
         <h1>LOGIN</h1>
         <input
@@ -72,9 +72,9 @@ export default function Login() {
           value={password}
         />
 
-        <a className="phrase-register" href="http://localhost:3000/register">
+        {/* <a className="phrase-register" href="http://localhost:3000/register">
           <p>Cadastrar Agora</p>
-        </a>
+        </a> */}
         <button type="submit">Entrar</button>
       </Form>
     </>
