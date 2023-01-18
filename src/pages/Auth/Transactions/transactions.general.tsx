@@ -6,7 +6,7 @@ import { columns } from './columns';
 import { useCallback, useEffect, useState } from 'react';
 import { useModal } from '@/context/modal';
 import { Input } from '@/components/Form';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
 import * as S from './styles';
 import {
