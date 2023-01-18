@@ -18,6 +18,7 @@ import { TransactionCategory } from '@/interface/transactionCategory.interface';
 import { DateInput } from './styles';
 import { transactionsService } from '@/api/transactions/service';
 import { transactionCategoryService } from '@/api/transactionCategory/service';
+import { useUser } from '@/hooks/useUser';
 
 interface FormProps {
   setStep: (value: 0 | 1) => void;
@@ -48,6 +49,8 @@ const validationSchema = Yup.object().shape({
 });
 
 export const Form = ({ setStep }: FormProps) => {
+  const { userAccess } = useUser();
+
   const [category, setCategory] = useState<TransactionCategory[]>([]);
   const [categoryFiltered, setCategoryFiltered] = useState<
     TransactionCategory[]
@@ -58,7 +61,10 @@ export const Form = ({ setStep }: FormProps) => {
     helper: FormikHelpers<typeof initialValues>,
   ) => {
     try {
-      const response = await transactionsService.createTransaction(values);
+      const response = await transactionsService.createTransaction({
+        ...values,
+        userId: userAccess.id!,
+      });
 
       if (response.status !== 201) throw new Error('Erro ao criar transação!');
 
