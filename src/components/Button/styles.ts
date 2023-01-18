@@ -4,7 +4,7 @@ interface ButtonProps {
   size?: 'small' | 'medium' | 'large';
 }
 
-const properties = (size: 'small' | 'medium' | 'large') => {
+const properties = (size?: 'small' | 'medium' | 'large') => {
   switch (size) {
     case 'small':
       return {
@@ -26,7 +26,10 @@ const properties = (size: 'small' | 'medium' | 'large') => {
         borderRadius: '20px',
       };
     default:
-      break;
+      return {
+        width: 'inherit',
+        height: 'inherit',
+      };
   }
 };
 
@@ -35,8 +38,8 @@ export const Button = styled.button<ButtonProps>`
   text-transform: none;
   font-size: 16px;
   font-family: 'Poppins';
-  width: ${props => properties(props.size).width};
-  height: ${props => properties(props.size).height};
+  width: ${props => properties(props?.size).width};
+  height: ${props => properties(props?.size).height};
   padding: 6px;
   border: 1px solid;
   line-height: 1.5;

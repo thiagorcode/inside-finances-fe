@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface InputProps {
-  error: string;
+  error?: string;
 }
 
 export const Container = styled.div`

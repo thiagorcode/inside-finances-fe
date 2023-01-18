@@ -10,12 +10,12 @@ import { TransactionCategory } from '@/interface/transactionCategory.interface';
 
 interface CategoryProps {
   name: string;
-  error: FormikErrors<DataType>;
+  error?: string;
   setFieldValue: (
     field: string,
     value: any,
     shouldValidate?: boolean | undefined,
-  ) => Promise<FormikErrors<DataType>> | Promise<void>;
+  ) => Promise<FormikErrors<any>> | Promise<void>;
   values: FormikValues;
   category: TransactionCategory[];
 }
@@ -69,11 +69,11 @@ export const Category = ({
   values,
   category,
 }: CategoryProps) => {
-  const isError = useMemo(() => (error ? error[name] : ''), [error, name]);
-  const Icon = useCallback(({ icon }) => {
-    const RenderIcon = I[icon];
-    return <RenderIcon />;
-  }, []);
+  // const Icon = useCallback(({ icon }: { icon: any }) => {
+
+  //   const RenderIcon = I[icon];
+  //   return <RenderIcon />;
+  // }, []);
   return (
     <Box component="div" sx={{ width: '100%' }}>
       <label
@@ -106,7 +106,7 @@ export const Category = ({
           </ButtonStyled>
         ))}
       </ButtonGroup>
-      <ErrorForm errorMessage={isError} />
+      <ErrorForm errorMessage={error} />
     </Box>
   );
 };

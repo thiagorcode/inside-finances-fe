@@ -144,7 +144,9 @@ export const TransactionsGeneral = () => {
   );
 
   const handleChangeDateForm = useCallback(
-    (date: dayjs.Dayjs, dateString: string) => {
+    (date: dayjs.Dayjs | null, dateString: string) => {
+      if (!date) return;
+
       setValueForm(value => ({
         ...value,
         date: date,

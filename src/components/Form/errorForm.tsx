@@ -1,7 +1,7 @@
 import { Alert } from '@mui/material';
 
 interface ErrorFormProps {
-  errorMessage: string;
+  errorMessage?: string;
 }
 
 export const ErrorForm = ({ errorMessage }: ErrorFormProps) => {
