@@ -1,12 +1,25 @@
-import { useCallback } from 'react';
+import { FormEvent, useCallback, useState } from 'react';
 import { Bordes, HeaderLogin, Form } from './styles';
-// Geralmente quando for importar usa letra maiúscula nas variáveis
-/// Lembra de usar os nomes das functions com Letra maiúscula
+import { useAuth } from '@/context/auth';
+
 export default function Login() {
-  const handleFormSubmit = useCallback(() => {
-    // Para fazer as integrações com api
-    // Estudar sobre Promises, async await
-  }, []);
+  // TODO: Adicionar Formik
+  const { login } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleFormSubmit = useCallback(
+    async (e: FormEvent) => {
+      e.preventDefault();
+
+      try {
+        await login(email, password);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [email, password],
+  );
 
   return (
     <>
@@ -44,15 +57,25 @@ export default function Login() {
           width="78px"
         />
       </HeaderLogin>
-      <Form>
+      <Form onSubmit={handleFormSubmit}>
         <h1>LOGIN</h1>
-        <input type="text" placeholder="Email" />
-        <input type="password" placeholder="Senha" />
+        <input
+          type="text"
+          placeholder="Email"
+          onChange={e => setEmail(e.target.value)}
+          value={email}
+        />
+        <input
+          type="password"
+          placeholder="Senha"
+          onChange={e => setPassword(e.target.value)}
+          value={password}
+        />
 
         <a className="phrase-register" href="http://localhost:3000/register">
-          <p>cadastrar agora</p>
+          <p>Cadastrar Agora</p>
         </a>
-        <button type="submit">LOGIN</button>
+        <button type="submit">Entrar</button>
       </Form>
     </>
   );

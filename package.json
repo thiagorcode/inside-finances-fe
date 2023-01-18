@@ -10,7 +10,9 @@
     "lint:fix": "npm run lint -- --fix",
     "prettier": "npx prettier src --check",
     "prettier:fix": "npm run prettier -- --write",
-    "format": "npm run prettier:fix && npm run lint:fix"
+    "format": "npm run prettier:fix && npm run lint:fix",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/react": "11.9.3",
@@ -19,14 +21,20 @@
     "@mui/icons-material": "5.8.3",
     "@mui/material": "5.8.3",
     "@mui/system": "5.8.3",
+    "@mui/x-date-pickers": "^5.0.6",
     "antd": "^5.1.1",
     "axios": "0.27.2",
     "date-fns": "2.28.0",
+    "dayjs": "^1.11.6",
+    "formik": "^2.2.9",
+    "moment": "^2.29.4",
     "phosphor-react": "^1.4.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "6.3.0",
-    "styled-components": "5.3.5"
+    "styled-components": "5.3.5",
+    "yup": "^0.32.11",
+    "zustand": "^4.1.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
@@ -34,7 +42,7 @@
     "@types/styled-components": "5.1.25",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
-    "@vitejs/plugin-react": "^1.3.0",
+    "@vitejs/plugin-react": "1.3.0",
     "autoprefixer": "^10.4.7",
     "eslint": "^8.16.0",
     "eslint-config-prettier": "^8.5.0",
@@ -43,10 +51,11 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-react-hooks": "^4.5.0",
+    "gh-pages": "^4.0.0",
     "postcss": "^8.4.14",
     "prettier": "^2.6.2",
     "tailwindcss": "^3.0.24",
-    "typescript": "^4.6.3",
+    "typescript": "^4.9.3",
     "vite": "^2.9.9",
     "vite-tsconfig-paths": "^3.5.0"
   }

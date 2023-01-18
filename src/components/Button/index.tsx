@@ -1,17 +1,13 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes } from 'react';
 
-import { But } from './styles';
+import * as S from './styles';
 
-const Button: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
-  children,
-  color,
-  ...rest
-}) => {
-  return (
-    <But textcolor={color} {...rest}>
-      {children}
-    </But>
-  );
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  size: string;
+}
+
+const Button: React.FC<ButtonProps> = ({ children, ...rest }) => {
+  return <S.Button {...rest}>{children}</S.Button>;
 };
 
 export default Button;

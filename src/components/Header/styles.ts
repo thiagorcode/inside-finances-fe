@@ -48,7 +48,7 @@ export const BoxNotification = styled.section`
   display: flex;
   flex-direction: row;
   align-items: center;
-  div {
+  button {
     display: flex;
     align-items: center;
     justify-content: center;

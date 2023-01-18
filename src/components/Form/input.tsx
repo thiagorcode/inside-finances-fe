@@ -1,24 +1,50 @@
-import { cloneElement, InputHTMLAttributes, ReactElement } from 'react';
+import { FormikErrors } from 'formik';
+import {
+  cloneElement,
+  InputHTMLAttributes,
+  ReactElement,
+  useMemo,
+} from 'react';
+import { DataType } from './DataType.type';
 
-import { Container } from './styles';
+import * as S from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   children?: ReactElement;
+  error?: FormikErrors<DataType>;
 }
 
-export const Input = ({ label, id, children, ...props }: InputProps) => {
+export const Input = ({
+  label,
+  id,
+  children,
+  name,
+  error,
+  ...props
+}: InputProps) => {
+  const isError = useMemo(() => {
+    console.log(error);
+    if (error === undefined) {
+      return '';
+    }
+
+    return error[name] ? error[name] : '';
+  }, [error, name]);
+  const newId = useMemo(() => (id ? id : `form-${name}`), [id, name]);
   return (
-    <Container>
+    <S.Container>
       {label && <label htmlFor={id}>{label}</label>}
       {children ? (
         cloneElement(children, {
-          className: 'class_input',
+          className: `class_input ${isError && 'validate-error'}`,
+          id: newId,
+          name,
           ...props,
         })
       ) : (
-        <input className="class_input" {...props} />
+        <S.Input error={isError} name={name} id={newId} {...props} />
       )}
-    </Container>
+    </S.Container>
   );
 };

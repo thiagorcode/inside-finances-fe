@@ -67,12 +67,16 @@ export const Form = styled.form`
     border-radius: 8px;
     font-size: 18px;
     width: 100%;
+    margin-top: 8px;
   }
 
   &::placeholder {
     font-size: 14px;
     padding-left: 0px;
     color: #888888;
+  }
+  a {
+    margin-top: 10px;
   }
 
   input {
@@ -81,5 +85,7 @@ export const Form = styled.form`
     display: block;
     background-color: transparent;
     width: 100%;
+    padding: 15px 5px;
+    font-size: 16px;
   }
 `;

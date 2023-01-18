@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-// * URL da API
+console.log(import.meta.env.API_URL);
 export default axios.create({
-  baseURL: 'http://localhost:3333',
+  baseURL: import.meta.env.API_URL || 'http://localhost:3333/api',
   headers: {
     'Content-type': 'application/json',
   },
