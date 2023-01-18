@@ -1,5 +1,4 @@
-import { Dayjs } from 'dayjs';
-import { FormikErrors, useFormikContext } from 'formik';
+import { FormikErrors } from 'formik';
 import {
   cloneElement,
   InputHTMLAttributes,
@@ -13,7 +12,7 @@ import * as S from './styles';
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   children?: ReactElement;
-  error: FormikErrors<DataType>;
+  error?: FormikErrors<DataType>;
 }
 
 export const Input = ({
@@ -24,7 +23,14 @@ export const Input = ({
   error,
   ...props
 }: InputProps) => {
-  const isError = useMemo(() => (error ? error[name] : ''), [error, name]);
+  const isError = useMemo(() => {
+    console.log(error);
+    if (error === undefined) {
+      return '';
+    }
+
+    return error[name] ? error[name] : '';
+  }, [error, name]);
   const newId = useMemo(() => (id ? id : `form-${name}`), [id, name]);
   return (
     <S.Container>

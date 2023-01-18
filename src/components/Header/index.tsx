@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback } from 'react';
 import { NotificationsNoneOutlined, Logout } from '@mui/icons-material';
 import {
   Container,
@@ -7,8 +7,14 @@ import {
   BoxProfile,
   BoxNotification,
 } from './styles';
+import { User, useUser } from '@/hooks/useUser';
 
 const Header: React.FC = () => {
+  const { increase } = useUser();
+
+  const handleClickLogout = useCallback(() => {
+    increase({} as User);
+  }, []);
   return (
     <Container>
       <BoxProfile>
@@ -19,12 +25,12 @@ const Header: React.FC = () => {
         </Status>
       </BoxProfile>
       <BoxNotification>
-        <div>
+        <button type="button">
           <NotificationsNoneOutlined />
-        </div>
-        <div>
+        </button>
+        <button type="button" onClick={handleClickLogout}>
           <Logout />
-        </div>
+        </button>
       </BoxNotification>
     </Container>
   );

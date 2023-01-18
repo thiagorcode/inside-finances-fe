@@ -19,7 +19,7 @@ export const Nav = styled.nav`
     margin: 0 auto;
     max-width: 480px;
     padding: 0 12px;
-    background-color: #2b2e35;
+    background-color: var(--secondary-bg-color);
     box-shadow: 2px 2px 7px 0px rgba(0, 0, 0, 0.5);
   }
   li {
