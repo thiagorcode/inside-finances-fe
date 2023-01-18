@@ -18,6 +18,7 @@ import {
 import { transactionsService } from '@/api/transactions/service';
 import { transactionCategoryService } from '@/api/transactionCategory/service';
 import { TransactionsCard } from './transactions.card';
+import { useUser } from '@/hooks/useUser';
 
 const initialValueForm = {
   type: '',
@@ -28,6 +29,7 @@ const initialValueForm = {
 
 export const TransactionsGeneral = () => {
   const { toggleModal } = useModal();
+  const { userAccess } = useUser();
 
   const [transactions, setTransactions] = useState<any[]>([]);
   const [totalizers, setTotalizers] = useState<any>(null);
@@ -58,8 +60,7 @@ export const TransactionsGeneral = () => {
       const { data } = await transactionsService.listTransactionsByParams({
         limit: 50,
         page,
-        // TODO; Alterar
-        userId: 'fac56249-feaf-460d-9aa5-37dd6412cdb9',
+        userId: userAccess.id!,
         query: {
           ...(categoryId && { categoryId }),
           ...(dateFormatted && { date: dateFormatted }),
@@ -84,14 +85,14 @@ export const TransactionsGeneral = () => {
       const { data } = await transactionsService.loadTotalizers({
         limit: 0,
         page: 0,
-        userId: 'fac56249-feaf-460d-9aa5-37dd6412cdb9',
+        userId: userAccess.id!,
         query: {
           ...(categoryId && { categoryId }),
           ...(dateFormatted && { date: dateFormatted }),
           ...(type && { type }),
         },
       });
-      console.log(data);
+
       setTotalizers(data.totalizers);
       // setHasNext(data.transactions.hasNext);
       // setPage(value => value + 1);

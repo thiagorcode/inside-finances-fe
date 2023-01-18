@@ -1,6 +1,7 @@
 import { lastTransactions } from '@/api/transactions/service/lastTransactions.service';
 import Button from '@/components/Button';
 import { useModal } from '@/context/modal';
+import { useUser } from '@/hooks/useUser';
 import { Transactions as TransactionsProps } from '@/interface/transactions.interface';
 import { formatMoney } from '@/utils/formatMoney';
 import {
@@ -19,6 +20,7 @@ import * as S from './styles';
 
 export const Transactions = () => {
   const { toggleModal } = useModal();
+  const { userAccess } = useUser();
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
 
   const handleOpenModal = (key: string) => {
@@ -32,7 +34,7 @@ export const Transactions = () => {
   const loadTransactions = useCallback(async () => {
     try {
       const response = await lastTransactions({
-        userId: 'fac56249-feaf-460d-9aa5-37dd6412cdb9',
+        userId: userAccess.id!,
       });
 
       if (response.status !== 200)

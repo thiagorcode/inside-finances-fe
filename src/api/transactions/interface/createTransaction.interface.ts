@@ -7,4 +7,5 @@ export interface CreateTransaction {
   description: string;
   date: dayjs.Dayjs;
   category: number;
+  userId: string;
 }

@@ -8,6 +8,8 @@ export const createTransaction = ({
   description,
   type,
   category,
+
+  userId,
 }: CreateTransaction) => {
   return api.post('transactions', {
     date,
@@ -16,7 +18,7 @@ export const createTransaction = ({
     description,
     type,
     originCreate: 'web',
-    userId: 'fac56249-feaf-460d-9aa5-37dd6412cdb9',
+    userId,
     categoryId: category,
   });
 };
