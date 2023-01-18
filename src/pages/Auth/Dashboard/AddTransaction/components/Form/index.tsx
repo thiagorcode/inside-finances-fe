@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { FormikHelpers, useFormik } from 'formik';
 import * as ptBr from 'dayjs/locale/pt-br';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import * as Yup from 'yup';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TextField } from '@mui/material';
