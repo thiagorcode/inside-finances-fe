@@ -24,7 +24,7 @@ const initialValueForm = {
   type: '',
   date: dayjs(new Date()),
   categoryId: 0,
-  dateFormatted: '',
+  dateFormatted: dayjs(new Date()).format('YYYY-MM'),
 };
 
 export const TransactionsGeneral = () => {
