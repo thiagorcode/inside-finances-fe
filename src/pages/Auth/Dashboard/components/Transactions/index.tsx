@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom';
 import * as S from './styles';
 
 export const Transactions = () => {
-  const { toggleModal } = useModal();
+  const { toggleModal, modal } = useModal();
   const { userAccess } = useUser();
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
 
@@ -48,7 +48,7 @@ export const Transactions = () => {
 
   useEffect(() => {
     loadTransactions();
-  }, []);
+  }, [modal?.addTransaction?.isOpen]);
 
   const defineColorValue = useCallback(
     (type: '+' | '-') => (type === '+' ? 'color-recipe' : 'color-expense'),

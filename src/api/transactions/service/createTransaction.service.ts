@@ -8,7 +8,6 @@ export const createTransaction = ({
   description,
   type,
   category,
-
   userId,
 }: CreateTransaction) => {
   return api.post('transactions', {

@@ -19,15 +19,25 @@ import { DateInput } from './styles';
 import { transactionsService } from '@/api/transactions/service';
 import { transactionCategoryService } from '@/api/transactionCategory/service';
 import { useUser } from '@/hooks/useUser';
+import { useModal } from '@/context/modal';
 
 interface FormProps {
   setStep: (value: 0 | 1) => void;
 }
 
+interface InitialValuesForm {
+  type: string;
+  description: string;
+  category: string;
+  value: string | null;
+  date: dayjs.Dayjs;
+  bank: string;
+}
+
 const initialValues = {
   type: '',
   description: '',
-  category: 0,
+  category: '',
   value: null,
   date: dayjs(new Date()),
   bank: '',
@@ -57,13 +67,14 @@ export const Form = ({ setStep }: FormProps) => {
   >([]);
 
   const onSubmit = async (
-    values: typeof initialValues,
+    values: InitialValuesForm,
     helper: FormikHelpers<typeof initialValues>,
   ) => {
     try {
       const response = await transactionsService.createTransaction({
         ...values,
         userId: userAccess.id!,
+        value: values.value?.replace(',', '.'),
       });
 
       if (response.status !== 201) throw new Error('Erro ao criar transação!');
