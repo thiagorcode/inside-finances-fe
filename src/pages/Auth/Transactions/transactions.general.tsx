@@ -20,15 +20,21 @@ import { transactionCategoryService } from '@/api/transactionCategory/service';
 import { TransactionsCard } from './transactions.card';
 import { useUser } from '@/hooks/useUser';
 
+interface InitialValueForm {
+  type: string;
+  date: dayjs.Dayjs;
+  categoryId: number;
+  dateFormatted: string | null;
+}
+
 const initialValueForm = {
   type: '',
   date: dayjs(new Date()),
   categoryId: 0,
-  dateFormatted: dayjs(new Date()).format('YYYY-MM'),
+  dateFormatted: null,
 };
 
 export const TransactionsGeneral = () => {
-  const { toggleModal } = useModal();
   const { userAccess } = useUser();
 
   const [transactions, setTransactions] = useState<any[]>([]);
@@ -41,17 +47,10 @@ export const TransactionsGeneral = () => {
   const [categoryFiltered, setCategoryFiltered] = useState<
     TransactionCategory[]
   >([]);
-  const [valueForm, setValueForm] = useState(initialValueForm);
+  const [valueForm, setValueForm] =
+    useState<InitialValueForm>(initialValueForm);
 
   const [isHideFilter, setIsHideFilter] = useState(false);
-
-  const handleOpenModal = () => {
-    toggleModal({
-      addTransaction: {
-        isOpen: true,
-      },
-    });
-  };
 
   const loadTransactions = useCallback(async () => {
     setLoading(true);
@@ -67,7 +66,6 @@ export const TransactionsGeneral = () => {
           ...(type && { type }),
         },
       });
-      console.log(data);
 
       setTransactions(data.transactions);
       // setHasNext(data.transactions.hasNext);
@@ -99,7 +97,7 @@ export const TransactionsGeneral = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [page, valueForm]);
+  }, [page, valueForm, userAccess.id]);
   // está sendo utilizado no add transaction
   const loadCategory = useCallback(async () => {
     try {
