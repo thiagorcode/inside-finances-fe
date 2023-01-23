@@ -9,9 +9,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { message } from 'antd';
 
-import { Input } from '../../../../../../components/Form';
-import { FormTransaction } from '../../styles';
-import { Category } from '../Category';
+import { Input } from '../../../../../components/Form';
+import { FormTransaction } from '../styles';
+import { SelectCategory } from '../../../../../components/SelectCategory';
 import Button from '@/components/Button';
 import { validateMoney } from '@/utils/validateMoney';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
@@ -19,7 +19,6 @@ import { DateInput } from './styles';
 import { transactionsService } from '@/api/transactions/service';
 import { transactionCategoryService } from '@/api/transactionCategory/service';
 import { useUser } from '@/hooks/useUser';
-import { useModal } from '@/context/modal';
 
 interface FormProps {
   setStep: (value: 0 | 1) => void;
@@ -152,7 +151,7 @@ export const Form = ({ setStep }: FormProps) => {
         onChange={formik.handleChange}
       />
       {!!categoryFiltered.length && (
-        <Category
+        <SelectCategory
           name="category"
           error={formik.errors.category}
           setFieldValue={formik.setFieldValue}

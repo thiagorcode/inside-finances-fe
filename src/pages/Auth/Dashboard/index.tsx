@@ -5,7 +5,6 @@ import MobileMenu from '../../../components/MobileMenu';
 import Button from '../../../components/Button';
 
 import { AddTransaction } from './AddTransaction';
-import { Modal } from '@mui/material';
 import { Transactions } from './components/Transactions';
 import { Investments } from './components/Investments';
 import { Cards } from './components/Cards';
@@ -28,11 +27,7 @@ const Dashboard = () => {
         {/* <Cards />  */}
       </Box>
       <MobileMenu />
-      {modal?.addTransaction?.isOpen && (
-        <Modal open sx={{ height: '100vh' }}>
-          <AddTransaction />
-        </Modal>
-      )}
+      {modal?.addTransaction?.isOpen && <AddTransaction />}
     </>
   );
 };
