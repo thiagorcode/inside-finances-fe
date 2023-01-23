@@ -4,6 +4,7 @@ export interface Transactions {
   id: string;
   description: string;
   value: number;
+  categoryId: string;
   category: Partial<TransactionCategory>;
   year: number;
   month: number;
@@ -13,7 +14,7 @@ export interface Transactions {
   dtCreate: Date;
   isPaid: boolean;
   originCreate?: 'web' | 'telegram';
-  type: '+' | '-';
-  specification?: string;
-  bank?: string;
+  type: string;
+  specification: string;
+  bank: string;
 }

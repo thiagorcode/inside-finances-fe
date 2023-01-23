@@ -1,3 +1,4 @@
+import { findOneTransaction } from './findOneTransaction.service';
 import {
   listTransactionsByParams,
   loadTotalizers,
@@ -8,4 +9,5 @@ export const transactionsService = {
   listTransactionsByParams,
   createTransaction,
   loadTotalizers,
+  findOneTransaction,
 };
