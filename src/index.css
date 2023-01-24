@@ -1,6 +1,7 @@
 :root {
   /* --main-bg-color: ; */
   --secondary-bg-color: #2b2e35;
+  --secondary-hover-bg-color: rgba(255,255,255, 0.1);
   /* --main-text-color: ; */
   /* --main-secondary-color: ; */
   --main-bg-button-color: #233DC7;
