@@ -159,11 +159,12 @@ export const TransactionsGeneral = () => {
           isOpen: true,
           data: {
             id,
+            afterSaveLoad: () => loadTransactions(),
           },
         },
       });
     },
-    [toggleModal],
+    [toggleModal, loadTransactions],
   );
   return (
     <>

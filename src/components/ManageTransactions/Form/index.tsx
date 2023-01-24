@@ -18,7 +18,6 @@ import { TransactionCategory } from '@/interface/transactionCategory.interface';
 import * as S from './styles';
 import { transactionsService } from '@/api/transactions/service';
 import { transactionCategoryService } from '@/api/transactionCategory/service';
-import { useUser } from '@/hooks/useUser';
 import { useModal } from '@/context/modal';
 import { Loading } from '@/components/Loading';
 import { SelectStatus } from '@/components/SelectStatus';
@@ -28,8 +27,9 @@ interface InitialValuesForm {
   description: string;
   category: string;
   value: string;
-  date: dayjs.Dayjs;
+  date: dayjs.Dayjs | string;
   bank: string;
+  isPaid: boolean;
 }
 
 const initialValues = {
@@ -39,12 +39,14 @@ const initialValues = {
   value: '',
   date: dayjs(new Date()),
   bank: '',
+  isPaid: true,
 };
 
 const validationSchema = Yup.object().shape({
   type: Yup.string().required('Campo obrigatório'),
   description: Yup.string(),
   category: Yup.string().required('Seleção obrigatória'),
+  isPaid: Yup.boolean().required('Seleção obrigatória'),
   bank: Yup.string(),
   value: Yup.string()
     .test({
@@ -57,8 +59,11 @@ const validationSchema = Yup.object().shape({
 });
 
 export const Form = () => {
-  const { userAccess } = useUser();
   const { toggleModal, modal } = useModal();
+
+  const afterSaveLoad = modal.manageTransaction?.data?.afterSaveLoad;
+  const transactionId = modal.manageTransaction?.data?.id;
+
   const [isLoading, setIsLoading] = useState(true);
   const [initialValuesForm, setInitialValuesForm] =
     useState<InitialValuesForm>(initialValues);
@@ -73,28 +78,34 @@ export const Form = () => {
     helper: FormikHelpers<InitialValuesForm>,
   ) => {
     try {
-      const response = await transactionsService.createTransaction({
-        ...values,
-        userId: userAccess.id!,
-        value: values.value?.replace(',', '.'),
-      });
+      const response = await transactionsService.updateTransaction(
+        transactionId,
+        {
+          ...values,
+          date: dayjs(values.date).format('YYYY-MM-DD'),
+          value: values.value?.replace(',', '.'),
+        },
+      );
 
-      if (response.status !== 201) throw new Error('Erro ao criar transação!');
+      if (response.status !== 200) throw new Error('Erro ao editar transação!');
+
+      if (afterSaveLoad) {
+        afterSaveLoad();
+      }
 
       helper.resetForm();
+
       toggleModal({
         manageTransaction: {
           isOpen: false,
         },
       });
     } catch (error) {
-      message.error(String(error));
+      message.error('Erro ao editar!');
     }
   };
 
   const loadTransaction = useCallback(async () => {
-    const transactionId: string | undefined = modal.manageTransaction?.data?.id;
-
     if (!transactionId) {
       message.error('Id não foi selecionado');
       return;
@@ -106,16 +117,21 @@ export const Form = () => {
         id: transactionId,
       });
       const transaction = response.data.transaction;
-      console.log(transaction);
+
+      const formatedValueMoney = transaction.value
+        .toLocaleString('pt-br', {
+          minimumFractionDigits: 2,
+        })
+        .replace('.', '');
+
       setInitialValuesForm({
         bank: transaction.bank,
         date: dayjs(transaction.date),
         type: transaction.type,
         category: transaction.categoryId,
         description: transaction.description,
-        value: transaction.value.toLocaleString('pt-br', {
-          minimumFractionDigits: 2,
-        }),
+        value: formatedValueMoney,
+        isPaid: transaction.isPaid,
       });
     } catch (error) {
       message.error('Erro inesperado!');
@@ -163,8 +179,6 @@ export const Form = () => {
   useEffect(() => {
     filterCategory();
   }, [formik.values.type]);
-
-  console.log(formik.values);
 
   if (isLoading) {
     return <Loading />;
@@ -224,7 +238,12 @@ export const Form = () => {
         onChange={formik.handleChange}
         value={formik.values?.value}
       />
-      <SelectStatus />
+      <SelectStatus
+        name="isPaid"
+        setFieldValue={formik.setFieldValue}
+        error={formik.errors.isPaid}
+        value={formik.values.isPaid}
+      />
       <S.DateInput>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={ptBr}>
           <StaticDatePicker

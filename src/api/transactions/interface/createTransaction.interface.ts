@@ -5,7 +5,7 @@ export interface CreateTransaction {
   value: any;
   type: string;
   description: string;
-  date: dayjs.Dayjs;
+  date: dayjs.Dayjs | string;
   category: string;
   userId: string;
 }

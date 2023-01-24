@@ -24,7 +24,9 @@ export const Header = styled.header`
   }
 `;
 
-export const FormTransaction = styled.form``;
+export const FormTransaction = styled.form`
+  margin-bottom: 50px;
+`;
 
 export const ContainerCategorys = styled.div`
   width: 100%;
