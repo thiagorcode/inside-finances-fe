@@ -19,6 +19,7 @@ import { DateInput } from './styles';
 import { transactionsService } from '@/api/transactions/service';
 import { transactionCategoryService } from '@/api/transactionCategory/service';
 import { useUser } from '@/hooks/useUser';
+import { SelectStatus } from '@/components/SelectStatus';
 
 interface FormProps {
   setStep: (value: 0 | 1) => void;
@@ -31,6 +32,7 @@ interface InitialValuesForm {
   value: string | null;
   date: dayjs.Dayjs;
   bank: string;
+  isPaid: boolean;
 }
 
 const initialValues = {
@@ -40,12 +42,14 @@ const initialValues = {
   value: null,
   date: dayjs(new Date()),
   bank: '',
+  isPaid: true,
 };
 
 const validationSchema = Yup.object().shape({
   type: Yup.string().required('Campo obrigatório'),
   description: Yup.string(),
   category: Yup.string().required('Seleção obrigatória'),
+  isPaid: Yup.boolean().required('Seleção obrigatória'),
   bank: Yup.string(),
   value: Yup.string()
     .test({
@@ -175,6 +179,12 @@ export const Form = ({ setStep }: FormProps) => {
         name="bank"
         error={formik.errors.bank}
         onChange={formik.handleChange}
+      />
+      <SelectStatus
+        name="isPaid"
+        setFieldValue={formik.setFieldValue}
+        error={formik.errors.isPaid}
+        value={formik.values.isPaid}
       />
       <DateInput>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={ptBr}>
