@@ -1,5 +1,5 @@
 import { FormEvent, useCallback, useState } from 'react';
-import { Bordes, HeaderLogin, Form } from './styles';
+import * as S from './styles';
 import { useAuth } from '@/context/auth';
 
 export default function Login() {
@@ -57,26 +57,28 @@ export default function Login() {
           width="78px"
         />
       </HeaderLogin> */}
-      <Form onSubmit={handleFormSubmit}>
-        <h1>LOGIN</h1>
-        <input
-          type="text"
-          placeholder="Email"
-          onChange={e => setEmail(e.target.value)}
-          value={email}
-        />
-        <input
-          type="password"
-          placeholder="Senha"
-          onChange={e => setPassword(e.target.value)}
-          value={password}
-        />
+      <S.Container>
+        <S.Form onSubmit={handleFormSubmit}>
+          <h1>LOGIN</h1>
+          <input
+            type="text"
+            placeholder="Email"
+            onChange={e => setEmail(e.target.value)}
+            value={email}
+          />
+          <input
+            type="password"
+            placeholder="Senha"
+            onChange={e => setPassword(e.target.value)}
+            value={password}
+          />
 
-        {/* <a className="phrase-register" href="http://localhost:3000/register">
+          {/* <a className="phrase-register" href="http://localhost:3000/register">
           <p>Cadastrar Agora</p>
         </a> */}
-        <button type="submit">Entrar</button>
-      </Form>
+          <button type="submit">Entrar</button>
+        </S.Form>
+      </S.Container>
     </>
   );
 }
