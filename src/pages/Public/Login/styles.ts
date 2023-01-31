@@ -49,25 +49,42 @@ export const Bordes = styled.div`
   }
 `;
 
+export const Container = styled.section`
+  height: 100vh;
+  width: 88%;
+  margin: 0 auto;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Form = styled.form`
   display: flex;
-  height: 100vh;
-  width: 85%; // Quando vc usa width menor que 100 vc pode usar o margin 0 auto para centralizar
-  margin: 0 auto;
+  width: 100%;
   flex-direction: column;
-  //alinha na vertica; Quando usa column inverte esse alinha na horizontal
-  align-items: center;
-  //alinha na horizontal; E esse alinha na vertical
   justify-content: center;
+  align-items: center;
+  padding: 0 1.5rem;
+  border-radius: 0.7rem;
+  background: rgb(29, 30, 37);
+  background: linear-gradient(
+    180deg,
+    rgba(29, 30, 37, 1) 0%,
+    rgba(34, 36, 44, 1) 42%,
+    rgba(29, 30, 37, 1) 100%
+  );
+  height: 400px;
 
   button {
     background-color: #0c27b5;
     color: white;
     height: 40px;
-    border-radius: 8px;
+    border-radius: 0.3rem;
     font-size: 18px;
     width: 100%;
     margin-top: 8px;
+    font-weight: bold;
   }
 
   &::placeholder {
@@ -83,9 +100,11 @@ export const Form = styled.form`
     color: white;
     border: none;
     display: block;
-    background-color: transparent;
+    background-color: #18191f;
+    border-radius: 0.3rem;
+    margin: 0.4rem 0;
     width: 100%;
-    padding: 15px 5px;
+    padding: 1rem 1rem;
     font-size: 16px;
   }
 `;

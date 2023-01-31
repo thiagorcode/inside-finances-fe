@@ -1,69 +1,69 @@
-import Header from '../../../components/Header';
-import { Grid } from '@mui/material';
-import { Card, Col, DatePicker, Row, Space, Statistic, Table } from 'antd';
-import MobileMenu from '../../../components/MobileMenu';
-import { columns } from './columns';
 import { useCallback, useEffect, useState } from 'react';
+import { Grid } from '@mui/material';
+import { Radio, RadioChangeEvent } from 'antd';
 import { useModal } from '@/context/modal';
-import { Input } from '@/components/Form';
 import dayjs from 'dayjs';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
 import * as S from './styles';
-import {
-  ArrowDownwardOutlined,
-  ArrowUpwardOutlined,
-  KeyboardArrowDownRounded,
-  KeyboardArrowUpRounded,
-} from '@mui/icons-material';
+
 import { transactionsService } from '@/api/transactions/service';
 import { transactionCategoryService } from '@/api/transactionCategory/service';
 import { TransactionsCard } from './transactions.card';
 import { useUser } from '@/hooks/useUser';
+import { ManageTransaction } from '@/components/ManageTransactions';
+import { TransactionsFilters } from './transactions.filters';
+import { Transactions } from '@/interface/transactions.interface';
+import { TransactionTableDay, TransactionTableMonth } from './tables';
 
-interface InitialValueForm {
+export interface InitialValueForm {
   type: string;
   date: dayjs.Dayjs;
   categoryId: number;
   dateFormatted: string | null;
 }
 
-const initialValueForm = {
-  type: '',
-  date: dayjs(new Date()),
-  categoryId: 0,
-  dateFormatted: null,
-};
-
 export const TransactionsGeneral = () => {
   const { userAccess } = useUser();
+  const { modal } = useModal();
 
-  const [transactions, setTransactions] = useState<any[]>([]);
+  const [transactions, setTransactions] = useState<Transactions[]>([]);
   const [totalizers, setTotalizers] = useState<any>(null);
   // const [hasNext, setHasNext] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [selectTypeSummary, setSelectTypeSummary] = useState<string>('day');
 
+  const handleChangeTypeSummary = (e: RadioChangeEvent) => {
+    setSelectTypeSummary(e.target.value);
+  };
   const [category, setCategory] = useState<TransactionCategory[]>([]);
   const [categoryFiltered, setCategoryFiltered] = useState<
     TransactionCategory[]
   >([]);
+
+  const initialValueForm = {
+    type: '',
+    date: dayjs(new Date()),
+    categoryId: 0,
+    dateFormatted: null,
+  };
+
   const [valueForm, setValueForm] =
     useState<InitialValueForm>(initialValueForm);
-
-  const [isHideFilter, setIsHideFilter] = useState(false);
 
   const loadTransactions = useCallback(async () => {
     setLoading(true);
     const { categoryId, dateFormatted, type } = valueForm;
+
     try {
       const { data } = await transactionsService.listTransactionsByParams({
         limit: 50,
         page,
         userId: userAccess.id!,
         query: {
-          ...(categoryId && { categoryId }),
-          ...(dateFormatted && { date: dateFormatted }),
-          ...(type && { type }),
+          categoryId,
+          date: dateFormatted,
+          type,
         },
       });
 
@@ -79,16 +79,17 @@ export const TransactionsGeneral = () => {
 
   const loadTotalizers = useCallback(async () => {
     const { categoryId, dateFormatted, type } = valueForm;
+    const query: { [key: string]: any } = {};
+    if (categoryId) query.categoryId = categoryId;
+    if (dateFormatted) query.date = dateFormatted;
+    if (type) query.type = type;
+
     try {
       const { data } = await transactionsService.loadTotalizers({
         limit: 0,
         page: 0,
         userId: userAccess.id!,
-        query: {
-          ...(categoryId && { categoryId }),
-          ...(dateFormatted && { date: dateFormatted }),
-          ...(type && { type }),
-        },
+        query,
       });
 
       setTotalizers(data.totalizers);
@@ -97,7 +98,7 @@ export const TransactionsGeneral = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [page, valueForm, userAccess.id]);
+  }, [valueForm, userAccess.id]);
   // está sendo utilizado no add transaction
   const loadCategory = useCallback(async () => {
     try {
@@ -155,84 +156,49 @@ export const TransactionsGeneral = () => {
     [],
   );
 
-  const handleToggleHideFilter = useCallback(() => {
-    setIsHideFilter(value => !value);
-  }, []);
-
   return (
     <>
-      <Header />
       <TransactionsCard
         loading={loading}
         recipe={totalizers?.recipe}
         expense={totalizers?.expense}
         totalBalance={totalizers?.totalBalance}
       />
-      <S.ContainerFilters>
-        <Space
-          direction="vertical"
-          size="middle"
-          style={{
-            display: 'flex',
-            maxHeight: isHideFilter ? 0 : '300px',
-            overflow: 'hidden',
-            transition: 'max-height 0.4s ease-out',
-          }}
-        >
-          <Input label="Tipo:" name="type" onChange={handleChangeForm}>
-            <select>
-              <option value="">Selecione</option>
-              <option value="+">Receita</option>
-              <option value="-">Despesa</option>
-            </select>
-          </Input>
-          {!!valueForm.type && (
-            <Input
-              label="Categoria:"
-              name="categoryId"
-              onChange={handleChangeForm}
-            >
-              <select>
-                <option value="">Selecione</option>
-                {categoryFiltered.map(_category => (
-                  <option key={_category.id} value={_category.id}>
-                    {_category.name}
-                  </option>
-                ))}
-              </select>
-            </Input>
-          )}
-          <S.ContainerDate>
-            <Input label="Data:" name="date">
-              <DatePicker
-                onChange={handleChangeDateForm}
-                placeholder=""
-                picker="month"
-                value={valueForm.date}
-              />
-            </Input>
-          </S.ContainerDate>
-        </Space>
-        {isHideFilter ? (
-          <button type="button" onClick={handleToggleHideFilter}>
-            <KeyboardArrowDownRounded style={{ color: '#fff' }} />
-          </button>
-        ) : (
-          <button type="button" onClick={handleToggleHideFilter}>
-            <KeyboardArrowUpRounded style={{ color: '#fff' }} />
-          </button>
-        )}
-      </S.ContainerFilters>
+      {selectTypeSummary === 'day' && (
+        <TransactionsFilters
+          valueForm={valueForm}
+          categoryFiltered={categoryFiltered}
+          changeDate={handleChangeDateForm}
+          changeValueForm={handleChangeForm}
+        />
+      )}
 
       <Grid style={{ padding: '10px 0 50px 0' }}>
-        <Table
-          columns={columns}
-          dataSource={transactions}
-          loading={loading}
-          rowKey="id"
-        />
+        <S.ContainerTable>
+          <Radio.Group
+            className="ant-tables-transactions"
+            value={selectTypeSummary}
+            onChange={handleChangeTypeSummary}
+          >
+            <Radio.Button value="day">Dia</Radio.Button>
+            <Radio.Button value="month">Mensal</Radio.Button>
+            {/* <Radio.Button value="year">Anual</Radio.Button> */}
+            {/* <Radio.Button value="category">Categorias</Radio.Button> */}
+          </Radio.Group>
+          <TransactionTableDay
+            loading={loading}
+            transactions={transactions}
+            loadTransactions={loadTransactions}
+            typeSummary={selectTypeSummary}
+            typeTable="day"
+          />
+          <TransactionTableMonth
+            typeSummary={selectTypeSummary}
+            typeTable="month"
+          />
+        </S.ContainerTable>
       </Grid>
-      <MobileMenu />
+      {modal?.manageTransaction?.isOpen && <ManageTransaction />}
     </>
   );
 };

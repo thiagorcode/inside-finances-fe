@@ -9,7 +9,7 @@ export const Container = styled.div`
 export const Header = styled.header`
   display: flex;
   justify-content: space-between;
-  width: 80%;
+  width: 100%;
   margin-bottom: 15px;
   h1 {
     font-size: 1.125rem;
@@ -25,7 +25,7 @@ export const Header = styled.header`
 `;
 
 export const FormTransaction = styled.form`
-  margin-bottom: 2.5rem;
+  margin-bottom: 50px;
 `;
 
 export const ContainerCategorys = styled.div`
