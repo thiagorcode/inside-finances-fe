@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import Header from '../../../components/Header';
 import { Grid } from '@mui/material';
-import { Table } from 'antd';
-import MobileMenu from '../../../components/MobileMenu';
+import { Radio, RadioChangeEvent, Table } from 'antd';
 import { columns } from './columns';
 import { useModal } from '@/context/modal';
 import dayjs from 'dayjs';
@@ -16,6 +14,7 @@ import { useUser } from '@/hooks/useUser';
 import { ManageTransaction } from '@/components/ManageTransactions';
 import { TransactionsFilters } from './transactions.filters';
 import { Transactions } from '@/interface/transactions.interface';
+import { SelectCommonPlacement } from 'antd/es/_util/motion';
 
 export interface InitialValueForm {
   type: string;
@@ -33,7 +32,11 @@ export const TransactionsGeneral = () => {
   // const [hasNext, setHasNext] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [placement, SetPlacement] = useState<SelectCommonPlacement>('topLeft');
 
+  const placementChange = (e: RadioChangeEvent) => {
+    SetPlacement(e.target.value);
+  };
   const [category, setCategory] = useState<TransactionCategory[]>([]);
   const [categoryFiltered, setCategoryFiltered] = useState<
     TransactionCategory[]
@@ -76,16 +79,17 @@ export const TransactionsGeneral = () => {
 
   const loadTotalizers = useCallback(async () => {
     const { categoryId, dateFormatted, type } = valueForm;
+    const query = {
+      categoryId: categoryId || undefined,
+      date: dateFormatted || undefined,
+      type: type || undefined,
+    };
     try {
       const { data } = await transactionsService.loadTotalizers({
         limit: 0,
         page: 0,
         userId: userAccess.id!,
-        query: {
-          ...(categoryId && { categoryId }),
-          ...(dateFormatted && { date: dateFormatted }),
-          ...(type && { type }),
-        },
+        query,
       });
 
       setTotalizers(data.totalizers);
@@ -94,7 +98,7 @@ export const TransactionsGeneral = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [page, valueForm, userAccess.id]);
+  }, [valueForm, userAccess.id]);
   // está sendo utilizado no add transaction
   const loadCategory = useCallback(async () => {
     try {
@@ -168,7 +172,6 @@ export const TransactionsGeneral = () => {
   );
   return (
     <>
-      <Header />
       <TransactionsCard
         loading={loading}
         recipe={totalizers?.recipe}
@@ -183,6 +186,12 @@ export const TransactionsGeneral = () => {
         changeValueForm={handleChangeForm}
       />
       <Grid style={{ padding: '10px 0 50px 0' }}>
+        <Radio.Group value={placement} onChange={placementChange}>
+          <Radio.Button value="topLeft">topLeft</Radio.Button>
+          <Radio.Button value="topRight">topRight</Radio.Button>
+          <Radio.Button value="bottomLeft">bottomLeft</Radio.Button>
+          <Radio.Button value="bottomRight">bottomRight</Radio.Button>
+        </Radio.Group>
         <S.ContainerTable>
           <Table
             columns={columns}
@@ -198,7 +207,6 @@ export const TransactionsGeneral = () => {
           />
         </S.ContainerTable>
       </Grid>
-      <MobileMenu />
       {modal?.manageTransaction?.isOpen && <ManageTransaction />}
     </>
   );
