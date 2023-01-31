@@ -2,7 +2,7 @@ import { Transactions } from '@/interface/transactions.interface';
 
 type QueryTransactions = {
   categoryId?: number;
-  date?: string;
+  date?: string | null;
   type?: string;
 };
 
@@ -21,8 +21,8 @@ export interface ResponseTransactionsByParams {
 }
 
 export interface RequestTransactions {
-  limit: number;
-  page: number;
+  limit?: number;
+  page?: number;
   userId: string;
   query: QueryTransactions;
 }

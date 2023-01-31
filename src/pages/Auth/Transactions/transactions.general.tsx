@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
-import { Radio, RadioChangeEvent, Table } from 'antd';
-import { columns } from './columns';
+import { Radio, RadioChangeEvent } from 'antd';
 import { useModal } from '@/context/modal';
 import dayjs from 'dayjs';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
@@ -14,7 +13,7 @@ import { useUser } from '@/hooks/useUser';
 import { ManageTransaction } from '@/components/ManageTransactions';
 import { TransactionsFilters } from './transactions.filters';
 import { Transactions } from '@/interface/transactions.interface';
-import { SelectCommonPlacement } from 'antd/es/_util/motion';
+import { TransactionTableDay, TransactionTableMonth } from './tables';
 
 export interface InitialValueForm {
   type: string;
@@ -25,17 +24,17 @@ export interface InitialValueForm {
 
 export const TransactionsGeneral = () => {
   const { userAccess } = useUser();
-  const { modal, toggleModal } = useModal();
+  const { modal } = useModal();
 
   const [transactions, setTransactions] = useState<Transactions[]>([]);
   const [totalizers, setTotalizers] = useState<any>(null);
   // const [hasNext, setHasNext] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [placement, SetPlacement] = useState<SelectCommonPlacement>('topLeft');
+  const [selectTypeSummary, setSelectTypeSummary] = useState<string>('day');
 
-  const placementChange = (e: RadioChangeEvent) => {
-    SetPlacement(e.target.value);
+  const handleChangeTypeSummary = (e: RadioChangeEvent) => {
+    setSelectTypeSummary(e.target.value);
   };
   const [category, setCategory] = useState<TransactionCategory[]>([]);
   const [categoryFiltered, setCategoryFiltered] = useState<
@@ -55,15 +54,16 @@ export const TransactionsGeneral = () => {
   const loadTransactions = useCallback(async () => {
     setLoading(true);
     const { categoryId, dateFormatted, type } = valueForm;
+
     try {
       const { data } = await transactionsService.listTransactionsByParams({
         limit: 50,
         page,
         userId: userAccess.id!,
         query: {
-          ...(categoryId && { categoryId }),
-          ...(dateFormatted && { date: dateFormatted }),
-          ...(type && { type }),
+          categoryId,
+          date: dateFormatted,
+          type,
         },
       });
 
@@ -79,11 +79,11 @@ export const TransactionsGeneral = () => {
 
   const loadTotalizers = useCallback(async () => {
     const { categoryId, dateFormatted, type } = valueForm;
-    const query = {
-      categoryId: categoryId || undefined,
-      date: dateFormatted || undefined,
-      type: type || undefined,
-    };
+    const query: { [key: string]: any } = {};
+    if (categoryId) query.categoryId = categoryId;
+    if (dateFormatted) query.date = dateFormatted;
+    if (type) query.type = type;
+
     try {
       const { data } = await transactionsService.loadTotalizers({
         limit: 0,
@@ -156,20 +156,6 @@ export const TransactionsGeneral = () => {
     [],
   );
 
-  const handleEditTransaction = useCallback(
-    (id: string) => {
-      toggleModal({
-        manageTransaction: {
-          isOpen: true,
-          data: {
-            id,
-            afterSaveLoad: () => loadTransactions(),
-          },
-        },
-      });
-    },
-    [toggleModal, loadTransactions],
-  );
   return (
     <>
       <TransactionsCard
@@ -178,32 +164,37 @@ export const TransactionsGeneral = () => {
         expense={totalizers?.expense}
         totalBalance={totalizers?.totalBalance}
       />
+      {selectTypeSummary === 'day' && (
+        <TransactionsFilters
+          valueForm={valueForm}
+          categoryFiltered={categoryFiltered}
+          changeDate={handleChangeDateForm}
+          changeValueForm={handleChangeForm}
+        />
+      )}
 
-      <TransactionsFilters
-        valueForm={valueForm}
-        categoryFiltered={categoryFiltered}
-        changeDate={handleChangeDateForm}
-        changeValueForm={handleChangeForm}
-      />
       <Grid style={{ padding: '10px 0 50px 0' }}>
-        <Radio.Group value={placement} onChange={placementChange}>
-          <Radio.Button value="topLeft">topLeft</Radio.Button>
-          <Radio.Button value="topRight">topRight</Radio.Button>
-          <Radio.Button value="bottomLeft">bottomLeft</Radio.Button>
-          <Radio.Button value="bottomRight">bottomRight</Radio.Button>
-        </Radio.Group>
         <S.ContainerTable>
-          <Table
-            columns={columns}
-            dataSource={transactions}
+          <Radio.Group
+            className="ant-tables-transactions"
+            value={selectTypeSummary}
+            onChange={handleChangeTypeSummary}
+          >
+            <Radio.Button value="day">Dia</Radio.Button>
+            <Radio.Button value="month">Mensal</Radio.Button>
+            {/* <Radio.Button value="year">Anual</Radio.Button> */}
+            {/* <Radio.Button value="category">Categorias</Radio.Button> */}
+          </Radio.Group>
+          <TransactionTableDay
             loading={loading}
-            rowKey="id"
-            sticky
-            onRow={record => {
-              return {
-                onClick: () => handleEditTransaction(record.id),
-              };
-            }}
+            transactions={transactions}
+            loadTransactions={loadTransactions}
+            typeSummary={selectTypeSummary}
+            typeTable="day"
+          />
+          <TransactionTableMonth
+            typeSummary={selectTypeSummary}
+            typeTable="month"
           />
         </S.ContainerTable>
       </Grid>

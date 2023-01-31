@@ -24,6 +24,7 @@ export const Resume = styled.div`
   }
   svg {
     color: #949499;
+    font-size: 2rem;
   }
 
   span.text-category {

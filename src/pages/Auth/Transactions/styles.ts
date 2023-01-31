@@ -26,26 +26,7 @@ export const ContainerCards = styled.div`
 `;
 
 export const ContainerTable = styled.div`
-  .ant-table {
-    background-color: var(--secondary-bg-color);
-  }
-
-  .ant-table-cell-row-hover {
-    background-color: var(--secondary-hover-bg-color) !important;
-  }
-  .ant-table-cell {
-    color: #fff;
-  }
-
-  .ant-table-thead > tr > th {
-    background-color: var(--secondary-bg-color);
-    color: #fff;
-    font-weight: bold;
-  }
-  .ant-pagination-item-active {
-    background-color: #000;
-  }
-  .ant-pagination-item-link {
-    color: rgba(255, 255, 255, 0.5) !important;
+  .ant-tables-transactions {
+    margin-bottom: 1rem;
   }
 `;

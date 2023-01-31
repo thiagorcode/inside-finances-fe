@@ -29,7 +29,7 @@ interface InitialValuesForm {
   type: string;
   description: string;
   category: string;
-  value: string | null;
+  value: string;
   date: dayjs.Dayjs;
   bank: string;
   isPaid: boolean;
@@ -39,7 +39,7 @@ const initialValues = {
   type: '',
   description: '',
   category: '',
-  value: null,
+  value: '',
   date: dayjs(new Date()),
   bank: '',
   isPaid: true,
@@ -74,10 +74,11 @@ export const Form = ({ setStep }: FormProps) => {
     helper: FormikHelpers<typeof initialValues>,
   ) => {
     try {
+      console.log(values);
       const response = await transactionsService.createTransaction({
         ...values,
         userId: userAccess.id!,
-        value: values.value?.replace(',', '.'),
+        value: +values.value.replace(',', '.'),
       });
 
       if (response.status !== 201) throw new Error('Erro ao criar transação!');

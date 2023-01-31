@@ -55,3 +55,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* ANTD Style*/
+/** Table Style **/
+
+.ant-table {
+  background-color: var(--secondary-bg-color) !important;
+}
+
+.ant-table-cell-row-hover {
+  background-color: var(--secondary-hover-bg-color) !important;
+}
+.ant-table-cell {
+  color: #fff !important;
+}
+
+.ant-table-thead > tr > th {
+  background-color: var(--secondary-bg-color) !important;
+  color: #fff !important;
+  font-weight: bold !important;
+}
+.ant-pagination-item-active {
+  background-color: #000 !important;
+}
+.ant-pagination-item-link {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/** Radio select button**/
+
+label.ant-radio-button-wrapper {
+  background-color: #000 !important;
+  color: #1677ff !important;
+
+}

@@ -44,7 +44,7 @@ export const Success = ({ setStep }: SuccessProps) => {
             justifyContent: 'center',
           }}
         >
-          <S.Image src="assets/svg/savetransaction.svg" alt="Transação salva" />
+          {/* <S.Image src="assets/svg/savetransaction.svg" alt="Transação salva" /> */}
           <h2>Transação salva com sucesso.</h2>
         </Box>
         <S.GroupButton>
