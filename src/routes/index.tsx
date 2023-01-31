@@ -1,6 +1,6 @@
 import { Route, Routes as RoutesDOM } from 'react-router-dom';
 
-// import Menu from '../layout';
+import Menu from '../layout';
 
 import Dashboard from '../pages/Auth/Dashboard';
 import Transactions from '../pages/Auth/Transactions';
@@ -15,7 +15,9 @@ export default function Routes() {
         path="/"
         element={
           <ProtectedRoute>
-            <Dashboard />
+            <Menu>
+              <Dashboard />
+            </Menu>
           </ProtectedRoute>
         }
       />
@@ -23,7 +25,9 @@ export default function Routes() {
         path="/transactions"
         element={
           <ProtectedRoute>
-            <Transactions />
+            <Menu>
+              <Transactions />
+            </Menu>
           </ProtectedRoute>
         }
       />

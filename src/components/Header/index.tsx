@@ -10,7 +10,7 @@ import {
 import { User, useUser } from '@/hooks/useUser';
 
 const Header: React.FC = () => {
-  const { increase } = useUser();
+  const { increase, userAccess } = useUser();
 
   const handleClickLogout = useCallback(() => {
     increase({} as User);
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
       <BoxProfile>
         <Profile>T</Profile>
         <Status>
-          <span>Jhoe Doe</span>
+          <span>{userAccess.username}</span>
           <span>R$ 22 500</span>
         </Status>
       </BoxProfile>
