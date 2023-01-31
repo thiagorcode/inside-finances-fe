@@ -11,11 +11,16 @@ export const listTransactionsByParams = ({
   limit,
   page,
   userId,
-  query,
+  query: { categoryId, date, type },
 }: RequestTransactions) => {
   // return api.get<ResponseTransactionsByParams>(
   //   `transactions/user/${userId}/all?limit=${limit}&page=${page}`,
   // );
+
+  const query: { [key: string]: any } = {};
+  if (categoryId) query.categoryId = categoryId;
+  if (date) query.date = date;
+  if (type) query.type = type;
 
   const queryString = queryStringBuilder(query);
 

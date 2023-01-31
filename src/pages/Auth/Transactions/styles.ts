@@ -24,3 +24,9 @@ export const ContainerCards = styled.div`
     font-weight: bold;
   }
 `;
+
+export const ContainerTable = styled.div`
+  .ant-tables-transactions {
+    margin-bottom: 1rem;
+  }
+`;

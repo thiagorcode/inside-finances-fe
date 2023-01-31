@@ -51,7 +51,7 @@ export const Transactions = () => {
   }, [modal?.addTransaction?.isOpen]);
 
   const defineColorValue = useCallback(
-    (type: '+' | '-') => (type === '+' ? 'color-recipe' : 'color-expense'),
+    (type: string) => (type === '+' ? 'color-recipe' : 'color-expense'),
     [],
   );
 

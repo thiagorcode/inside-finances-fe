@@ -8,6 +8,7 @@ export const createTransaction = ({
   description,
   type,
   category,
+  isPaid,
   userId,
 }: CreateTransaction) => {
   return api.post('transactions', {
@@ -19,5 +20,6 @@ export const createTransaction = ({
     originCreate: 'web',
     userId,
     categoryId: category,
+    isPaid,
   });
 };

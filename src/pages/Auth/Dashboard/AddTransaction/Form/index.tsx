@@ -9,9 +9,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { message } from 'antd';
 
-import { Input } from '../../../../../../components/Form';
-import { FormTransaction } from '../../styles';
-import { Category } from '../Category';
+import { Input } from '../../../../../components/Form';
+import { FormTransaction } from '../styles';
+import { SelectCategory } from '../../../../../components/SelectCategory';
 import Button from '@/components/Button';
 import { validateMoney } from '@/utils/validateMoney';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
@@ -19,7 +19,7 @@ import { DateInput } from './styles';
 import { transactionsService } from '@/api/transactions/service';
 import { transactionCategoryService } from '@/api/transactionCategory/service';
 import { useUser } from '@/hooks/useUser';
-import { useModal } from '@/context/modal';
+import { SelectStatus } from '@/components/SelectStatus';
 
 interface FormProps {
   setStep: (value: 0 | 1) => void;
@@ -29,24 +29,27 @@ interface InitialValuesForm {
   type: string;
   description: string;
   category: string;
-  value: string | null;
+  value: string;
   date: dayjs.Dayjs;
   bank: string;
+  isPaid: boolean;
 }
 
 const initialValues = {
   type: '',
   description: '',
   category: '',
-  value: null,
+  value: '',
   date: dayjs(new Date()),
   bank: '',
+  isPaid: true,
 };
 
 const validationSchema = Yup.object().shape({
   type: Yup.string().required('Campo obrigatório'),
   description: Yup.string(),
   category: Yup.string().required('Seleção obrigatória'),
+  isPaid: Yup.boolean().required('Seleção obrigatória'),
   bank: Yup.string(),
   value: Yup.string()
     .test({
@@ -71,10 +74,11 @@ export const Form = ({ setStep }: FormProps) => {
     helper: FormikHelpers<typeof initialValues>,
   ) => {
     try {
+      console.log(values);
       const response = await transactionsService.createTransaction({
         ...values,
         userId: userAccess.id!,
-        value: values.value?.replace(',', '.'),
+        value: +values.value.replace(',', '.'),
       });
 
       if (response.status !== 201) throw new Error('Erro ao criar transação!');
@@ -152,7 +156,7 @@ export const Form = ({ setStep }: FormProps) => {
         onChange={formik.handleChange}
       />
       {!!categoryFiltered.length && (
-        <Category
+        <SelectCategory
           name="category"
           error={formik.errors.category}
           setFieldValue={formik.setFieldValue}
@@ -176,6 +180,12 @@ export const Form = ({ setStep }: FormProps) => {
         name="bank"
         error={formik.errors.bank}
         onChange={formik.handleChange}
+      />
+      <SelectStatus
+        name="isPaid"
+        setFieldValue={formik.setFieldValue}
+        error={formik.errors.isPaid}
+        value={formik.values.isPaid}
       />
       <DateInput>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={ptBr}>

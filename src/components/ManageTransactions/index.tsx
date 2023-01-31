@@ -1,28 +1,21 @@
-import { useState } from 'react';
-import { Close } from '@mui/icons-material';
+import { Close, EditOutlined } from '@mui/icons-material';
 import { Box } from '@mui/system';
 import * as S from './styles';
 import { Form } from './Form';
-import { Success } from './Success';
 import { useModal } from '@/context/modal';
 import { Modal } from '@mui/material';
+import { useCallback, useState } from 'react';
 
-export const AddTransaction = () => {
+export const ManageTransaction = () => {
   const { toggleModal } = useModal();
-  const [step, setStep] = useState<0 | 1>(0);
 
-  const components = {
-    0: <Form setStep={setStep} />,
-    1: <Success setStep={setStep} />,
-  };
-
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     toggleModal({
-      addTransaction: {
+      manageTransaction: {
         isOpen: false,
       },
     });
-  };
+  }, []);
 
   return (
     <Modal open sx={{ height: '100vh' }}>
@@ -60,9 +53,10 @@ export const AddTransaction = () => {
               <button type="button" onClick={() => handleCloseModal()}>
                 <Close />
               </button>
-              <h1>Adicionar Transação</h1>
+              <h1>Editar Transação</h1>
+              <div></div>
             </S.Header>
-            {components[step]}
+            <Form />
           </S.Container>
         </Box>
       </Box>
