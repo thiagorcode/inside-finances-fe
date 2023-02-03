@@ -33,6 +33,8 @@ interface InitialValuesForm {
   date: dayjs.Dayjs;
   bank: string;
   isPaid: boolean;
+  installment: number;
+  finalInstallment: number;
 }
 
 const initialValues = {
@@ -43,6 +45,8 @@ const initialValues = {
   date: dayjs(new Date()),
   bank: '',
   isPaid: true,
+  installment: 0,
+  finalInstallment: 0,
 };
 
 const validationSchema = Yup.object().shape({
@@ -51,6 +55,8 @@ const validationSchema = Yup.object().shape({
   category: Yup.string().required('Seleção obrigatória'),
   isPaid: Yup.boolean().required('Seleção obrigatória'),
   bank: Yup.string(),
+  installment: Yup.number(),
+  finalInstallment: Yup.number(),
   value: Yup.string()
     .test({
       name: 'isMoney',
@@ -77,6 +83,8 @@ export const Form = ({ setStep }: FormProps) => {
       console.log(values);
       const response = await transactionsService.createTransaction({
         ...values,
+        originCreate: 'web',
+        categoryId: values.category,
         userId: userAccess.id!,
         value: +values.value.replace(',', '.'),
       });
@@ -181,6 +189,25 @@ export const Form = ({ setStep }: FormProps) => {
         error={formik.errors.bank}
         onChange={formik.handleChange}
       />
+      {formik.values.type === '-' && (
+        <>
+          <Input
+            label="Parcela Inicial:(opcional)"
+            placeholder="1"
+            name="installment"
+            error={formik.errors.installment}
+            onChange={formik.handleChange}
+          />
+          <Input
+            label="Parcela final:(opcional)"
+            placeholder="4"
+            name="finalInstallment"
+            error={formik.errors.finalInstallment}
+            onChange={formik.handleChange}
+          />
+        </>
+      )}
+
       <SelectStatus
         name="isPaid"
         setFieldValue={formik.setFieldValue}

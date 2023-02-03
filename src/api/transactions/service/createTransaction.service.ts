@@ -7,19 +7,25 @@ export const createTransaction = ({
   value,
   description,
   type,
-  category,
+  categoryId,
   isPaid,
   userId,
+  installment,
+  finalInstallment,
+  originCreate,
 }: CreateTransaction) => {
-  return api.post('transactions', {
+  const transaction: CreateTransaction = {
     date,
     bank,
     value,
     description,
     type,
-    originCreate: 'web',
+    originCreate,
     userId,
-    categoryId: category,
+    categoryId,
     isPaid,
-  });
+    installment: +installment,
+    finalInstallment: +finalInstallment,
+  };
+  return api.post('transactions', transaction);
 };
