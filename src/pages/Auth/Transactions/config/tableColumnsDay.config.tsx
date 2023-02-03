@@ -1,5 +1,6 @@
 import { Transactions } from '@/interface/transactions.interface';
 import { formatMoney } from '@/utils/formatMoney';
+import { InfoOutlined } from '@mui/icons-material';
 import { ColumnsType } from 'antd/es/table';
 import { format, parse } from 'date-fns';
 
@@ -21,6 +22,7 @@ export const columns: ColumnsType<Transactions> = [
     title: 'Data',
     dataIndex: 'date',
     key: 'date',
+
     render(value) {
       return format(parse(value, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
     },
@@ -30,8 +32,26 @@ export const columns: ColumnsType<Transactions> = [
     title: 'Valor',
     dataIndex: 'value',
     key: 'value',
-    render(value) {
-      return formatMoney(value);
+    render(value, record) {
+      console.log(record);
+      return (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+          }}
+        >
+          <span>{formatMoney(value)}</span>
+          <span style={{ width: '20px', height: '22px' }}>
+            {!record.isPaid && (
+              <InfoOutlined
+                style={{ color: '#e9c46a', width: '22px', height: '22px' }}
+              />
+            )}
+          </span>
+        </div>
+      );
     },
   },
   // {

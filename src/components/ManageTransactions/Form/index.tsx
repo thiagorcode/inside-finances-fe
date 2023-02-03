@@ -25,7 +25,7 @@ import { SelectStatus } from '@/components/SelectStatus';
 interface InitialValuesForm {
   type: string;
   description: string;
-  category: string;
+  categoryId: string;
   value: string;
   date: dayjs.Dayjs | string;
   bank: string;
@@ -35,7 +35,7 @@ interface InitialValuesForm {
 const initialValues = {
   type: '',
   description: '',
-  category: '',
+  categoryId: '',
   value: '',
   date: dayjs(new Date()),
   bank: '',
@@ -45,7 +45,7 @@ const initialValues = {
 const validationSchema = Yup.object().shape({
   type: Yup.string().required('Campo obrigatório'),
   description: Yup.string(),
-  category: Yup.string().required('Seleção obrigatória'),
+  categoryId: Yup.string().required('Seleção obrigatória'),
   isPaid: Yup.boolean().required('Seleção obrigatória'),
   bank: Yup.string(),
   value: Yup.string()
@@ -77,13 +77,14 @@ export const Form = () => {
     values: InitialValuesForm,
     helper: FormikHelpers<InitialValuesForm>,
   ) => {
+    console.log(values);
     try {
       const response = await transactionsService.updateTransaction(
         transactionId,
         {
           ...values,
           date: dayjs(values.date).format('YYYY-MM-DD'),
-          value: values.value?.replace(',', '.'),
+          value: +values.value?.replace(',', '.'),
         },
       );
 
@@ -128,7 +129,7 @@ export const Form = () => {
         bank: transaction.bank,
         date: dayjs(transaction.date),
         type: transaction.type,
-        category: transaction.categoryId,
+        categoryId: transaction.categoryId,
         description: transaction.description,
         value: formatedValueMoney,
         isPaid: transaction.isPaid,
@@ -213,8 +214,8 @@ export const Form = () => {
       />
       {!!categoryFiltered.length && (
         <SelectCategory
-          name="category"
-          error={formik.errors.category}
+          name="categoryId"
+          error={formik.errors.categoryId}
           setFieldValue={formik.setFieldValue}
           values={formik.values}
           category={categoryFiltered}

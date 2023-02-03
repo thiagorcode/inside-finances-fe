@@ -1,10 +1,10 @@
-import { Close, EditOutlined } from '@mui/icons-material';
+import { Close } from '@mui/icons-material';
 import { Box } from '@mui/system';
 import * as S from './styles';
 import { Form } from './Form';
 import { useModal } from '@/context/modal';
 import { Modal } from '@mui/material';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 export const ManageTransaction = () => {
   const { toggleModal } = useModal();
