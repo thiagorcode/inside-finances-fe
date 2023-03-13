@@ -56,6 +56,14 @@ code {
     monospace;
 }
 
+.color-recipe {
+  color: var(--color-recipe);
+}
+
+.color-expense {
+  color: var(--color-expense);
+}
+
 /* ANTD Style*/
 /** Table Style **/
 

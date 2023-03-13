@@ -30,14 +30,6 @@ export const Resume = styled.div`
   span.text-category {
     min-width: 110px;
   }
-
-  .color-recipe {
-    color: var(--color-recipe);
-  }
-
-  .color-expense {
-    color: var(--color-expense);
-  }
 `;
 
 export const Details = styled.div`

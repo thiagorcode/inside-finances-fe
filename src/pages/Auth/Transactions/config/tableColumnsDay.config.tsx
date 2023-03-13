@@ -34,6 +34,7 @@ export const columns: ColumnsType<Transactions> = [
     key: 'value',
     render(value, record) {
       console.log(record);
+      const moneyFormatted = formatMoney(value);
       return (
         <div
           style={{
@@ -42,7 +43,11 @@ export const columns: ColumnsType<Transactions> = [
             justifyContent: 'space-evenly',
           }}
         >
-          <span>{formatMoney(value)}</span>
+          <span
+            className={record.type === '+' ? 'color-recipe' : 'color-expense'}
+          >
+            {moneyFormatted}
+          </span>
           <span style={{ width: '20px', height: '22px' }}>
             {!record.isPaid && (
               <InfoOutlined
