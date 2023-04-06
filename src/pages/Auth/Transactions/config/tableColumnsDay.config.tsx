@@ -15,7 +15,7 @@ export const columns: ColumnsType<Transactions> = [
     dataIndex: 'description',
     key: 'description',
     render(value) {
-      return value.substring(0, 12);
+      return value.substring(0, 25);
     },
   },
   {
