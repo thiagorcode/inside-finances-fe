@@ -37,8 +37,8 @@ export const Transactions = () => {
         userId: userAccess.id!,
       });
 
-      if (response.status !== 200)
-        throw new Error('Erro ao carregas as últimas transações');
+      // if (response.status !== 200)
+      //   throw new Error('Erro ao carregas as últimas transações');
 
       setTransactions(response.data.transactions);
     } catch (error) {
