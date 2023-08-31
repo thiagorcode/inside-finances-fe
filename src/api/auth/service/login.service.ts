@@ -14,11 +14,12 @@ export const login = (
     .catch(err => {
       return {
         ...err,
-        status: 200,
-        id: '1214',
-        username: 'thiagorcode',
-        email: 'thiago@gmail.com',
-        active: 'true',
+        user: {
+          id: '1214',
+          username: 'thiagorcode',
+          email: 'thiago@gmail.com',
+          active: 'true',
+        },
       };
     });
 };
