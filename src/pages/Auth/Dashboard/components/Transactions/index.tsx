@@ -5,6 +5,7 @@ import { useUser } from '@/hooks/useUser';
 import { Transactions as TransactionsProps } from '@/interface/transactions.interface';
 import { formatMoney } from '@/utils/formatMoney';
 import {
+  TextSnippet,
   Add,
   ArrowDownwardRounded,
   ArrowUpwardRounded,
@@ -17,6 +18,7 @@ import { format, parse } from 'date-fns';
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as S from './styles';
+import CarrosselButton from './Components';
 
 export const Transactions = () => {
   const { toggleModal, modal } = useModal();
@@ -56,6 +58,13 @@ export const Transactions = () => {
   );
 
   return (
+    <>
+    <Box 
+    component="div"
+    sx={{mt:5,}}
+    >
+    <S.Title>Controle de Gasto</S.Title>
+
     <Box
       component="div"
       bgcolor="#2B2E35"
@@ -66,24 +75,7 @@ export const Transactions = () => {
         mb: 2,
         borderRadius: 6,
       }}
-    >
-      <Box
-        component="div"
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
       >
-        <h2>Controle de Gasto</h2>
-        <Button
-          type="button"
-          onClick={() => handleOpenModal('addTransaction')}
-          size="small"
-        >
-          <Add />
-        </Button>
-      </Box>
       <Box
         component="div"
         sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}
@@ -107,29 +99,11 @@ export const Transactions = () => {
           <span>R$ 1,000.00</span>
         </div>
       </S.BoxTypeValues>
-      <S.Resume>
-        {transactions.map(transaction => (
-          <div key={transaction.id}>
-            <FastfoodRounded />
-            <span className="text-category">{transaction.category.name}</span>
-            <S.Details>
-              <span className={defineColorValue(transaction.type)}>
-                {formatMoney(transaction.value)}
-              </span>
-              <span className="box-date">
-                {format(
-                  parse(transaction.date, 'yyyy-MM-dd', new Date()),
-                  'dd/MM/yyyy',
-                )}
-              </span>
-            </S.Details>
-          </div>
-        ))}
-
-        <Link to="transactions">
-          <KeyboardArrowDownRounded />
-        </Link>
-      </S.Resume>
+    
     </Box>
+     <CarrosselButton toggleModal={toggleModal}/>
+    </Box>
+    </>
+
   );
 };
