@@ -5,11 +5,14 @@ import {
   } from '@mui/icons-material';
 
 
-  interface CarrosselProps {
-    toggleModal: any;
+  interface CarouselProps {
+    toggleModal: 
+    (modalData: Record<string,
+       { isOpen: boolean }>) => 
+       void;
   }
 
-export default function CarrosselButton({toggleModal}:CarrosselProps ) {
+export default function CarouselButton({toggleModal}:CarouselProps ) {
 
   const handleOpenModal = (key: string) => {
     toggleModal({
@@ -20,7 +23,6 @@ export default function CarrosselButton({toggleModal}:CarrosselProps ) {
   };
 
 
-  
   return (
  
      <>

@@ -18,20 +18,12 @@ import { format, parse } from 'date-fns';
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as S from './styles';
-import CarrosselButton from './Components';
+import CarouselButton from './Components';
 
 export const Transactions = () => {
   const { toggleModal, modal } = useModal();
   const { userAccess } = useUser();
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
-
-  const handleOpenModal = (key: string) => {
-    toggleModal({
-      [key]: {
-        isOpen: true,
-      },
-    });
-  };
 
   const loadTransactions = useCallback(async () => {
     try {
@@ -101,7 +93,7 @@ export const Transactions = () => {
       </S.BoxTypeValues>
     
     </Box>
-     <CarrosselButton toggleModal={toggleModal}/>
+     <CarouselButton toggleModal={toggleModal}/>
     </Box>
     </>
 
