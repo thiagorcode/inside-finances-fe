@@ -93,7 +93,7 @@ export const BoxTypeValues = styled.div`
 `;
 
 export const Title = styled.h2`
- margin-bottom: 15px;
+ margin-bottom: 10px;
  margin-left: 16px;
  `;
 
@@ -104,7 +104,7 @@ export const CarContainer = styled.div`
   gap: 15px;
   display: flex;
   justify-content: center;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 
   label{
     font-size: 10px;
