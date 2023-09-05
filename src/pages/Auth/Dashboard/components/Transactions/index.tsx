@@ -19,6 +19,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as S from './styles';
 import CarouselButton from '../CarouselButton';
+import { width } from '@mui/system';
 
 export const Transactions = () => {
   const { toggleModal, modal } = useModal();
@@ -90,6 +91,9 @@ export const Transactions = () => {
           </S.BoxTypeValues>
         </Box>
         <CarouselButton toggleModal={toggleModal} />
+        <Button
+          size='simple'
+          children='hello' />
       </Box>
     </>
   );
