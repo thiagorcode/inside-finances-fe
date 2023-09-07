@@ -1,5 +1,4 @@
-import * as S from '../Transactions/styles';
-import { Add, Description } from '@mui/icons-material';
+import * as S from './style';
 
 interface CarouselProps {
   toggleModal: (modalData: Record<string, { isOpen: boolean }>) => void;
@@ -28,7 +27,7 @@ export default function CarouselButton({ toggleModal }: CarouselProps) {
               </button>
             </S.MotionIcon>
           </S.CarBox>
-          <label> Adicionar</label>
+          <span> Adicionar</span>
         </div>
         <div>
           <S.CarBox>
@@ -38,7 +37,7 @@ export default function CarouselButton({ toggleModal }: CarouselProps) {
               </button>
             </S.MotionIcon>
           </S.CarBox>
-          <label> Meus Gastos</label>
+          <span> Meus Gastos</span>
         </div>
       </S.CarContainer>
     </>
