@@ -91,9 +91,6 @@ export const Transactions = () => {
           </S.BoxTypeValues>
         </Box>
         <CarouselButton toggleModal={toggleModal} />
-        <Button
-          size='simple'
-          children='hello' />
       </Box>
     </>
   );
