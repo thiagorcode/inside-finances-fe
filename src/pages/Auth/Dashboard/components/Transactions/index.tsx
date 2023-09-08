@@ -5,6 +5,7 @@ import { useUser } from '@/hooks/useUser';
 import { Transactions as TransactionsProps } from '@/interface/transactions.interface';
 import { formatMoney } from '@/utils/formatMoney';
 import {
+  TextSnippet,
   Add,
   ArrowDownwardRounded,
   ArrowUpwardRounded,
@@ -17,19 +18,13 @@ import { format, parse } from 'date-fns';
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as S from './styles';
+import CarouselButton from '../CarouselButton';
+import { width } from '@mui/system';
 
 export const Transactions = () => {
   const { toggleModal, modal } = useModal();
   const { userAccess } = useUser();
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
-
-  const handleOpenModal = (key: string) => {
-    toggleModal({
-      [key]: {
-        isOpen: true,
-      },
-    });
-  };
 
   const loadTransactions = useCallback(async () => {
     try {
@@ -56,80 +51,51 @@ export const Transactions = () => {
   );
 
   return (
-    <Box
-      component="div"
-      bgcolor="#2B2E35"
-      sx={{
-        display: 'block',
-        px: 2.3,
-        py: 2,
-        mb: 2,
-        borderRadius: 6,
-      }}
-    >
-      <Box
-        component="div"
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <h2>Controle de Gasto</h2>
-        <Button
-          type="button"
-          onClick={() => handleOpenModal('addTransaction')}
-          size="small"
-        >
-          <Add />
-        </Button>
-      </Box>
-      <Box
-        component="div"
-        sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}
-      >
-        <S.Spiral>
-          <span>R$ 1,000.00</span>
-          <span>+ 15%</span>
-        </S.Spiral>
-      </Box>
-      <S.BoxTypeValues>
-        <div>
-          <span>
-            <ArrowUpwardRounded />
-          </span>
-          <span>R$ 2,000.00</span>
-        </div>
-        <div>
-          <span>
-            <ArrowDownwardRounded />
-          </span>
-          <span>R$ 1,000.00</span>
-        </div>
-      </S.BoxTypeValues>
-      <S.Resume>
-        {transactions.map(transaction => (
-          <div key={transaction.id}>
-            <FastfoodRounded />
-            <span className="text-category">{transaction.category.name}</span>
-            <S.Details>
-              <span className={defineColorValue(transaction.type)}>
-                {formatMoney(transaction.value)}
-              </span>
-              <span className="box-date">
-                {format(
-                  parse(transaction.date, 'yyyy-MM-dd', new Date()),
-                  'dd/MM/yyyy',
-                )}
-              </span>
-            </S.Details>
-          </div>
-        ))}
+    <>
+      <Box component="div" sx={{ mt: 5 }}>
+        <S.Title>Controle de Gasto</S.Title>
 
-        <Link to="transactions">
-          <KeyboardArrowDownRounded />
-        </Link>
-      </S.Resume>
-    </Box>
+        <Box
+          component="div"
+          bgcolor="#2B2E35"
+          sx={{
+            display: 'block',
+            px: 2.3,
+            py: 2,
+            mb: 2,
+            borderRadius: 6,
+          }}
+        >
+          <Box
+            component="div"
+            sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}
+          >
+            <S.Spiral>
+              <span>R$ 1,000.00</span>
+              <span>+ 15%</span>
+            </S.Spiral>
+          </Box>
+          <S.BoxTypeValues>
+            <div>
+              <span>
+                <ArrowUpwardRounded />
+              </span>
+              <span>R$ 2,000.00</span>
+            </div>
+            <div>
+              <span>
+                <ArrowDownwardRounded />
+              </span>
+              <span>R$ 1,000.00</span>
+            </div>
+          </S.BoxTypeValues>
+        </Box>
+        <CarouselButton toggleModal={toggleModal} />
+        <Button 
+        types='primary'
+        
+        > oi</Button>
+      </Box>
+    </>
   );
 };

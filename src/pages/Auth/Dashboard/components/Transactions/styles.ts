@@ -1,7 +1,8 @@
+import { metrics } from '@/shared/styles';
 import styled from 'styled-components';
 
 export const Resume = styled.div`
-  margin-top: 42px;
+  margin-top: ${metrics.insideSpacingLarge};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,3 +91,8 @@ export const BoxTypeValues = styled.div`
     }
   }
 `;
+
+export const Title = styled.h2`
+ margin-bottom: 10px;
+ margin-left: 16px;
+ `;

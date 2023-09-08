@@ -1,29 +1,26 @@
 import styled from 'styled-components';
 
 interface ButtonProps {
-  size?: 'small' | 'medium' | 'large';
+  types?: 'primary' |  'simple';
 }
 
-const properties = (size?: 'small' | 'medium' | 'large') => {
-  switch (size) {
-    case 'small':
+const properties = (type?: 'primary' | 'simple') => {
+  switch (type) {
+    case 'primary':
       return {
-        width: '40px',
-        height: '40px',
+        borderRadius: '8px',
+        padding:'0px 32px' ,
+        height: '64px',
+        background:'#3652DC'
       };
-
-    case 'medium':
+    case 'simple':
       return {
-        width: '100%',
-        height: '55px',
-        borderRadius: '20px',
-      };
+        padding:'0px 20px' ,
+        height: '64px',
+        border:'none',
+        borderBt:'2px solid',
+        background:'none'
 
-    case 'large':
-      return {
-        width: '100%',
-        height: '55px',
-        borderRadius: '20px',
       };
     default:
       return {
@@ -34,30 +31,47 @@ const properties = (size?: 'small' | 'medium' | 'large') => {
 };
 
 export const Button = styled.button<ButtonProps>`
+  border-radius: ${props => properties(props?.types).borderRadius};
   box-shadow: none;
   text-transform: none;
-  font-size: 16px;
+  font-size: 16px;  
   font-family: 'Poppins';
-  width: ${props => properties(props?.size).width};
-  height: ${props => properties(props?.size).height};
-  padding: 6px;
-  border: 1px solid;
+  width: ${props => properties(props?.types).width};
+  height: ${props => properties(props?.types).height};
+  padding: ${props => properties(props?.types).padding};
+  border: ${props => properties(props?.types).border};
   line-height: 1.5;
   font-weight: bold;
   color: ${props => props.color || '#fff'};
-  background-color: #233dc7;
-  border-color: #233dc7;
-  &:hover {
-    background-color: #2644d8;
-    border-color: #2644d8;
+  background-color: ${props => properties(props?.types).background};
+  border-color: #233dc7;;
+  border-bottom: ${props => properties(props?.types).borderBt};
+  transition: all 700ms ease-in-out;
+   
+  &:disabled{
+    background-color: ${props => props.types === 'primary' && '#919ee3'};
+  } 
+
+
+  &:not(:disabled):hover {
+    padding: ${props => props.types === 'simple' && '0px 30px' };
+    background-color: ${props => props.types === 'primary' && '#233dc7' };
+    background-color: ${props => props.types === 'simple' 
+    && 'transparent'};
+    border-color:${props => props.types === 'simple' ? '#ffff' : '#233dc7 '};
     box-shadow: none;
   }
+
   &:active {
     box-shadow: none;
-    background-color: #2644d8;
-    border-color: #2644d8;
+    background-color: ${props => props.types === 'simple' ? 'transparent' : '#2644d8 '};
+    border-color: ${props => props.types === 'simple' ? '#ffff' : '#233dc7 '};
   }
   &:focus {
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+    box-shadow: ${props => props.types === 'simple' ? 'none' : '0 0 0 0.2rem rgba(0, 123, 255, 0.5)'
   }
+
+  }
+
+  
 `;
