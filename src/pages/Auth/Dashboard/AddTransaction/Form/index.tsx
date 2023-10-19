@@ -20,6 +20,7 @@ import { transactionsService } from '@/api/transactions/service';
 import { transactionCategoryService } from '@/api/transactionCategory/service';
 import { useUser } from '@/hooks/useUser';
 import { SelectStatus } from '@/components/SelectStatus';
+import { width } from '@mui/system';
 
 interface FormProps {
   setStep: (value: 0 | 1) => void;
@@ -142,6 +143,9 @@ export const Form = ({ setStep }: FormProps) => {
     <FormTransaction onSubmit={formik.handleSubmit}>
       {/* Alterar o type para uma tela inicial com dois botões um de despesa outro de receita */}
       {/** Separa cada input em uma etapa do form */}
+   
+    {/** usar depois */}  {/**
+
       <Input
         label="Tipo:"
         name="type"
@@ -156,6 +160,8 @@ export const Form = ({ setStep }: FormProps) => {
       </Input>
 
       {/** TODO: Alterar o placeholder quando ele for despesa ou receita */}
+
+       {/** usar depois */}  {/**
       <Input
         label="Descrição:"
         placeholder="Alimentação, Salário, Conta"
@@ -175,6 +181,7 @@ export const Form = ({ setStep }: FormProps) => {
 
       {/** TODO: Create sugest Value - 20,00 / MED */}
 
+ {/** usar depois */}  {/**
       <Input
         label="Valor:"
         placeholder="R$ 99,99"
@@ -231,9 +238,10 @@ export const Form = ({ setStep }: FormProps) => {
       {/* Inseri erro do YUP */}
 
       {/* <Input label="Pagamento:" placeholder="Cartão ou Avista" /> */}
-      <Button size="large" type="submit">
-        Salvar
-      </Button>
+     
+      <Button style={{width:'295px', height:'53px'}}
+        types='primary'
+        > Proximo</Button>
     </FormTransaction>
   );
 };

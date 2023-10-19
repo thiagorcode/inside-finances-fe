@@ -91,10 +91,7 @@ export const Transactions = () => {
           </S.BoxTypeValues>
         </Box>
         <CarouselButton toggleModal={toggleModal} />
-        <Button 
-        types='primary'
-        
-        > oi</Button>
+       
       </Box>
     </>
   );
