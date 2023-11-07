@@ -51,47 +51,45 @@ export const Transactions = () => {
   );
 
   return (
-    <>
-      <Box component="div" sx={{ mt: 5 }}>
-        <S.Title>Controle de Gasto</S.Title>
+    <Box component="div" sx={{ mt: 5 }}>
+      <S.Title>Controle de Gasto</S.Title>
 
+      <Box
+        component="div"
+        bgcolor="#2B2E35"
+        sx={{
+          display: 'block',
+          px: 2.3,
+          py: 2,
+          mb: 2,
+          borderRadius: 6,
+        }}
+      >
         <Box
           component="div"
-          bgcolor="#2B2E35"
-          sx={{
-            display: 'block',
-            px: 2.3,
-            py: 2,
-            mb: 2,
-            borderRadius: 6,
-          }}
+          sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}
         >
-          <Box
-            component="div"
-            sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}
-          >
-            <S.Spiral>
-              <span>R$ 1,000.00</span>
-              <span>+ 15%</span>
-            </S.Spiral>
-          </Box>
-          <S.BoxTypeValues>
-            <div>
-              <span>
-                <ArrowUpwardRounded />
-              </span>
-              <span>R$ 2,000.00</span>
-            </div>
-            <div>
-              <span>
-                <ArrowDownwardRounded />
-              </span>
-              <span>R$ 1,000.00</span>
-            </div>
-          </S.BoxTypeValues>
+          <S.Spiral>
+            <span>R$ 1,000.00</span>
+            <span>+ 15%</span>
+          </S.Spiral>
         </Box>
-        <CarouselButton toggleModal={toggleModal} />
+        <S.BoxTypeValues>
+          <div>
+            <span>
+              <ArrowUpwardRounded />
+            </span>
+            <span>R$ 2,000.00</span>
+          </div>
+          <div>
+            <span>
+              <ArrowDownwardRounded />
+            </span>
+            <span>R$ 1,000.00</span>
+          </div>
+        </S.BoxTypeValues>
       </Box>
-    </>
+      <CarouselButton toggleModal={toggleModal} />
+    </Box>
   );
 };
