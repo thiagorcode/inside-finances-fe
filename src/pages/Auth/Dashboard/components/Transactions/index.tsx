@@ -39,7 +39,7 @@ export const Transactions = () => {
     } catch (error) {
       message.error('Erro ao buscar as últimas transações');
     }
-  }, []);
+  }, [userAccess.id]);
 
   useEffect(() => {
     loadTransactions();
@@ -91,10 +91,6 @@ export const Transactions = () => {
           </S.BoxTypeValues>
         </Box>
         <CarouselButton toggleModal={toggleModal} />
-        <Button 
-        types='primary'
-        
-        > oi</Button>
       </Box>
     </>
   );
