@@ -10,17 +10,18 @@ import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { message } from 'antd';
 
 import { Input } from '../../../../../components/Form';
-import { FormTransaction } from '../styles';
+import { ContainerCategorys, FormTransaction } from '../styles';
 import { SelectCategory } from '../../../../../components/SelectCategory';
 import Button from '@/components/Button';
 import { validateMoney } from '@/utils/validateMoney';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
-import { DateInput } from './styles';
+import { ButtonDesp, ButtonRece, ContainerCategory, Label } from './styles';
 import { transactionsService } from '@/api/transactions/service';
 import { transactionCategoryService } from '@/api/transactionCategory/service';
 import { useUser } from '@/hooks/useUser';
 import { SelectStatus } from '@/components/SelectStatus';
 import { width } from '@mui/system';
+import { Payments, ProductionQuantityLimits } from '@mui/icons-material';
 
 interface FormProps {
   setStep: (value: 0 | 1) => void;
@@ -70,18 +71,18 @@ const validationSchema = Yup.object().shape({
 
 export const Form = ({ setStep }: FormProps) => {
   const { userAccess } = useUser();
-
   const [category, setCategory] = useState<TransactionCategory[]>([]);
   const [categoryFiltered, setCategoryFiltered] = useState<
-    TransactionCategory[]
+  TransactionCategory[]
   >([]);
-
+  
+  
   const onSubmit = async (
     values: InitialValuesForm,
     helper: FormikHelpers<typeof initialValues>,
   ) => {
     try {
-      console.log(values);
+     
       const response = await transactionsService.createTransaction({
         ...values,
         originCreate: 'web',
@@ -93,11 +94,13 @@ export const Form = ({ setStep }: FormProps) => {
       if (response.status !== 201) throw new Error('Erro ao criar transação!');
 
       helper.resetForm();
+
       setStep(1);
     } catch (error) {
       message.error(String(error));
     }
   };
+
 
   const loadCategory = useCallback(async () => {
     try {
@@ -107,7 +110,6 @@ export const Form = ({ setStep }: FormProps) => {
         message.error('Erro ao carregar as categorias!');
         return;
       }
-
       setCategory(response.data.category);
     } catch (error) {
       message.error('Erro ao carregar as categorias!');
@@ -139,12 +141,117 @@ export const Form = ({ setStep }: FormProps) => {
     filterCategory();
   }, [formik.values.type]);
 
+ const data = [
+  {
+    "message": "Category fetched successfully",
+    "category": [
+      {
+        "id": "05094f4b-f0eb-460d-bd79-d36fb63f86f5",
+        "name": "Contas",
+        "icon": "Receipt",
+        "type": "-"
+      },
+      {
+        "id": "0e13f258-ea8f-422c-aefd-185b1c9a73fc",
+        "name": "Transferência",
+        "icon": "",
+        "type": "+"
+      },
+      {
+        "id": "1582f89e-77ed-4b1f-8e4e-82471e9a6e0b",
+        "name": "Educação",
+        "icon": "Receipt",
+        "type": "-"
+      },
+      {
+        "id": "4329373a-f409-453f-98d2-815262ecc6e7",
+        "name": "Dividendos",
+        "icon": "Receipt",
+        "type": "+"
+      },
+      {
+        "id": "0d29d8da-8db8-4c78-bb61-60cdea046465",
+        "name": "Pet",
+        "icon": "",
+        "type": "-"
+      },
+      {
+        "id": "4757f2e1-4464-49bf-b873-9f1e4870c856",
+        "name": "Alimentação",
+        "icon": "Receipt",
+        "type": "-"
+      },
+      {
+        "id": "487515eb-101d-4d6d-96d2-eff8eb8a27f7",
+        "name": "Música",
+        "icon": "",
+        "type": "-"
+      },
+      {
+        "id": "08da2204-05c5-4124-a95f-7d944b5c7435",
+        "name": "Vestuário",
+        "icon": "Checkroom",
+        "type": "-"
+    },
+  ]
+    }
+ ]
+ 
+
   return (
     <FormTransaction onSubmit={formik.handleSubmit}>
       {/* Alterar o type para uma tela inicial com dois botões um de despesa outro de receita */}
       {/** Separa cada input em uma etapa do form */}
-   
-    {/** usar depois */}  {/**
+      <ContainerCategory>
+        <ButtonRece
+        type='button'
+        onClick={() => console.log('click')}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              marginLeft: '100px',
+              gap: '10px',
+            }}
+          >
+            <Payments
+              sx={{ color: 'white', marginLeft: '10px', fontSize: 55 }}
+            />
+            <Label> Receita</Label>
+          </div>
+        </ButtonRece>
+        <ButtonDesp
+                type='button'
+                >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              marginLeft: '100px',
+              gap: '10px',
+            }}
+          >
+            <ProductionQuantityLimits
+              sx={{ color: 'white', marginLeft: '20px', fontSize: 55 }}
+            />
+            <Label> Despesas</Label>
+          </div>
+        </ButtonDesp>
+      </ContainerCategory>
+      <div style={{marginLeft:'25px',marginTop:"100px"}}>
+      <Button
+        style={{
+          width: '295px',
+          height: '53px',
+        }}
+        types="primary"
+      >
+        Proximo
+      </Button>
+      </div>
+      {/** usar depois */}
+      {/**
 
       <Input
         label="Tipo:"
@@ -160,8 +267,8 @@ export const Form = ({ setStep }: FormProps) => {
       </Input>
 
       {/** TODO: Alterar o placeholder quando ele for despesa ou receita */}
-
-       {/** usar depois */}  {/**
+      {/** usar depois */}{' '}
+      {/**
       <Input
         label="Descrição:"
         placeholder="Alimentação, Salário, Conta"
@@ -180,8 +287,8 @@ export const Form = ({ setStep }: FormProps) => {
       )}
 
       {/** TODO: Create sugest Value - 20,00 / MED */}
-
- {/** usar depois */}  {/**
+      {/** usar depois */}{' '}
+      {/**
       <Input
         label="Valor:"
         placeholder="R$ 99,99"
@@ -236,12 +343,7 @@ export const Form = ({ setStep }: FormProps) => {
         </LocalizationProvider>
       </DateInput>
       {/* Inseri erro do YUP */}
-
       {/* <Input label="Pagamento:" placeholder="Cartão ou Avista" /> */}
-     
-      <Button style={{width:'295px', height:'53px'}}
-        types='primary'
-        > Proximo</Button>
     </FormTransaction>
   );
 };

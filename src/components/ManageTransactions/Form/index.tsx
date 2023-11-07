@@ -21,6 +21,7 @@ import { transactionCategoryService } from '@/api/transactionCategory/service';
 import { useModal } from '@/context/modal';
 import { Loading } from '@/components/Loading';
 import { SelectStatus } from '@/components/SelectStatus';
+import { Category } from './styles';
 
 interface InitialValuesForm {
   type: string;
@@ -189,6 +190,13 @@ export const Form = () => {
     <FormTransaction onSubmit={formik.handleSubmit}>
       {/* Alterar o type para uma tela inicial com dois botões um de despesa outro de receita */}
       {/** Separa cada input em uma etapa do form */}
+     
+      <Category>
+   </Category>
+   <Category>
+    
+    </Category>
+
      
     {/** usar depois */}  {/**
       <Input
