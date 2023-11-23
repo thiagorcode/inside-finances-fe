@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { FormikHelpers, useFormik } from 'formik';
 import * as ptBr from 'dayjs/locale/pt-br';
 import dayjs from 'dayjs';
@@ -22,6 +22,8 @@ import { useUser } from '@/hooks/useUser';
 import { SelectStatus } from '@/components/SelectStatus';
 import { width } from '@mui/system';
 import { Payments, ProductionQuantityLimits } from '@mui/icons-material';
+import { ReceitaTest } from '@/components/Receit';
+import { DespesaPage } from '@/components/Desp';
 
 interface FormProps {
   setStep: (value: 0 | 1) => void;
@@ -72,9 +74,11 @@ const validationSchema = Yup.object().shape({
 export const Form = ({ setStep }: FormProps) => {
   const { userAccess } = useUser();
   const [category, setCategory] = useState<TransactionCategory[]>([]);
+  const [categoryInit, setCategoryInit] = useState('')
   const [categoryFiltered, setCategoryFiltered] = useState<
   TransactionCategory[]
   >([]);
+  const [steppage,SetStepPage] = useState(0)
   
   
   const onSubmit = async (
@@ -141,71 +145,148 @@ export const Form = ({ setStep }: FormProps) => {
     filterCategory();
   }, [formik.values.type]);
 
- const data = [
-  {
-    "message": "Category fetched successfully",
-    "category": [
-      {
-        "id": "05094f4b-f0eb-460d-bd79-d36fb63f86f5",
-        "name": "Contas",
-        "icon": "Receipt",
-        "type": "-"
-      },
-      {
-        "id": "0e13f258-ea8f-422c-aefd-185b1c9a73fc",
-        "name": "Transferência",
-        "icon": "",
-        "type": "+"
-      },
-      {
-        "id": "1582f89e-77ed-4b1f-8e4e-82471e9a6e0b",
-        "name": "Educação",
-        "icon": "Receipt",
-        "type": "-"
-      },
-      {
-        "id": "4329373a-f409-453f-98d2-815262ecc6e7",
-        "name": "Dividendos",
-        "icon": "Receipt",
-        "type": "+"
-      },
-      {
-        "id": "0d29d8da-8db8-4c78-bb61-60cdea046465",
-        "name": "Pet",
-        "icon": "",
-        "type": "-"
-      },
-      {
-        "id": "4757f2e1-4464-49bf-b873-9f1e4870c856",
-        "name": "Alimentação",
-        "icon": "Receipt",
-        "type": "-"
-      },
-      {
-        "id": "487515eb-101d-4d6d-96d2-eff8eb8a27f7",
-        "name": "Música",
-        "icon": "",
-        "type": "-"
-      },
-      {
-        "id": "08da2204-05c5-4124-a95f-7d944b5c7435",
-        "name": "Vestuário",
-        "icon": "Checkroom",
-        "type": "-"
-    },
-  ]
+
+  function HandleCategory(type: SetStateAction<string>){
+    setCategoryInit(type)
+  }
+
+  function Contentcategory ( ){
+    if(categoryInit === 'receita'){
+     return <div>receita</div>
+    }else if (categoryInit === 'despesa'){
+     return <div>despesa</div>
     }
+
+  } 
+
+  function StepNexthandle (){
+    SetStepPage( cur => cur + 1)
+
+  }
+
+
+
+ const data = [
+  { 
+    "message": "Category fetched successfully",
+    "category_recebs": [
+      {
+        type:'receita'
+      },
+      {
+        id: "05094f4b-f0eb-460d-bd79-d36fb63f86f5",
+        name: "Contas",
+        icon: "Receipt",
+        type: "-"
+      },
+      {
+        id: "0e13f258-ea8f-422c-aefd-185b1c9a73fc",
+        name: "Transferência",
+        icon: "",
+        type: "+"
+      },
+      {
+        id: "1582f89e-77ed-4b1f-8e4e-82471e9a6e0b",
+        name: "Educação",
+        icon: "Receipt",
+        type: "-"
+      },
+      {
+        id: "4329373a-f409-453f-98d2-815262ecc6e7",
+        name: "Dividendos",
+        icon: "Receipt",
+        type: "+"
+      },
+      {
+        id: "0d29d8da-8db8-4c78-bb61-60cdea046465",
+        name: "Pet",
+        icon: "",
+        type: "-"
+      },
+      {
+        id: "4757f2e1-4464-49bf-b873-9f1e4870c856",
+        name: "Alimentação",
+        con: "Receipt",
+        type: "-"
+      },
+      {
+        id: "487515eb-101d-4d6d-96d2-eff8eb8a27f7",
+        name: "Música",
+        icon: "",
+        type: "-"
+      },
+      {
+        id: "08da2204-05c5-4124-a95f-7d944b5c7435",
+        name: "Vestuário",
+        icon: "Checkroom",
+        type: "-"
+    }],
+    "category_desp": [
+      {
+        type:'despesa'
+      },
+      {
+        id: "05094f4b-f0eb-460d-bd79-d36fb63f86f5",
+        name: "Contas",
+        icon: "Receipt",
+        type: "-"
+      },
+      {
+        id: "0e13f258-ea8f-422c-aefd-185b1c9a73fc",
+        name: "Transferência",
+        icon: "",
+        type: "+"
+      },
+      {
+        id: "1582f89e-77ed-4b1f-8e4e-82471e9a6e0b",
+        name: "Educação",
+        icon: "Receipt",
+        type: "-"
+      },
+      {
+        id: "4329373a-f409-453f-98d2-815262ecc6e7",
+        name: "Dividendos",
+        icon: "Receipt",
+        type: "+"
+      },
+      {
+        id: "0d29d8da-8db8-4c78-bb61-60cdea046465",
+        name: "Pet",
+        icon: "",
+        type: "-"
+      },
+      {
+        id: "4757f2e1-4464-49bf-b873-9f1e4870c856",
+        name: "Alimentação",
+        con: "Receipt",
+        type: "-"
+      },
+      {
+        id: "487515eb-101d-4d6d-96d2-eff8eb8a27f7",
+        name: "Música",
+        icon: "",
+        type: "-"
+      },
+      {
+        id: "08da2204-05c5-4124-a95f-7d944b5c7435",
+        name: "Vestuário",
+        icon: "Checkroom",
+        type: "-"
+    },
+  ] 
+}
  ]
  
+ console.log(categoryInit)
 
   return (
     <FormTransaction onSubmit={formik.handleSubmit}>
       {/* Alterar o type para uma tela inicial com dois botões um de despesa outro de receita */}
       {/** Separa cada input em uma etapa do form */}
-      <ContainerCategory>
+     {steppage === 0 && <ContainerCategory>
         <ButtonRece
         type='button'
-        onClick={() => console.log('click')}
+        onClick={() => HandleCategory('receita')}
         >
           <div
             style={{
@@ -223,6 +304,7 @@ export const Form = ({ setStep }: FormProps) => {
         </ButtonRece>
         <ButtonDesp
                 type='button'
+                onClick={() => HandleCategory('despesa')}
                 >
           <div
             style={{
@@ -238,18 +320,21 @@ export const Form = ({ setStep }: FormProps) => {
             <Label> Despesas</Label>
           </div>
         </ButtonDesp>
-      </ContainerCategory>
-      <div style={{marginLeft:'25px',marginTop:"100px"}}>
+      </ContainerCategory>} 
+        {categoryInit ===  'receita' && (<ReceitaTest/>)  }
+        {categoryInit ===  'despesa' && (<DespesaPage/>)  }
+
       <Button
         style={{
           width: '295px',
           height: '53px',
+          
         }}
         types="primary"
+        onClick={StepNexthandle}
       >
         Proximo
-      </Button>
-      </div>
+      </Button >
       {/** usar depois */}
       {/**
 
