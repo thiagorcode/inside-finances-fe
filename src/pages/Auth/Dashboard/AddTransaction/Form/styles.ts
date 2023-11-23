@@ -68,3 +68,15 @@ export const DateInput = styled.div`
     background-color: #233dc7 !important;
   }
 `;
+
+export const TitleCategory = styled.h3`
+text-align: center;
+`
+;
+
+export const ContentOptions = styled.div`
+display: flex;
+align-items: center;
+flex-direction:column ;
+`
+;

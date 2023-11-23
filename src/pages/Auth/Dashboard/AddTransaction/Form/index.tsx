@@ -15,7 +15,13 @@ import { SelectCategory } from '../../../../../components/SelectCategory';
 import Button from '@/components/Button';
 import { validateMoney } from '@/utils/validateMoney';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
-import { ButtonDesp, ButtonRece, ContainerCategory, Label } from './styles';
+import { 
+  ButtonDesp, 
+  ButtonRece, 
+  ContainerCategory, 
+  Label, 
+  TitleCategory, 
+  ContentOptions } from './styles';
 import { transactionsService } from '@/api/transactions/service';
 import { transactionCategoryService } from '@/api/transactionCategory/service';
 import { useUser } from '@/hooks/useUser';
@@ -150,15 +156,6 @@ export const Form = ({ setStep }: FormProps) => {
     setCategoryInit(type)
   }
 
-  function Contentcategory ( ){
-    if(categoryInit === 'receita'){
-     return <div>receita</div>
-    }else if (categoryInit === 'despesa'){
-     return <div>despesa</div>
-    }
-
-  } 
-
   function StepNexthandle (){
     SetStepPage( cur => cur + 1)
 
@@ -166,118 +163,58 @@ export const Form = ({ setStep }: FormProps) => {
 
 
 
- const data = [
-  { 
-    "message": "Category fetched successfully",
-    "category_recebs": [
-      {
-        type:'receita'
-      },
-      {
-        id: "05094f4b-f0eb-460d-bd79-d36fb63f86f5",
-        name: "Contas",
-        icon: "Receipt",
-        type: "-"
-      },
-      {
-        id: "0e13f258-ea8f-422c-aefd-185b1c9a73fc",
-        name: "Transferência",
-        icon: "",
-        type: "+"
-      },
-      {
-        id: "1582f89e-77ed-4b1f-8e4e-82471e9a6e0b",
-        name: "Educação",
-        icon: "Receipt",
-        type: "-"
-      },
-      {
-        id: "4329373a-f409-453f-98d2-815262ecc6e7",
-        name: "Dividendos",
-        icon: "Receipt",
-        type: "+"
-      },
-      {
-        id: "0d29d8da-8db8-4c78-bb61-60cdea046465",
-        name: "Pet",
-        icon: "",
-        type: "-"
-      },
-      {
-        id: "4757f2e1-4464-49bf-b873-9f1e4870c856",
-        name: "Alimentação",
-        con: "Receipt",
-        type: "-"
-      },
-      {
-        id: "487515eb-101d-4d6d-96d2-eff8eb8a27f7",
-        name: "Música",
-        icon: "",
-        type: "-"
-      },
-      {
-        id: "08da2204-05c5-4124-a95f-7d944b5c7435",
-        name: "Vestuário",
-        icon: "Checkroom",
-        type: "-"
-    }],
-    "category_desp": [
-      {
-        type:'despesa'
-      },
-      {
-        id: "05094f4b-f0eb-460d-bd79-d36fb63f86f5",
-        name: "Contas",
-        icon: "Receipt",
-        type: "-"
-      },
-      {
-        id: "0e13f258-ea8f-422c-aefd-185b1c9a73fc",
-        name: "Transferência",
-        icon: "",
-        type: "+"
-      },
-      {
-        id: "1582f89e-77ed-4b1f-8e4e-82471e9a6e0b",
-        name: "Educação",
-        icon: "Receipt",
-        type: "-"
-      },
-      {
-        id: "4329373a-f409-453f-98d2-815262ecc6e7",
-        name: "Dividendos",
-        icon: "Receipt",
-        type: "+"
-      },
-      {
-        id: "0d29d8da-8db8-4c78-bb61-60cdea046465",
-        name: "Pet",
-        icon: "",
-        type: "-"
-      },
-      {
-        id: "4757f2e1-4464-49bf-b873-9f1e4870c856",
-        name: "Alimentação",
-        con: "Receipt",
-        type: "-"
-      },
-      {
-        id: "487515eb-101d-4d6d-96d2-eff8eb8a27f7",
-        name: "Música",
-        icon: "",
-        type: "-"
-      },
-      {
-        id: "08da2204-05c5-4124-a95f-7d944b5c7435",
-        name: "Vestuário",
-        icon: "Checkroom",
-        type: "-"
-    },
-  ] 
-}
- ]
- 
- console.log(categoryInit)
+ const data =  [
+  {
+    "id": "05094f4b-f0eb-460d-bd79-d36fb63f86f5",
+    "name": "Contas",
+    "icon": "Receipt",
+    "type": "-"
+  },
+  {
+    "id": "0e13f258-ea8f-422c-aefd-185b1c9a73fc",
+    "name": "Transferência",
+    "icon": "",
+    "type": "+"
+  },
+  {
+    "id": "1582f89e-77ed-4b1f-8e4e-82471e9a6e0b",
+    "name": "Educação",
+    "icon": "Receipt",
+    "type": "-"
+  },
+  {
+    "id": "4329373a-f409-453f-98d2-815262ecc6e7",
+    "name": "Dividendos",
+    "icon": "Receipt",
+    "type": "+"
+  },
+  {
+    "id": "0d29d8da-8db8-4c78-bb61-60cdea046465",
+    "name": "Pet",
+    "icon": "",
+    "type": "-"
+  },
+  {
+    "id": "4757f2e1-4464-49bf-b873-9f1e4870c856",
+    "name": "Alimentação",
+    "icon": "Receipt",
+    "type": "-"
+  },
+  {
+    "id": "487515eb-101d-4d6d-96d2-eff8eb8a27f7",
+    "name": "Música",
+    "icon": "",
+    "type": "-"
+  },
+  {
+    "id": "08da2204-05c5-4124-a95f-7d944b5c7435",
+    "name": "Vestuário",
+    "icon": "Checkroom",
+    "type": "-"
+  }
+];
+
+ console.log(data.map(date => date.name))
 
   return (
     <FormTransaction onSubmit={formik.handleSubmit}>
@@ -321,14 +258,28 @@ export const Form = ({ setStep }: FormProps) => {
           </div>
         </ButtonDesp>
       </ContainerCategory>} 
-        {categoryInit ===  'receita' && (<ReceitaTest/>)  }
-        {categoryInit ===  'despesa' && (<DespesaPage/>)  }
 
+    {steppage === 1 && <><div>
+          <TitleCategory>Categoria:</TitleCategory>
+        </div>
+        {data.map(date => (
+        <ContentOptions key={date.id}> 
+            <div>
+            
+            </div>
+            <label>{date.name}</label>
+          </ContentOptions>))
+          } 
+          
+       
+          </>} 
+   
       <Button
         style={{
           width: '295px',
           height: '53px',
-          
+          marginLeft:'28px',
+          marginTop:'70px'
         }}
         types="primary"
         onClick={StepNexthandle}
