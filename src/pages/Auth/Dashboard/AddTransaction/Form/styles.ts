@@ -76,7 +76,10 @@ text-align: center;
 
 export const ContentOptions = styled.div`
 display: flex;
-align-items: center;
-flex-direction:column ;
+background-color: black;
+flex-wrap: wrap;
+width: 33%;
+
+
 `
 ;
