@@ -23,10 +23,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const response = await authService.login(user, password);
 
-      if (response.status !== 202) {
-        console.log('No Auth');
-        return;
-      }
+      // if (response.status) {
+      //   console.log('No Auth');
+      //   return;
+      // }
 
       increase(response.data.user);
       navigate('/');

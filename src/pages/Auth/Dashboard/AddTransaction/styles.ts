@@ -26,6 +26,7 @@ export const Header = styled.header`
 
 export const FormTransaction = styled.form`
   margin-bottom: 2.5rem;
+  
 `;
 
 export const ContainerCategorys = styled.div`
@@ -36,3 +37,7 @@ export const ContainerCategorys = styled.div`
     flex-direction: row;
   }
 `;
+
+
+
+

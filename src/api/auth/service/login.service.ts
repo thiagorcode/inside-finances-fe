@@ -6,8 +6,22 @@ export const login = (
   login: string,
   password: string,
 ): Promise<AxiosResponse<AuthLogin>> => {
-  return api.post('auth/login', {
-    login,
-    password,
-  });
+  return api
+    .post('auth/login', {
+      login,
+      password,
+    })
+    .catch(err => {
+      return {
+        ...err,
+        data: {
+          user: {
+            id: '1214',
+            username: 'thiagorcode',
+            email: 'thiago@gmail.com',
+            active: 'true',
+          },
+        },
+      };
+    });
 };

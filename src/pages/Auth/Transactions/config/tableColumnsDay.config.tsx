@@ -11,12 +11,25 @@ export const columns: ColumnsType<Transactions> = [
   //   key: 'icon',
   // },
   {
+    title: 'Descrição',
+    dataIndex: 'description',
+    key: 'description',
+    render(value) {
+      return value.substring(0, 25);
+    },
+  },
+  {
     title: 'Categoria',
     dataIndex: 'category',
     key: 'category',
     render(value) {
       return value.name;
     },
+  },
+  {
+    title: 'Banco',
+    dataIndex: 'bank',
+    key: 'bank',
   },
   {
     title: 'Data',

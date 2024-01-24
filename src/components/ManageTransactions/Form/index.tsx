@@ -21,6 +21,7 @@ import { transactionCategoryService } from '@/api/transactionCategory/service';
 import { useModal } from '@/context/modal';
 import { Loading } from '@/components/Loading';
 import { SelectStatus } from '@/components/SelectStatus';
+import { Category } from './styles';
 
 interface InitialValuesForm {
   type: string;
@@ -189,7 +190,15 @@ export const Form = () => {
     <FormTransaction onSubmit={formik.handleSubmit}>
       {/* Alterar o type para uma tela inicial com dois botões um de despesa outro de receita */}
       {/** Separa cada input em uma etapa do form */}
+     
+      <Category>
+   </Category>
+   <Category>
+    
+    </Category>
 
+     
+    {/** usar depois */}  {/**
       <Input
         label="Tipo:"
         name="type"
@@ -204,6 +213,7 @@ export const Form = () => {
       </Input>
 
       {/** TODO: Alterar o placeholder quando ele for despesa ou receita */}
+       {/** usar depois */}  {/**
       <Input
         label="Descrição:"
         placeholder="Alimentação, Salário, Conta"
@@ -223,6 +233,7 @@ export const Form = () => {
       )}
 
       {/** TODO: Create sugest Value - 20,00 / MED */}
+       {/** usar depois */}  {/**
       <Input
         label="Banco:"
         placeholder="Inter"
@@ -263,9 +274,7 @@ export const Form = () => {
 
       {/* <Input label="Pagamento:" placeholder="Cartão ou Avista" /> */}
 
-      <Button size="large" type="submit">
-        Salvar
-      </Button>
+   
     </FormTransaction>
   );
 };
