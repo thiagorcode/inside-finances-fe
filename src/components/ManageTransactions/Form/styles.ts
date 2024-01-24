@@ -19,4 +19,9 @@ export const DateInput = styled.div`
   }
 `;
 
-export const IsPay = styled.div``;
+export const Category = styled.div`
+  height: 204px;
+  width: 149px;
+  background-color: #233DC7;
+`
+;

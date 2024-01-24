@@ -88,6 +88,7 @@ export const Transactions = () => {
             <span>R$ 1,000.00</span>
           </div>
         </S.BoxTypeValues>
+        <CarouselButton toggleModal={toggleModal} />
       </Box>
       <CarouselButton toggleModal={toggleModal} />
     </Box>
