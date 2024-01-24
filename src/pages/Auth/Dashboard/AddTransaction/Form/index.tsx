@@ -28,7 +28,6 @@ import { SelectStatus } from '@/components/SelectStatus';
 import { Payments, ProductionQuantityLimits } from '@mui/icons-material';
 import { width } from '@mui/system';
 
-
 interface FormProps {
   setStep: (value: 0 | 1) => void;
 }
@@ -83,7 +82,7 @@ export const Form = ({ setStep }: FormProps) => {
     TransactionCategory[]
   >([]);
   const [steppage, SetStepPage] = useState(0);
-  
+
   const datas = [
     {
       id: '05094f4b-f0eb-460d-bd79-d36fb63f86f5',
@@ -134,9 +133,8 @@ export const Form = ({ setStep }: FormProps) => {
       type: '-',
     },
   ];
-  
-  const filterData = datas.filter(date => date.type === categoryInit)
 
+  const filterData = datas.filter(date => date.type === categoryInit);
 
   const onSubmit = async (
     values: InitialValuesForm,
@@ -207,9 +205,6 @@ export const Form = ({ setStep }: FormProps) => {
     SetStepPage(cur => cur + 1);
   }
 
-
-  
-  
   return (
     <FormTransaction onSubmit={formik.handleSubmit}>
       {/* Alterar o type para uma tela inicial com dois botões um de despesa outro de receita */}
@@ -253,23 +248,24 @@ export const Form = ({ setStep }: FormProps) => {
           <div>
             <TitleCategory>Categoria:</TitleCategory>
           </div>
-          {filterData.map(date => (
-            <ContentOptions key={date.id}>
-              <div
-                style={{
-                  display:'flex',
-                  flexDirection:"column",
-                  alignItems:'center',
-                  marginTop:'5px',
-                }} >
-              <span>Ola</span>
-              <label>{date.name}</label>
-              </div>
-            </ContentOptions>
-          ))}
+          <div
+            style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
+          >
+            {filterData.map(date => (
+              <ContentOptions key={date.id}>
+                <div
+                  style={{
+                    alignItems: 'center',
+                    marginTop: '5px',
+                  }}
+                >
+                  <label>{date.name}</label>
+                </div>
+              </ContentOptions>
+            ))}
+          </div>
         </>
       )}
-
       <Button
         style={{
           width: '295px',
