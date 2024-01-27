@@ -7,16 +7,18 @@ export const Container = styled.div`
 `;
 
 export const Header = styled.header`
+  position: relative;
   display: flex;
-  justify-content: space-between;
-  width: 80%;
-  margin-bottom: 15px;
+  justify-content: center;
+  align-items: center;
   h1 {
     font-size: 1.125rem;
-    line-height: 2rem;
-    margin-left: 1rem;
   }
   button {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
     cursor: pointer;
   }
   svg {
@@ -26,7 +28,6 @@ export const Header = styled.header`
 
 export const FormTransaction = styled.form`
   margin-bottom: 2.5rem;
-  
 `;
 
 export const ContainerCategorys = styled.div`
@@ -37,7 +38,3 @@ export const ContainerCategorys = styled.div`
     flex-direction: row;
   }
 `;
-
-
-
-

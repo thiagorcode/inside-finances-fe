@@ -1,21 +1,25 @@
 import styled from 'styled-components';
 
-export const ButtonRece = styled.button`
+type ButtonProps = {
+  selected?: boolean;
+};
+
+export const ButtonRece = styled.button<ButtonProps>`
   align-items: center;
   display: flex;
   height: 160px;
   width: 280px;
-  background-color: #233dc7;
+  background-color: ${props => (props.selected ? '#6495ed	' : 'blue')};
   border-radius: 14px;
   cursor: pointer;
 `;
 
-export const ButtonDesp = styled.button`
+export const ButtonDesp = styled.button<ButtonProps>`
   align-items: center;
   display: flex;
   height: 160px;
   width: 280px;
-  background-color: #233dc7;
+  background-color: ${props => (props.selected ? '#6495ed	' : 'blue')};
   border-radius: 14px;
   cursor: pointer;
 `;
@@ -27,12 +31,14 @@ export const Label = styled.label`
 `;
 
 export const ContainerCategory = styled.div`
+  /* background: #910; */
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  padding: 1rem;
   gap: 10px;
   margin-top: 20px;
-  margin-left: 35px;
 `;
 
 export const DateInput = styled.div`

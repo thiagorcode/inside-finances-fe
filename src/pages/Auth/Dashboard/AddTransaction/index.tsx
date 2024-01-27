@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Close } from '@mui/icons-material';
 import { Box } from '@mui/system';
-import * as S from './styles';
+import * as Style from './styles';
 import { Form } from './Form';
 import { Success } from './Success';
 import { useModal } from '@/context/modal';
@@ -25,7 +25,7 @@ export const AddTransaction = () => {
   };
 
   return (
-    <Modal open sx={{ height: '100vh' }}>
+    <Modal open onClose={handleCloseModal} sx={{ height: '100vh' }}>
       <Box
         component="div"
         sx={{
@@ -51,19 +51,19 @@ export const AddTransaction = () => {
             borderRadius: 6,
             py: 2,
             paddingBottom: 3,
-            height: '90%',
+            height: '100%',
             overflowX: 'scroll',
           }}
         >
-          <S.Container>
-            <S.Header>
+          <Style.Container>
+            <Style.Header>
               <button type="button" onClick={() => handleCloseModal()}>
                 <Close />
               </button>
               <h1>Adicionar Transação</h1>
-            </S.Header>
+            </Style.Header>
             {components[step]}
-          </S.Container>
+          </Style.Container>
         </Box>
       </Box>
     </Modal>

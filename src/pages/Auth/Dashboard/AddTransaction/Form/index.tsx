@@ -82,6 +82,7 @@ export const Form = ({ setStep }: FormProps) => {
     TransactionCategory[]
   >([]);
   const [steppage, SetStepPage] = useState(0);
+  const [categorySelected, setCategorySelected] = useState(false);
 
   const datas = [
     {
@@ -199,6 +200,7 @@ export const Form = ({ setStep }: FormProps) => {
 
   function HandleCategory(type: SetStateAction<string>) {
     setCategoryInit(type);
+    setCategorySelected(true);
   }
 
   function StepNexthandle() {
@@ -268,13 +270,18 @@ export const Form = ({ setStep }: FormProps) => {
       )}
       <Button
         style={{
-          width: '295px',
-          height: '53px',
-          marginLeft: '28px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '70%',
+          height: '55px',
           marginTop: '70px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
         }}
         types="primary"
         onClick={StepNexthandle}
+        disabled={!categorySelected}
       >
         Proximo
       </Button>
