@@ -2,79 +2,21 @@ import { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { FormikHelpers, useFormik } from 'formik';
 import * as ptBr from 'dayjs/locale/pt-br';
 import dayjs from 'dayjs';
-import * as Yup from 'yup';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TextField } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { message } from 'antd';
 import { ContainerCategorys, FormTransaction } from '../styles';
-import { SelectCategory } from '../../../../../components/SelectCategory';
-import Button from '@/components/Button';
+import { ListCategory } from '../../../../../components/ListCategory';
 import { validateMoney } from '@/utils/validateMoney';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
-import {
-  ButtonDesp,
-  ButtonRece,
-  ContainerCategory,
-  Label,
-  TitleCategory,
-  ContentOptions,
-} from './styles';
+import { TitleCategory, ContentOptions } from './styles';
 import { transactionsService } from '@/api/transactions/service';
 import { transactionCategoryService } from '@/api/transactionCategory/service';
 import { useUser } from '@/hooks/useUser';
-import { SelectStatus } from '@/components/SelectStatus';
-import { Payments, ProductionQuantityLimits } from '@mui/icons-material';
-import { width } from '@mui/system';
 
-interface FormProps {
-  setStep: (value: 0 | 1) => void;
-}
-
-interface InitialValuesForm {
-  type: string;
-  description: string;
-  category: string;
-  value: string;
-  date: dayjs.Dayjs;
-  bank: string;
-  isPaid: boolean;
-  installment: number;
-  finalInstallment: number;
-}
-
-const initialValues = {
-  type: '',
-  description: '',
-  category: '',
-  value: '',
-  date: dayjs(new Date()),
-  bank: '',
-  isPaid: true,
-  installment: 0,
-  finalInstallment: 0,
-};
-
-const validationSchema = Yup.object().shape({
-  type: Yup.string().required('Campo obrigatório'),
-  description: Yup.string(),
-  category: Yup.string().required('Seleção obrigatória'),
-  isPaid: Yup.boolean().required('Seleção obrigatória'),
-  bank: Yup.string(),
-  installment: Yup.number(),
-  finalInstallment: Yup.number(),
-  value: Yup.string()
-    .test({
-      name: 'isMoney',
-      message: 'Valor inválido',
-      test: (value, context) => validateMoney(value),
-    })
-    .required('Campo obrigatório'),
-  date: Yup.date().required('Campo obrigatório'),
-});
-
-export const Form = ({ setStep }: FormProps) => {
+export const SelectCategory = () => {
   const { userAccess } = useUser();
   const [category, setCategory] = useState<TransactionCategory[]>([]);
   const [categoryInit, setCategoryInit] = useState('');
@@ -134,55 +76,24 @@ export const Form = ({ setStep }: FormProps) => {
       type: '-',
     },
   ];
-
   const filterData = datas.filter(date => date.type === categoryInit);
 
-  const onSubmit = async (
-    values: InitialValuesForm,
-    helper: FormikHelpers<typeof initialValues>,
-  ) => {
-    try {
-      const response = await transactionsService.createTransaction({
-        ...values,
-        originCreate: 'web',
-        categoryId: values.category,
-        userId: userAccess.id!,
-        value: +values.value.replace(',', '.'),
-      });
-
-      if (response.status !== 201) throw new Error('Erro ao criar transação!');
-
-      helper.resetForm();
-
-      setStep(1);
-    } catch (error) {
-      message.error(String(error));
-    }
-  };
-
   const loadCategory = useCallback(async () => {
-    try {
-      const response = await transactionCategoryService.listCategory();
-
-      if (response.status !== 200) {
-        message.error('Erro ao carregar as categorias!');
-        return;
-      }
-      setCategory(response.data.category);
-    } catch (error) {
-      message.error('Erro ao carregar as categorias!');
-    }
+    // try {
+    //   const response = await transactionCategoryService.listCategory();
+    //   if (response.status !== 200) {
+    //     message.error('Erro ao carregar as categorias!');
+    //     return;
+    //   }
+    //   setCategory(response.data.category);
+    // } catch (error) {
+    //   message.error('Erro ao carregar as categorias!');
+    // }
   }, []);
 
   useEffect(() => {
     loadCategory();
   }, []);
-
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: onSubmit,
-  });
 
   const filterCategory = useCallback(() => {
     formik.setFieldValue('category', '');
@@ -198,53 +109,8 @@ export const Form = ({ setStep }: FormProps) => {
     filterCategory();
   }, [formik.values.type]);
 
-  function HandleCategory(type: SetStateAction<string>) {
-    setCategoryInit(type);
-    setCategorySelected(true);
-  }
-
-  function StepNexthandle() {
-    SetStepPage(cur => cur + 1);
-  }
-
   return (
-    <FormTransaction onSubmit={formik.handleSubmit}>
-      {/* Alterar o type para uma tela inicial com dois botões um de despesa outro de receita */}
-      {/** Separa cada input em uma etapa do form */}
-      {steppage === 0 && (
-        <ContainerCategory>
-          <ButtonRece type="button" onClick={() => HandleCategory('+')}>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                marginLeft: '100px',
-                gap: '10px',
-              }}
-            >
-              <Payments
-                sx={{ color: 'white', marginLeft: '10px', fontSize: 55 }}
-              />
-              <Label> Receita</Label>
-            </div>
-          </ButtonRece>
-          <ButtonDesp type="button" onClick={() => HandleCategory('-')}>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                marginLeft: '100px',
-                gap: '10px',
-              }}
-            >
-              <ProductionQuantityLimits
-                sx={{ color: 'white', marginLeft: '20px', fontSize: 55 }}
-              />
-              <Label> Despesas</Label>
-            </div>
-          </ButtonDesp>
-        </ContainerCategory>
-      )}
+    <FormTransaction>
       {steppage === 1 && (
         <>
           <div>
@@ -268,23 +134,6 @@ export const Form = ({ setStep }: FormProps) => {
           </div>
         </>
       )}
-      <Button
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '70%',
-          height: '55px',
-          marginTop: '70px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-        }}
-        types="primary"
-        onClick={StepNexthandle}
-        disabled={!categorySelected}
-      >
-        Proximo
-      </Button>
       {/** usar depois */}
       {/**
 

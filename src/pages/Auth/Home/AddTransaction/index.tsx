@@ -1,20 +1,19 @@
-import { useState } from 'react';
+import React from 'react';
 import { Close } from '@mui/icons-material';
 import { Box } from '@mui/system';
 import * as Style from './styles';
-import { Form } from './Form';
+import { SelectCategory } from './SelectCategory';
 import { Success } from './Success';
 import { useModal } from '@/context/modal';
 import { Modal } from '@mui/material';
+import { SelectType } from './SelectType';
+import { useFormTransaction } from '@/context/formTransaction';
 
 export const AddTransaction = () => {
   const { toggleModal } = useModal();
-  const [step, setStep] = useState<0 | 1>(0);
+  const { onSubmit, currentStep } = useFormTransaction();
 
-  const components = {
-    0: <Form setStep={setStep} />,
-    1: <Success setStep={setStep} />,
-  };
+  const components = [<SelectType />, <SelectCategory />, <Success />];
 
   const handleCloseModal = () => {
     toggleModal({
@@ -62,7 +61,7 @@ export const AddTransaction = () => {
               </button>
               <h1>Adicionar Transação</h1>
             </Style.Header>
-            {components[step]}
+            <form onSubmit={onSubmit}>{components[currentStep]}</form>
           </Style.Container>
         </Box>
       </Box>

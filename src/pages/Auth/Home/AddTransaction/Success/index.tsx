@@ -2,11 +2,8 @@ import Button from '@/components/Button';
 import { useModal } from '@/context/modal';
 import { Box } from '@mui/system';
 import * as S from './styles';
-interface SuccessProps {
-  setStep: (value: 0 | 1) => void;
-}
 
-export const Success = ({ setStep }: SuccessProps) => {
+export const Success = () => {
   const { toggleModal } = useModal();
 
   const handleCloseModal = () => {
@@ -48,7 +45,11 @@ export const Success = ({ setStep }: SuccessProps) => {
           <h2>Transação salva com sucesso.</h2>
         </Box>
         <S.GroupButton>
-          <Button type="button" onClick={() => setStep(0)} size="large">
+          <Button
+            type="button"
+            // onClick={() => setStep(0)}
+            size="large"
+          >
             Adicionar Novo
           </Button>
           <Button type="button" onClick={handleCloseModal} size="large">
