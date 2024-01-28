@@ -13,7 +13,7 @@ export const Nav = styled.nav`
     justify-content: space-between;
     align-items: center;
     margin: 0 4%;
-    width: 92%;
+    width: 100%;
     height: 60px;
     border-radius: 22px;
     margin: 0 auto;
