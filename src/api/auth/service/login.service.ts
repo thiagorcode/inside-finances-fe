@@ -12,6 +12,7 @@ export const login = (
       password,
     })
     .catch(err => {
+      // MOCK
       return {
         ...err,
         data: {
