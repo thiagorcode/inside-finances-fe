@@ -3,7 +3,7 @@ import { FormikHelpers, useFormik } from 'formik';
 import * as ptBr from 'dayjs/locale/pt-br';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { TextField } from '@mui/material';
+import { Input, TextField } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { message } from 'antd';
@@ -11,10 +11,17 @@ import { ContainerCategorys, FormTransaction } from '../styles';
 import { ListCategory } from '../../../../../components/ListCategory';
 import { validateMoney } from '@/utils/validateMoney';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
-import { TitleCategory, ContentOptions } from './styles';
+import {
+  TitleCategory,
+  ContentOptions,
+  FieldCategory,
+  CategoryBadge,
+  CategoryContainer,
+} from './styles';
 import { transactionsService } from '@/api/transactions/service';
 import { transactionCategoryService } from '@/api/transactionCategory/service';
 import { useUser } from '@/hooks/useUser';
+import { FlightTakeoff } from '@mui/icons-material';
 
 export const SelectCategory = () => {
   const { userAccess } = useUser();
@@ -25,6 +32,23 @@ export const SelectCategory = () => {
   >([]);
   const [steppage, SetStepPage] = useState(0);
   const [categorySelected, setCategorySelected] = useState(false);
+  
+  const formik = useFormik({
+    initialValues: {
+      type: '',
+      description: '',
+      category: '',
+      value: '',
+      bank: '',
+      installment: '',
+      finalInstallment: '',
+      isPaid: '',
+      date: null,
+    },
+    onSubmit: values => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
 
   const datas = [
     {
@@ -107,14 +131,14 @@ export const SelectCategory = () => {
 
   useEffect(() => {
     filterCategory();
-  }, [formik.values.type]);
+  }, []);
 
   return (
     <FormTransaction>
-      {steppage === 1 && (
+      {steppage === 0 && (
         <>
           <div>
-            <TitleCategory>Categoria:</TitleCategory>
+            <TitleCategory>Categorias:</TitleCategory>
           </div>
           <div
             style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
@@ -132,102 +156,77 @@ export const SelectCategory = () => {
               </ContentOptions>
             ))}
           </div>
+          <div>
+            <FieldCategory>
+              <CategoryContainer>
+                <CategoryBadge>
+                  <FlightTakeoff
+                    style={{ fontSize: 40 }}
+                    sx={{ color: '#fff' }}
+                  />
+                  Viagem
+                </CategoryBadge>
+                <CategoryBadge>
+                  <FlightTakeoff
+                    style={{ fontSize: 40 }}
+                    sx={{ color: '#fff' }}
+                  />
+                  Viagem
+                </CategoryBadge>
+                <CategoryBadge>
+                  <FlightTakeoff
+                    style={{ fontSize: 40 }}
+                    sx={{ color: '#fff' }}
+                  />
+                  Viagem
+                </CategoryBadge>
+                <CategoryBadge>
+                  <FlightTakeoff
+                    style={{ fontSize: 40 }}
+                    sx={{ color: '#fff' }}
+                  />
+                  Viagem
+                </CategoryBadge>
+                <CategoryBadge>
+                  <FlightTakeoff
+                    style={{ fontSize: 40 }}
+                    sx={{ color: '#fff' }}
+                  />
+                  Viagem
+                </CategoryBadge>
+                <CategoryBadge>
+                  <FlightTakeoff
+                    style={{ fontSize: 40 }}
+                    sx={{ color: '#fff' }}
+                  />
+                  Viagem
+                </CategoryBadge>{' '}
+                <CategoryBadge>
+                  <FlightTakeoff
+                    style={{ fontSize: 40 }}
+                    sx={{ color: '#fff' }}
+                  />
+                  Viagem
+                </CategoryBadge>
+                <CategoryBadge>
+                  <FlightTakeoff
+                    style={{ fontSize: 40 }}
+                    sx={{ color: '#fff' }}
+                  />
+                  Viagem
+                </CategoryBadge>
+                <CategoryBadge>
+                  <FlightTakeoff
+                    style={{ fontSize: 40 }}
+                    sx={{ color: '#fff' }}
+                  />
+                  Viagem
+                </CategoryBadge>
+              </CategoryContainer>
+            </FieldCategory>
+          </div>
         </>
       )}
-      {/** usar depois */}
-      {/**
-
-      <Input
-        label="Tipo:"
-        name="type"
-        error={formik.errors.type}
-        onChange={formik.handleChange}
-      >
-        <select>
-          <option value="">Selecione</option>
-          <option value="+">Receita</option>
-          <option value="-">Despesa</option>
-        </select>
-      </Input>
-
-      {/** TODO: Alterar o placeholder quando ele for despesa ou receita */}
-      {/** usar depois */}{' '}
-      {/**
-      <Input
-        label="Descrição:"
-        placeholder="Alimentação, Salário, Conta"
-        name="description"
-        error={formik.errors.description}
-        onChange={formik.handleChange}
-      />
-      {!!categoryFiltered.length && (
-        <SelectCategory
-          name="category"
-          error={formik.errors.category}
-          setFieldValue={formik.setFieldValue}
-          values={formik.values}
-          category={categoryFiltered}
-        />
-      )}
-
-      {/** TODO: Create sugest Value - 20,00 / MED */}
-      {/** usar depois */}{' '}
-      {/**
-      <Input
-        label="Valor:"
-        placeholder="R$ 99,99"
-        name="value"
-        error={formik.errors.value}
-        onChange={formik.handleChange}
-      />
-      <Input
-        label="Banco:"
-        placeholder="Inter"
-        name="bank"
-        error={formik.errors.bank}
-        onChange={formik.handleChange}
-      />
-      {formik.values.type === '-' && (
-        <>
-          <Input
-            label="Parcela Inicial:(opcional)"
-            placeholder="1"
-            name="installment"
-            error={formik.errors.installment}
-            onChange={formik.handleChange}
-          />
-          <Input
-            label="Parcela final:(opcional)"
-            placeholder="4"
-            name="finalInstallment"
-            error={formik.errors.finalInstallment}
-            onChange={formik.handleChange}
-          />
-        </>
-      )}
-
-      <SelectStatus
-        name="isPaid"
-        setFieldValue={formik.setFieldValue}
-        error={formik.errors.isPaid}
-        value={formik.values.isPaid}
-      />
-      <DateInput>
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={ptBr}>
-          <StaticDatePicker
-            displayStaticWrapperAs="desktop"
-            openTo="month"
-            value={formik.values.date}
-            views={['year', 'month', 'day']}
-            onChange={newValue => {
-              formik.setFieldValue('date', dayjs(newValue));
-            }}
-            renderInput={params => <TextField {...params} />}
-          />
-        </LocalizationProvider>
-      </DateInput>
-      {/* Inseri erro do YUP */}
-      {/* <Input label="Pagamento:" placeholder="Cartão ou Avista" /> */}
     </FormTransaction>
   );
 };

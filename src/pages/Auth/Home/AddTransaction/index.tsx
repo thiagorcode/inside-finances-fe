@@ -5,15 +5,20 @@ import * as Style from './styles';
 import { SelectCategory } from './SelectCategory';
 import { Success } from './Success';
 import { useModal } from '@/context/modal';
-import { Modal } from '@mui/material';
+import { Button, Modal } from '@mui/material';
 import { SelectType } from './SelectType';
 import { useFormTransaction } from '@/context/formTransaction';
 
 export const AddTransaction = () => {
   const { toggleModal } = useModal();
-  const { onSubmit, currentStep } = useFormTransaction();
+  const { onSubmit, currentStep, nextStep, formValues, resetForm } =
+    useFormTransaction();
 
-  const components = [<SelectType />, <SelectCategory />, <Success />];
+  const components = [
+    <SelectType key={'type'} />,
+    <SelectCategory key={'category'} />,
+    <Success key={'success'} />,
+  ];
 
   const handleCloseModal = () => {
     toggleModal({
@@ -63,6 +68,25 @@ export const AddTransaction = () => {
             </Style.Header>
             <form onSubmit={onSubmit}>{components[currentStep]}</form>
           </Style.Container>
+          <Button
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '72%',
+              height: '55px',
+              marginTop: '10rem',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              backgroundColor: formValues.type ? '#233DC7' : '#ccc',
+              color: formValues.type ? '#fff' : '#888',
+              borderRadius: '1rem',
+            }}
+            onClick={nextStep}
+            disabled={!formValues.type}
+          >
+            Proximo
+          </Button>
         </Box>
       </Box>
     </Modal>

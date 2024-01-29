@@ -48,11 +48,11 @@ export const Success = () => {
           <Button
             type="button"
             // onClick={() => setStep(0)}
-            size="large"
+            // size="large"
           >
             Adicionar Novo
           </Button>
-          <Button type="button" onClick={handleCloseModal} size="large">
+          <Button type="button" onClick={handleCloseModal}>
             Fechar
           </Button>
         </S.GroupButton>

@@ -12,6 +12,8 @@ interface FormTransactionContextProps {
   onChangeType: (type: SelectTypeTransaction) => void;
   onSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void;
   nextStep: () => void;
+  isCategorySelected: () => boolean;
+  resetForm: () => void;
 }
 
 const validationSchema = Yup.object().shape({
@@ -50,11 +52,18 @@ const FormTransactionContext = createContext({} as FormTransactionContextProps);
 
 const FormTransactionProvider = ({ children }: { children: ReactNode }) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
+  const [formValues, setFormValues] = useState({ type: null });
+
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: values => console.log(values),
   });
+
+  const resetForm = () => {
+    setFormValues({ type: null });
+  };
+
   const onChangeType = (typeValue: SelectTypeTransaction) => {
     formik.setFieldValue('type', typeValue);
   };
@@ -71,7 +80,8 @@ const FormTransactionProvider = ({ children }: { children: ReactNode }) => {
       return currentValue + 1;
     });
   };
-  const backStep = () => {};
+  // const backStep = () => {};
+
   // const onSubmit = async (
   //   values: InitialValuesForm,
   //   helper: FormikHelpers<typeof initialValues>,
@@ -93,6 +103,9 @@ const FormTransactionProvider = ({ children }: { children: ReactNode }) => {
   //     // message.error(String(error));
   //   }
   // };
+  const isCategorySelected = () => {
+    return formik.values.category !== '';
+  };
 
   const contextValue = useMemo(
     () => ({
@@ -101,6 +114,8 @@ const FormTransactionProvider = ({ children }: { children: ReactNode }) => {
       onChangeType,
       onSubmit: formik.handleSubmit,
       nextStep,
+      isCategorySelected,
+      resetForm,
     }),
     [currentStep, formik.values, formik.handleSubmit],
   );
@@ -119,7 +134,9 @@ const useFormTransaction = () => {
     throw new Error('useUserContext was used outside of its Provider');
   }
 
-  return context;
+  return {
+    ...context,
+  };
 };
 
 export { useFormTransaction, FormTransactionProvider };
