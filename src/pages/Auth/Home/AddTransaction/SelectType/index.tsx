@@ -8,46 +8,26 @@ export const SelectType = () => {
   return (
     <S.ContainerCategory>
       <S.ButtonRecipe
-        style={{
-          backgroundColor: formValues.type === '+' ? '#233DC7' : '#ccc',
-          color: formValues.type === '+' ? '#fff' : '#888',
-        }}
+        selected={formValues.type === '+'}
         type="button"
         onClick={() => onChangeType('+')}
       >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            marginLeft: '100px',
-            gap: '10px',
-          }}
-        >
+        <S.ButtonContent>
           <Payments sx={{ color: 'white', marginLeft: '10px', fontSize: 55 }} />
           <S.Label> Receita</S.Label>
-        </div>
+        </S.ButtonContent>
       </S.ButtonRecipe>
       <S.ButtonExpense
-        style={{
-          backgroundColor: formValues.type === '-' ? '#233DC7' : '#ccc',
-          color: formValues.type === '-' ? '#fff' : '#888',
-        }}
+        selected={formValues.type === '-'}
         type="button"
         onClick={() => onChangeType('-')}
       >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            marginLeft: '100px',
-            gap: '10px',
-          }}
-        >
+        <S.ButtonContent>
           <ProductionQuantityLimits
             sx={{ color: 'white', marginLeft: '20px', fontSize: 55 }}
           />
           <S.Label> Despesas</S.Label>
-        </div>
+        </S.ButtonContent>
       </S.ButtonExpense>
     </S.ContainerCategory>
   );

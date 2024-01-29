@@ -1,15 +1,4 @@
-import { SetStateAction, useCallback, useEffect, useState } from 'react';
-import { FormikHelpers, useFormik } from 'formik';
-import * as ptBr from 'dayjs/locale/pt-br';
-import dayjs from 'dayjs';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Input, TextField } from '@mui/material';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
-import { message } from 'antd';
-import { ContainerCategorys, FormTransaction } from '../styles';
-import { ListCategory } from '../../../../../components/ListCategory';
-import { validateMoney } from '@/utils/validateMoney';
+import { useCallback, useEffect, useState } from 'react';
 import { TransactionCategory } from '@/interface/transactionCategory.interface';
 import {
   TitleCategory,
@@ -18,37 +7,16 @@ import {
   CategoryBadge,
   CategoryContainer,
 } from './styles';
-import { transactionsService } from '@/api/transactions/service';
-import { transactionCategoryService } from '@/api/transactionCategory/service';
-import { useUser } from '@/hooks/useUser';
 import { FlightTakeoff } from '@mui/icons-material';
+import { FormTransaction } from '../styles';
 
 export const SelectCategory = () => {
-  const { userAccess } = useUser();
   const [category, setCategory] = useState<TransactionCategory[]>([]);
   const [categoryInit, setCategoryInit] = useState('');
   const [categoryFiltered, setCategoryFiltered] = useState<
     TransactionCategory[]
   >([]);
   const [steppage, SetStepPage] = useState(0);
-  const [categorySelected, setCategorySelected] = useState(false);
-  
-  const formik = useFormik({
-    initialValues: {
-      type: '',
-      description: '',
-      category: '',
-      value: '',
-      bank: '',
-      installment: '',
-      finalInstallment: '',
-      isPaid: '',
-      date: null,
-    },
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
 
   const datas = [
     {
@@ -120,14 +88,9 @@ export const SelectCategory = () => {
   }, []);
 
   const filterCategory = useCallback(() => {
-    formik.setFieldValue('category', '');
-
-    const selectedType = formik.values.type;
-    const categoryByType = category.filter(
-      _category => _category.type === selectedType,
-    );
+    const categoryByType = category.filter(_category => _category.type);
     setCategoryFiltered(categoryByType);
-  }, [formik, category]);
+  }, [category]);
 
   useEffect(() => {
     filterCategory();
