@@ -11,6 +11,7 @@ export default function Login() {
   const handleFormSubmit = useCallback(
     async (e: FormEvent) => {
       e.preventDefault();
+      console.log(email, password);
 
       try {
         await login(email, password);
