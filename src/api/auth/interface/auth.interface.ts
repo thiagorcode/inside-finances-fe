@@ -1,10 +1,10 @@
 import { ResponseDefault } from '../../../interface/responseDefault.interface';
 
 export interface AuthLogin extends ResponseDefault {
-  user: {
+  userAccess: {
     id: string;
     username: string;
     email: string;
-    active: boolean;
+    token: string;
   };
 }
