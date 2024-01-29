@@ -16,11 +16,11 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "@emotion/react": "11.9.3",
-    "@emotion/styled": "11.9.3",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
     "@headlessui/react": "^1.6.4",
-    "@mui/icons-material": "^5.8.3",
-    "@mui/material": "5.8.3",
+    "@mui/icons-material": "^5.15.6",
+    "@mui/material": "^5.8.3",
     "@mui/system": "5.8.3",
     "@mui/x-date-pickers": "^5.0.6",
     "antd": "^5.1.1",
