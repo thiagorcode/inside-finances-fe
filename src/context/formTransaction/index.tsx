@@ -13,7 +13,6 @@ interface FormTransactionContextProps {
   onSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void;
   nextStep: () => void;
   isCategorySelected: () => boolean;
-  resetForm: () => void;
 }
 
 const validationSchema = Yup.object().shape({
@@ -59,10 +58,6 @@ const FormTransactionProvider = ({ children }: { children: ReactNode }) => {
     validationSchema,
     onSubmit: values => console.log(values),
   });
-
-  const resetForm = () => {
-    setFormValues({ type: null });
-  };
 
   const onChangeType = (typeValue: SelectTypeTransaction) => {
     formik.setFieldValue('type', typeValue);
@@ -115,7 +110,6 @@ const FormTransactionProvider = ({ children }: { children: ReactNode }) => {
       onSubmit: formik.handleSubmit,
       nextStep,
       isCategorySelected,
-      resetForm,
     }),
     [currentStep, formik.values, formik.handleSubmit],
   );

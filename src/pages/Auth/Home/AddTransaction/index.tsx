@@ -11,8 +11,7 @@ import { useFormTransaction } from '@/context/formTransaction';
 
 export const AddTransaction = () => {
   const { toggleModal } = useModal();
-  const { onSubmit, currentStep, nextStep, formValues, resetForm } =
-    useFormTransaction();
+  const { onSubmit, currentStep, nextStep, formValues } = useFormTransaction();
 
   const components = [
     <SelectType key={'type'} />,
