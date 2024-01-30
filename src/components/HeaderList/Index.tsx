@@ -12,6 +12,7 @@ export default function HeaderList() {
   const dataTitle = {
     '/transactions': 'Transition',
     '/settings': 'Settings',
+    '/filter': 'Filter',
   };
 
   useEffect(() => {
