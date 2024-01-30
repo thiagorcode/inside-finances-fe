@@ -15,6 +15,7 @@ import { TransactionsFilters } from './transactions.filters';
 import { Transactions } from '@/interface/transactions.interface';
 import { TransactionTableDay, TransactionTableMonth } from './tables';
 import { StatusMoney } from './components/StatusMoney/statusMoney';
+import { Spending } from './components/Spending';
 
 export interface InitialValueForm {
   type: string;
@@ -160,6 +161,7 @@ export const TransactionsGeneral = () => {
   return (
     <>
       <StatusMoney />
+      <Spending />
       {modal?.manageTransaction?.isOpen && <ManageTransaction />}
     </>
   );

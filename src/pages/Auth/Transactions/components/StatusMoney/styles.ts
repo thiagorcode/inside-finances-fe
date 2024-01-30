@@ -45,6 +45,10 @@ export const Container = styled.div`
 
 export const Button = styled.button`
   color: #ffffff;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  padding-left: 10px;
+  padding-right: 10px;
   border: 1px solid #ffffff;
   border-radius: 50px;
   display: flex;
