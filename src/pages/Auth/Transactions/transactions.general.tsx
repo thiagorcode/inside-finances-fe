@@ -158,46 +158,7 @@ export const TransactionsGeneral = () => {
 
   return (
     <>
-      <TransactionsCard
-        loading={loading}
-        recipe={totalizers?.recipe}
-        expense={totalizers?.expense}
-        totalBalance={totalizers?.totalBalance}
-      />
-      {selectTypeSummary === 'day' && (
-        <TransactionsFilters
-          valueForm={valueForm}
-          categoryFiltered={categoryFiltered}
-          changeDate={handleChangeDateForm}
-          changeValueForm={handleChangeForm}
-        />
-      )}
-
-      <Grid style={{ padding: '10px 0 50px 0' }}>
-        <S.ContainerTable>
-          <Radio.Group
-            className="ant-tables-transactions"
-            value={selectTypeSummary}
-            onChange={handleChangeTypeSummary}
-          >
-            <Radio.Button value="day">Dia</Radio.Button>
-            <Radio.Button value="month">Mensal</Radio.Button>
-            {/* <Radio.Button value="year">Anual</Radio.Button> */}
-            {/* <Radio.Button value="category">Categorias</Radio.Button> */}
-          </Radio.Group>
-          <TransactionTableDay
-            loading={loading}
-            transactions={transactions}
-            loadTransactions={loadTransactions}
-            typeSummary={selectTypeSummary}
-            typeTable="day"
-          />
-          <TransactionTableMonth
-            typeSummary={selectTypeSummary}
-            typeTable="month"
-          />
-        </S.ContainerTable>
-      </Grid>
+      <div></div>
       {modal?.manageTransaction?.isOpen && <ManageTransaction />}
     </>
   );

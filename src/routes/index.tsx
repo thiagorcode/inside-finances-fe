@@ -7,6 +7,7 @@ import Transactions from '../pages/Auth/Transactions';
 import Login from '../pages/Public/Login';
 import Register from '../pages/Public/Register';
 import { ProtectedRoute } from './protectedRoute';
+import { LayoutTransaction } from '@/layout/layoutTransaction';
 
 export default function Routes() {
   return (
@@ -25,9 +26,9 @@ export default function Routes() {
         path="/transactions"
         element={
           <ProtectedRoute>
-            <Menu>
+            <LayoutTransaction>
               <Transactions />
-            </Menu>
+            </LayoutTransaction>
           </ProtectedRoute>
         }
       />

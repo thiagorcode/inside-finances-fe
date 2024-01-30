@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import * as S from './style';
 
 interface CarouselProps {
@@ -5,6 +6,7 @@ interface CarouselProps {
 }
 
 export default function CarouselButton({ toggleModal }: CarouselProps) {
+  const navigate = useNavigate();
   const handleOpenModal = (key: string) => {
     toggleModal({
       [key]: {
@@ -32,7 +34,7 @@ export default function CarouselButton({ toggleModal }: CarouselProps) {
         <div>
           <S.CarBox>
             <S.MotionIcon>
-              <button>
+              <button onClick={() => navigate('/transactions')}>
                 <S.StyledDescript />
               </button>
             </S.MotionIcon>

@@ -1,10 +1,10 @@
 :root {
   /* --main-bg-color: ; */
   --secondary-bg-color: #2b2e35;
-  --secondary-hover-bg-color: rgba(255,255,255, 0.1);
+  --secondary-hover-bg-color: rgba(255, 255, 255, 0.1);
   /* --main-text-color: ; */
   /* --main-secondary-color: ; */
-  --main-bg-button-color: #233DC7;
+  --main-bg-button-color: #233dc7;
   --color-recipe: #00c614;
   --color-expense: #ff0404;
 }
@@ -37,7 +37,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #fff;
-  background: #22242c;
+  background: #16110d;
 }
 button {
   background-color: transparent;
@@ -46,10 +46,12 @@ button {
   cursor: pointer;
 }
 
-input, select, textarea, button {
+input,
+select,
+textarea,
+button {
   outline: 0;
 }
-
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -95,5 +97,4 @@ code {
 label.ant-radio-button-wrapper {
   background-color: #000 !important;
   color: #1677ff !important;
-
 }
