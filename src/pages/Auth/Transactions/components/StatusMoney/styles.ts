@@ -2,16 +2,14 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
+  margin-top: 2rem;
   border-radius: 5px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
 
   .default {
     width: 70%;
     padding: 1rem;
-    margin-bottom: 10px;
     background-color: #323238;
     display: flex;
     flex-direction: column;

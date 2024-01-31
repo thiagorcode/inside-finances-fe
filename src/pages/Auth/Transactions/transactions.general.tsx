@@ -14,7 +14,7 @@ import { ManageTransaction } from '@/components/ManageTransactions';
 import { TransactionsFilters } from './transactions.filters';
 import { Transactions } from '@/interface/transactions.interface';
 import { TransactionTableDay, TransactionTableMonth } from './tables';
-import { StatusMoney } from './components/StatusMoney/statusMoney';
+import { StatusMoney } from './components/StatusMoney';
 import { Spending } from './components/Spending';
 
 export interface InitialValueForm {
