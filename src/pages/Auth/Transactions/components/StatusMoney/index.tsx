@@ -43,7 +43,8 @@ export const StatusMoney = () => {
         </div>
       </Container>
       <Button>
-        <FilterAltOutlined sx={{ color: 'white' }} /> Filtro
+        <FilterAltOutlined sx={{ color: 'white' }} />
+        <span className="text">Filtro</span>
       </Button>
     </>
   );

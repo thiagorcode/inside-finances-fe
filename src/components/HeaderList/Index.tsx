@@ -10,9 +10,9 @@ export default function HeaderList() {
   const path = location.pathname as keyof typeof dataTitle;
 
   const dataTitle = {
-    '/transactions': 'Transition',
+    '/transactions': 'Transações',
     '/settings': 'Settings',
-    '/filter': 'Filter',
+    '/filter': 'Filtro',
   };
 
   useEffect(() => {

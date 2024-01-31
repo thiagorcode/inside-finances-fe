@@ -47,11 +47,17 @@ export const Button = styled.button`
   color: #ffffff;
   margin-left: 1rem;
   margin-top: 1rem;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   border: 1px solid #ffffff;
   border-radius: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .text {
+    margin-left: 3px;
+  }
 `;
