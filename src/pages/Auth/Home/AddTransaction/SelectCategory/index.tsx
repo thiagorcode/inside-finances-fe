@@ -16,7 +16,6 @@ export const SelectCategory = () => {
   const [categoryFiltered, setCategoryFiltered] = useState<
     TransactionCategory[]
   >([]);
-  const [steppage, SetStepPage] = useState(0);
 
   const datas = [
     {
@@ -98,98 +97,96 @@ export const SelectCategory = () => {
 
   return (
     <FormTransaction>
-      {steppage === 0 && (
-        <>
-          <div>
-            <TitleCategory>Categorias:</TitleCategory>
-          </div>
-          <div
-            style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
-          >
-            {filterData.map(date => (
-              <ContentOptions key={date.id}>
-                <div
-                  style={{
-                    alignItems: 'center',
-                    marginTop: '5px',
-                  }}
-                >
-                  <label>{date.name}</label>
-                </div>
-              </ContentOptions>
-            ))}
-          </div>
-          <div>
-            <FieldCategory>
-              <CategoryContainer>
-                <CategoryBadge>
-                  <FlightTakeoff
-                    style={{ fontSize: 40 }}
-                    sx={{ color: '#fff' }}
-                  />
-                  Viagem
-                </CategoryBadge>
-                <CategoryBadge>
-                  <FlightTakeoff
-                    style={{ fontSize: 40 }}
-                    sx={{ color: '#fff' }}
-                  />
-                  Viagem
-                </CategoryBadge>
-                <CategoryBadge>
-                  <FlightTakeoff
-                    style={{ fontSize: 40 }}
-                    sx={{ color: '#fff' }}
-                  />
-                  Viagem
-                </CategoryBadge>
-                <CategoryBadge>
-                  <FlightTakeoff
-                    style={{ fontSize: 40 }}
-                    sx={{ color: '#fff' }}
-                  />
-                  Viagem
-                </CategoryBadge>
-                <CategoryBadge>
-                  <FlightTakeoff
-                    style={{ fontSize: 40 }}
-                    sx={{ color: '#fff' }}
-                  />
-                  Viagem
-                </CategoryBadge>
-                <CategoryBadge>
-                  <FlightTakeoff
-                    style={{ fontSize: 40 }}
-                    sx={{ color: '#fff' }}
-                  />
-                  Viagem
-                </CategoryBadge>{' '}
-                <CategoryBadge>
-                  <FlightTakeoff
-                    style={{ fontSize: 40 }}
-                    sx={{ color: '#fff' }}
-                  />
-                  Viagem
-                </CategoryBadge>
-                <CategoryBadge>
-                  <FlightTakeoff
-                    style={{ fontSize: 40 }}
-                    sx={{ color: '#fff' }}
-                  />
-                  Viagem
-                </CategoryBadge>
-                <CategoryBadge>
-                  <FlightTakeoff
-                    style={{ fontSize: 40 }}
-                    sx={{ color: '#fff' }}
-                  />
-                  Viagem
-                </CategoryBadge>
-              </CategoryContainer>
-            </FieldCategory>
-          </div>
-        </>
-      )}
+      <>
+        <div>
+          <TitleCategory>Categorias:</TitleCategory>
+        </div>
+        <div
+          style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
+        >
+          {filterData.map(date => (
+            <ContentOptions key={date.id}>
+              <div
+                style={{
+                  alignItems: 'center',
+                  marginTop: '5px',
+                }}
+              >
+                <label>{date.name}</label>
+              </div>
+            </ContentOptions>
+          ))}
+        </div>
+        <div>
+          <FieldCategory>
+            <CategoryContainer>
+              <CategoryBadge>
+                <FlightTakeoff
+                  style={{ fontSize: 40 }}
+                  sx={{ color: '#fff' }}
+                />
+                Viagem
+              </CategoryBadge>
+              <CategoryBadge>
+                <FlightTakeoff
+                  style={{ fontSize: 40 }}
+                  sx={{ color: '#fff' }}
+                />
+                Viagem
+              </CategoryBadge>
+              <CategoryBadge>
+                <FlightTakeoff
+                  style={{ fontSize: 40 }}
+                  sx={{ color: '#fff' }}
+                />
+                Viagem
+              </CategoryBadge>
+              <CategoryBadge>
+                <FlightTakeoff
+                  style={{ fontSize: 40 }}
+                  sx={{ color: '#fff' }}
+                />
+                Viagem
+              </CategoryBadge>
+              <CategoryBadge>
+                <FlightTakeoff
+                  style={{ fontSize: 40 }}
+                  sx={{ color: '#fff' }}
+                />
+                Viagem
+              </CategoryBadge>
+              <CategoryBadge>
+                <FlightTakeoff
+                  style={{ fontSize: 40 }}
+                  sx={{ color: '#fff' }}
+                />
+                Viagem
+              </CategoryBadge>{' '}
+              <CategoryBadge>
+                <FlightTakeoff
+                  style={{ fontSize: 40 }}
+                  sx={{ color: '#fff' }}
+                />
+                Viagem
+              </CategoryBadge>
+              <CategoryBadge>
+                <FlightTakeoff
+                  style={{ fontSize: 40 }}
+                  sx={{ color: '#fff' }}
+                />
+                Viagem
+              </CategoryBadge>
+              <CategoryBadge>
+                <FlightTakeoff
+                  style={{ fontSize: 40 }}
+                  sx={{ color: '#fff' }}
+                />
+                Viagem
+              </CategoryBadge>
+            </CategoryContainer>
+          </FieldCategory>
+        </div>
+      </>
     </FormTransaction>
   );
 };
