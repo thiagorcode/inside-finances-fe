@@ -2,7 +2,7 @@ import { Route, Routes as RoutesDOM } from 'react-router-dom';
 
 import Menu from '../layout';
 
-import Dashboard from '../pages/Auth/Dashboard';
+import Home from '../pages/Auth/Home';
 import Transactions from '../pages/Auth/Transactions';
 import Login from '../pages/Public/Login';
 import Register from '../pages/Public/Register';
@@ -16,7 +16,7 @@ export default function Routes() {
         element={
           <ProtectedRoute>
             <Menu>
-              <Dashboard />
+              <Home />
             </Menu>
           </ProtectedRoute>
         }

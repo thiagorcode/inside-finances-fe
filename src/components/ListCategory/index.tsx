@@ -17,7 +17,7 @@ interface CategoryProps {
   category: TransactionCategory[];
 }
 
-export const SelectCategory = ({
+export const ListCategory = ({
   name,
   error,
   setFieldValue,
