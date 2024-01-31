@@ -5,7 +5,10 @@ export const Header = styled.header`
   padding-left: 8px;
   padding-right: 8px;
   display: flex;
-  justify-content: center;
-  justify-content: space-around;
   flex-direction: row;
+
+  .title {
+    margin-left: 6rem;
+    font-size: x-large;
+  }
 `;

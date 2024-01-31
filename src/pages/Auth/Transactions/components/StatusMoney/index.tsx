@@ -12,7 +12,7 @@ export const StatusMoney = () => {
   return (
     <>
       <Container>
-        <div ref={sliderRef} className="keen-slider">
+        <div ref={sliderRef} className="container keen-slider">
           <div className="default keen-slider__slide">
             <div className="container-icon">
               <p>Entrada</p>

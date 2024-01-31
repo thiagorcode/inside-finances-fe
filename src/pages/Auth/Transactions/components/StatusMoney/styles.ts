@@ -7,8 +7,11 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
 
+  .container {
+    width: 80%;
+  }
+
   .default {
-    width: 70%;
     padding: 1rem;
     background-color: #323238;
     display: flex;
@@ -18,7 +21,6 @@ export const Container = styled.div`
   }
 
   .green {
-    width: 70%;
     padding: 1rem;
     background-color: #015f43;
     display: flex;

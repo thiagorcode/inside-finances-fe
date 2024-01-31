@@ -33,7 +33,7 @@ export default function HeaderList() {
       <button onClick={() => navigate('/')}>
         <ArrowBack sx={{ color: 'white' }} />
       </button>
-      <h1>{title}</h1>
+      <h1 className="title">{title}</h1>
     </Header>
   );
 }
