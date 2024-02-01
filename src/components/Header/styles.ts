@@ -65,3 +65,16 @@ export const BoxNotification = styled.section`
     }
   }
 `;
+
+export const HeaderList = styled.header`
+  margin-top: 3rem;
+  padding-left: 8px;
+  padding-right: 8px;
+  display: flex;
+  flex-direction: row;
+
+  .title {
+    margin-left: 6rem;
+    font-size: x-large;
+  }
+`;
