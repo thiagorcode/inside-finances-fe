@@ -1,5 +1,4 @@
 import { Container } from './styles';
-import icon from 'assets/svg/Icon.svg';
 
 const data = [
   {
@@ -10,7 +9,7 @@ const data = [
   },
   {
     title: 'Gasolina',
-    description: 'Transporte',
+    description: 'Saude',
     price: 'R$ 160,00',
     date: '17 Maio 2023',
   },
@@ -22,7 +21,7 @@ const data = [
   },
   {
     title: 'Gasolina',
-    description: 'Transporte',
+    description: 'Saude',
     price: 'R$ 160,00',
     date: '17 Maio 2023',
   },
@@ -39,7 +38,11 @@ export const Spending = () => {
     <Container key={index}>
       <div className="spanding-container">
         <div className="icon-container">
-          <img className="icon" src={icon} alt="icon" />
+          <img
+            className="icon"
+            src={`assets/svg/${data.description}.svg`}
+            alt="icon"
+          />
           <div>
             <h3 className="title">{data.title}</h3>
             <p className="description">{data.description}</p>
