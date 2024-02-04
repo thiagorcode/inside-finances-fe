@@ -34,25 +34,29 @@ const data = [
 ];
 
 export const Spending = () => {
-  return data.map((data, index) => (
-    <Container key={index}>
-      <div className="spanding-container">
-        <div className="icon-container">
-          <img
-            className="icon"
-            src={`assets/svg/${data.description}.svg`}
-            alt="icon"
-          />
-          <div>
-            <h3 className="title">{data.title}</h3>
-            <p className="description">{data.description}</p>
+  return (
+    <Container>
+      {data.map((data, index) => (
+        <div key={index} className="container">
+          <div className="spanding-container">
+            <div className="icon-container">
+              <img
+                className="icon"
+                src={`assets/svg/${data.description}.svg`}
+                alt="icon"
+              />
+              <div>
+                <h3 className="title">{data.title}</h3>
+                <p className="description">{data.description}</p>
+              </div>
+            </div>
+            <div>
+              <h3 className="title">{data.price}</h3>
+              <p className="description">{data.date}</p>
+            </div>
           </div>
         </div>
-        <div>
-          <h3 className="title">{data.price}</h3>
-          <p className="description">{data.date}</p>
-        </div>
-      </div>
+      ))}
     </Container>
-  ));
+  );
 };

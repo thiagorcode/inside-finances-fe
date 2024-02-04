@@ -3,8 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 100%;
   margin-top: 2rem;
-  display: flex;
-  justify-content: center;
+  padding-bottom: 5rem;
 
   .container {
     display: flex;
@@ -13,6 +12,8 @@ export const Container = styled.div`
 
   .spanding-container {
     width: 90%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #f3f3f3;
