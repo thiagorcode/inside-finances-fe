@@ -1,7 +1,17 @@
+import {
+  AccordionContent,
+  AccordionRoot,
+  AccordionTrigger,
+} from '@/components/Accordion';
+import { Container } from './styles';
+
 export const Filter = () => {
   return (
-    <div>
-      <h1>filter</h1>
-    </div>
+    <Container>
+      <AccordionRoot>
+        <AccordionTrigger className="trigger">teste</AccordionTrigger>
+        <AccordionContent>testado</AccordionContent>
+      </AccordionRoot>
+    </Container>
   );
 };
