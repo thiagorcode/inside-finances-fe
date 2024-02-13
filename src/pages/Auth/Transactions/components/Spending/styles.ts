@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
   margin-top: 2rem;
   padding-bottom: 5rem;
 
@@ -11,7 +13,6 @@ export const Container = styled.div`
   }
 
   .spanding-container {
-    width: 90%;
     padding-top: 1rem;
     padding-bottom: 1rem;
     display: flex;

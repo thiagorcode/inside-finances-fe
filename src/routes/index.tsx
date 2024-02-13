@@ -7,6 +7,7 @@ import Transactions from '../pages/Auth/Transactions';
 import Login from '../pages/Public/Login';
 import Register from '../pages/Public/Register';
 import { ProtectedRoute } from './protectedRoute';
+import { Filter } from '@/pages/Auth/Filter';
 
 export default function Routes() {
   return (
@@ -27,6 +28,16 @@ export default function Routes() {
           <ProtectedRoute>
             <Menu>
               <Transactions />
+            </Menu>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/filter"
+        element={
+          <ProtectedRoute>
+            <Menu>
+              <Filter />
             </Menu>
           </ProtectedRoute>
         }

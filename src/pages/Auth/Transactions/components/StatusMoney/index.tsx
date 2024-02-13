@@ -5,9 +5,11 @@ import { AttachMoney } from '@mui/icons-material/';
 import { FilterAltOutlined } from '@mui/icons-material/';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
+import { useNavigate } from 'react-router-dom';
 
 export const StatusMoney = () => {
   const [sliderRef] = useKeenSlider();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -42,7 +44,7 @@ export const StatusMoney = () => {
           </div>
         </div>
       </Container>
-      <Button>
+      <Button onClick={() => navigate('/filter')}>
         <FilterAltOutlined sx={{ color: 'white' }} />
         <span className="text">Filtro</span>
       </Button>
