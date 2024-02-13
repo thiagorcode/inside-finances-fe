@@ -5,5 +5,5 @@ export const login = async (login: string, password: string) => {
     username: login,
     password: password,
   });
-  return await response.data;
+  return response.data;
 };

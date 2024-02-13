@@ -1,4 +1,4 @@
-import { metrics } from '@/shared/styles';
+import { metrics } from '@/uikit';
 import styled from 'styled-components';
 
 export const Resume = styled.div`
@@ -93,6 +93,6 @@ export const BoxTypeValues = styled.div`
 `;
 
 export const Title = styled.h2`
- margin-bottom: 10px;
- margin-left: 16px;
- `;
+  margin-bottom: 10px;
+  margin-left: 16px;
+`;
