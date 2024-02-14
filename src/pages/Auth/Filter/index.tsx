@@ -18,7 +18,11 @@ export const Filter = () => {
             Categoria
           </div>
         </AccordionTrigger>
-        <AccordionContent>testado</AccordionContent>
+        <AccordionContent className="content">
+          <button className="item">Saúde</button>
+          <button className="item">Alimentação</button>
+          <button className="item">Contas</button>
+        </AccordionContent>
       </AccordionRoot>
       <AccordionRoot className="root">
         <AccordionTrigger className="trigger">
@@ -29,7 +33,11 @@ export const Filter = () => {
             Tipo
           </div>
         </AccordionTrigger>
-        <AccordionContent>testado</AccordionContent>
+        <AccordionContent className="content">
+          <button className="item">Receita</button>
+          <button className="item">Despesa</button>
+          <button className="item">Todos</button>
+        </AccordionContent>
       </AccordionRoot>
       <AccordionRoot className="root">
         <AccordionTrigger className="trigger">
@@ -40,7 +48,11 @@ export const Filter = () => {
             Status
           </div>
         </AccordionTrigger>
-        <AccordionContent>testado</AccordionContent>
+        <AccordionContent className="content">
+          <button className="item">Pago</button>
+          <button className="item">Não Pago</button>
+          <button className="item">Todos</button>
+        </AccordionContent>
       </AccordionRoot>
     </Container>
   );

@@ -37,4 +37,17 @@ export const Container = styled.div`
     border-radius: 5px;
     padding: 3px;
   }
+
+  .content {
+    display: flex;
+    gap: 5px;
+    margin-top: 6px;
+  }
+
+  .item {
+    border-radius: 5px;
+    padding: 4px;
+    border: 1px solid #ffff;
+    color: white;
+  }
 `;
