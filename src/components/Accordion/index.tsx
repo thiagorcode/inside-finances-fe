@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { Button } from './styles';
+import { KeyboardArrowDown } from '@mui/icons-material';
 
 /* __________________Provider__________________ */
 interface AccordionContextProps {
@@ -44,20 +46,25 @@ export const AccordionRoot = React.forwardRef<
 });
 
 /* __________________Trigger__________________ */
-interface AccordionTriggerProps extends React.HTMLAttributes<HTMLDivElement> {
-  asChild?: boolean;
+interface AccordionTriggerProps
+  extends React.HTMLAttributes<HTMLButtonElement> {
+  children?: React.ReactNode;
 }
 
 export const AccordionTrigger = React.forwardRef<
-  HTMLDivElement,
+  HTMLButtonElement,
   AccordionTriggerProps
->(({ ...props }, ref) => {
+>(({ children, ...props }, ref) => {
   const { handleState, isOpen } = React.useContext(AccordionContext);
 
   return (
-    <button onClick={handleState}>
-      <div ref={ref} {...props}></div>
-    </button>
+    <Button {...props} ref={ref} onClick={handleState}>
+      {children}
+      <KeyboardArrowDown
+        sx={{ color: 'white' }}
+        className={`${isOpen ? 'to' : 'from'}`}
+      />
+    </Button>
   );
 });
 
@@ -65,7 +72,6 @@ AccordionTrigger.displayName = 'AccordionTrigger';
 
 /* __________________Content__________________ */
 interface AccordionContentProps extends React.HTMLAttributes<HTMLDivElement> {
-  asChild?: boolean;
   children?: React.ReactNode;
 }
 
