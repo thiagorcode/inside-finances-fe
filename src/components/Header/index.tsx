@@ -1,21 +1,51 @@
-import { useCallback } from 'react';
-import { NotificationsNoneOutlined, Logout } from '@mui/icons-material';
+import { useCallback, useEffect, useState } from 'react';
+import {
+  NotificationsNoneOutlined,
+  Logout,
+  ArrowBack,
+} from '@mui/icons-material';
 import {
   Container,
   Profile,
   Status,
   BoxProfile,
   BoxNotification,
+  HeaderList,
 } from './styles';
 import { User, useUser } from '@/hooks/useUser';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const { increase, userAccess } = useUser();
+  const location = useLocation();
+  const [title, setTitle] = useState<string>();
+  const navigate = useNavigate();
+  const path = location.pathname as keyof typeof dataTitle;
 
   const handleClickLogout = useCallback(() => {
     increase({} as User);
   }, []);
-  return (
+
+  const dataTitle = {
+    '/transactions': 'Transações',
+    '/settings': 'Settings',
+    '/filter': 'Filtro',
+  };
+
+  useEffect(() => {
+    function getTitle() {
+      const keys = Object.keys(dataTitle);
+      if (!keys.includes(path)) {
+        setTitle('Pagina não existente!');
+        return;
+      }
+
+      setTitle(dataTitle[path]);
+    }
+    getTitle();
+  });
+
+  return location.pathname === '/' ? (
     <Container>
       <BoxProfile>
         <Profile>T</Profile>
@@ -33,6 +63,13 @@ const Header: React.FC = () => {
         </button>
       </BoxNotification>
     </Container>
+  ) : (
+    <HeaderList>
+      <button onClick={() => navigate('/')}>
+        <ArrowBack sx={{ color: 'white' }} />
+      </button>
+      <h1 className="title">{title}</h1>
+    </HeaderList>
   );
 };
 
