@@ -5,6 +5,7 @@ import {
 } from '@/components/Accordion';
 import { Diamond } from '@mui/icons-material/';
 import { Container } from './styles';
+import { SelectItem, SelectRoot } from '@/components/Select';
 
 export const Filter = () => {
   return (
@@ -19,9 +20,11 @@ export const Filter = () => {
           </div>
         </AccordionTrigger>
         <AccordionContent className="content">
-          <button className="item">Saúde</button>
-          <button className="item">Alimentação</button>
-          <button className="item">Contas</button>
+          <SelectRoot>
+            <SelectItem key="alimentação">Alimentação</SelectItem>
+            <SelectItem key="alimentação">Saúde</SelectItem>
+            <SelectItem key="alimentação">Transporte</SelectItem>
+          </SelectRoot>
         </AccordionContent>
       </AccordionRoot>
       <AccordionRoot className="root">
