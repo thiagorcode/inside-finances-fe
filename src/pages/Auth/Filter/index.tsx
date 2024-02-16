@@ -5,7 +5,7 @@ import {
 } from '@/components/Accordion';
 import { Diamond } from '@mui/icons-material/';
 import { Container } from './styles';
-import { SelectItem, SelectRoot } from '@/components/Select';
+import { SelectItem, SelectContent } from '@/components/Select';
 
 export const Filter = () => {
   return (
@@ -20,11 +20,15 @@ export const Filter = () => {
           </div>
         </AccordionTrigger>
         <AccordionContent className="content">
-          <SelectRoot>
-            <SelectItem key="alimentação">Alimentação</SelectItem>
-            <SelectItem key="alimentação">Saúde</SelectItem>
-            <SelectItem key="alimentação">Transporte</SelectItem>
-          </SelectRoot>
+          <SelectContent>
+            <SelectItem key="food">Alimentação</SelectItem>
+          </SelectContent>
+          <SelectContent>
+            <SelectItem key="heal">Saúde</SelectItem>
+          </SelectContent>
+          <SelectContent>
+            <SelectItem key="trasport">Trasporte</SelectItem>
+          </SelectContent>
         </AccordionContent>
       </AccordionRoot>
       <AccordionRoot className="root">
@@ -37,9 +41,15 @@ export const Filter = () => {
           </div>
         </AccordionTrigger>
         <AccordionContent className="content">
-          <button className="item">Receita</button>
-          <button className="item">Despesa</button>
-          <button className="item">Todos</button>
+          <SelectContent>
+            <SelectItem key="revenue">Receita</SelectItem>
+          </SelectContent>
+          <SelectContent>
+            <SelectItem key="expense">Despesa</SelectItem>
+          </SelectContent>
+          <SelectContent>
+            <SelectItem key="all">Todos</SelectItem>
+          </SelectContent>
         </AccordionContent>
       </AccordionRoot>
       <AccordionRoot className="root">
@@ -52,9 +62,15 @@ export const Filter = () => {
           </div>
         </AccordionTrigger>
         <AccordionContent className="content">
-          <button className="item">Pago</button>
-          <button className="item">Não Pago</button>
-          <button className="item">Todos</button>
+          <SelectContent>
+            <SelectItem key="pay">Pago</SelectItem>
+          </SelectContent>
+          <SelectContent>
+            <SelectItem key="no pay">Não Pago</SelectItem>
+          </SelectContent>
+          <SelectContent>
+            <SelectItem key="all">Todos</SelectItem>
+          </SelectContent>
         </AccordionContent>
       </AccordionRoot>
     </Container>

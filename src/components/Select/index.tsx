@@ -31,7 +31,7 @@ interface SelectRootProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
 }
 
-export const SelectRoot = React.forwardRef<HTMLDivElement, SelectRootProps>(
+export const SelectContent = React.forwardRef<HTMLDivElement, SelectRootProps>(
   ({ children, ...props }, ref) => {
     return (
       <SelectProvider>
