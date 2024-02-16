@@ -73,6 +73,10 @@ export const Filter = () => {
           </SelectContent>
         </AccordionContent>
       </AccordionRoot>
+      <div className="button-content">
+        <button className="button-submit">Aplicar</button>
+        <button className="button-reset">Resetar</button>
+      </div>
     </Container>
   );
 };

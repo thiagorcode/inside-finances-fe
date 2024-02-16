@@ -50,4 +50,23 @@ export const Container = styled.div`
     border: 1px solid #ffff;
     color: white;
   }
+
+  .button-content {
+    width: 90%;
+    margin-top: 10rem;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .button-submit {
+    color: white;
+    background-color: #233dc7;
+    border-radius: 5px;
+    padding: 10px 15px;
+  }
+
+  .button-reset {
+    color: white;
+  }
 `;
