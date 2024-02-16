@@ -28,14 +28,12 @@ export const Transactions = () => {
 
   const loadTransactions = useCallback(async () => {
     try {
-      const response = await lastTransactions({
-        userId: userAccess.id!,
-      });
-
+      // const response = await lastTransactions({
+      //   userId: userAccess.id!,
+      // });
       // if (response.status !== 200)
       //   throw new Error('Erro ao carregas as últimas transações');
-
-      setTransactions(response.data.transactions);
+      // setTransactions(response.data.transactions);
     } catch (error) {
       message.error('Erro ao buscar as últimas transações');
     }
