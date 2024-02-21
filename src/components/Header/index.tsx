@@ -14,6 +14,8 @@ import {
 } from './styles';
 import { User, useUser } from '@/hooks/useUser';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { IoSettingsSharp } from "react-icons/io5";
+
 
 const Header: React.FC = () => {
   const { increase, userAccess } = useUser();
@@ -28,7 +30,7 @@ const Header: React.FC = () => {
 
   const dataTitle = {
     '/transactions': 'Transações',
-    '/settings': 'Settings',
+    '/settings': 'Configuração',
     '/filter': 'Filtro',
   };
 
@@ -57,6 +59,9 @@ const Header: React.FC = () => {
       <BoxNotification>
         <button type="button">
           <NotificationsNoneOutlined />
+        </button>
+        <button onClick={() => navigate("settings")}>
+          <IoSettingsSharp />
         </button>
         <button type="button" onClick={handleClickLogout}>
           <Logout />

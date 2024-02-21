@@ -8,6 +8,8 @@ import Login from '../pages/Public/Login';
 import Register from '../pages/Public/Register';
 import { ProtectedRoute } from './protectedRoute';
 import { Filter } from '@/pages/Auth/Filter';
+import SettingsPage from '@/pages/Auth/SettingsPage';
+
 
 export default function Routes() {
   return (
@@ -38,6 +40,16 @@ export default function Routes() {
           <ProtectedRoute>
             <Menu>
               <Filter />
+            </Menu>
+          </ProtectedRoute>
+        }
+      />
+          <Route
+        path="/settings"
+        element={
+          <ProtectedRoute >
+            <Menu>
+              <SettingsPage />
             </Menu>
           </ProtectedRoute>
         }
