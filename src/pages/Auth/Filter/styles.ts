@@ -10,7 +10,7 @@ export const Container = styled.div`
 
   .root {
     width: 90%;
-    padding: 4px;
+    padding: 8px 14px;
     border-radius: 8px;
     border: 1px solid #646464;
   }
@@ -36,6 +36,12 @@ export const Container = styled.div`
     background-color: #233dc7;
     border-radius: 5px;
     padding: 3px;
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .content {

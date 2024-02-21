@@ -4,19 +4,36 @@ import {
   AccordionTrigger,
 } from '@/components/Accordion';
 import { Diamond } from '@mui/icons-material/';
+import { CalendarMonth } from '@mui/icons-material/';
 import { Container } from './styles';
 import { SelectItem, SelectContent } from '@/components/Select';
 
 export const Filter = () => {
   return (
     <Container>
+      <button className="root">
+        <div className="trigger">
+          <div className="trigger-content">
+            <div className="icon">
+              <CalendarMonth sx={{ color: 'white' }} />
+            </div>
+            <div className="text">
+              <h4>Data da Transição</h4>
+              <p>01/07</p>
+            </div>
+          </div>
+        </div>
+      </button>
       <AccordionRoot className="root">
         <AccordionTrigger className="trigger">
           <div className="trigger-content">
             <div className="icon">
               <Diamond sx={{ color: 'white' }} />
             </div>
-            Categoria
+            <div className="text">
+              <h4>Categoria</h4>
+              <p>Filtro:</p>
+            </div>
           </div>
         </AccordionTrigger>
         <AccordionContent className="content">
@@ -37,7 +54,10 @@ export const Filter = () => {
             <div className="icon">
               <Diamond sx={{ color: 'white' }} />
             </div>
-            Tipo
+            <div className="text">
+              <h4>Tipo</h4>
+              <p>Filtro:</p>
+            </div>
           </div>
         </AccordionTrigger>
         <AccordionContent className="content">
@@ -58,7 +78,10 @@ export const Filter = () => {
             <div className="icon">
               <Diamond sx={{ color: 'white' }} />
             </div>
-            Status
+            <div className="text">
+              <h4>Status</h4>
+              <p>Filtro:</p>
+            </div>
           </div>
         </AccordionTrigger>
         <AccordionContent className="content">
