@@ -10,12 +10,10 @@ import api from '../../../../../services/api'
 import { display } from '@mui/system';
 
 export interface IDataMonthly {
-  dtCreated: string
-  dtUpdated: string
+
   expenseValue: number
   goal: number
   id: string
-  quantityTransactions: number
   recipeValue: number
   total: number
   userId: string
@@ -31,7 +29,7 @@ export default  function MonthlyGoals() {
 
   const DateAt = new Date();
   const CapturMonth = DateAt.getMonth() + 1;
-  const zerolocation = CapturMonth <= 9 ? '0' + CapturMonth : CapturMonth;
+  const MonthFormatted = CapturMonth <= 9 ? '0' + CapturMonth : CapturMonth;
   const Year = new Date().toLocaleDateString('pt-br', { year: 'numeric' });
   const options = {
     minimumFractionDigits: 2,
@@ -54,7 +52,7 @@ export default  function MonthlyGoals() {
   
   async function fetchData() {
     try {
-      const response = await api.get(`/transactions/reports-monthly?userId=${userAccess.id}&yearMonth=${Year}-${zerolocation}`);
+      const response = await api.get(`/transactions/reports-monthly?userId=${userAccess.id}&yearMonth=${Year}-${MonthFormatted}`);
       setDatasMonthly(response.data.reportMonthly);
     } catch (error) {
       console.error('Error fetching monthly reports:', error);
@@ -65,7 +63,6 @@ export default  function MonthlyGoals() {
     fetchData();
   }, []);
   
-console.log(datasMonthly)
 
   return (
   
