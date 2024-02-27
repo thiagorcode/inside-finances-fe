@@ -7,6 +7,7 @@ import ReactSpeedometer from 'react-d3-speedometer';
 import ModalMonthly from '@/components/ModalMonthly';
 import { useUser } from '@/hooks/useUser';
 import api from '../../../../../services/api'
+import { display } from '@mui/system';
 
 export interface IDataMonthly {
   dtCreated: string
@@ -26,10 +27,11 @@ export interface IDataMonthly {
 export default  function MonthlyGoals() {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const { userAccess } = useUser();
-  const [datasMonthly, setDatasMonthly] = useState<IDataMonthly[]>([])
+  const [datasMonthly, setDatasMonthly] = useState <IDataMonthly | null>(null)
 
   const DateAt = new Date();
   const CapturMonth = DateAt.getMonth() + 1;
+  const zerolocation = CapturMonth <= 9 ? '0' + CapturMonth : CapturMonth;
   const Year = new Date().toLocaleDateString('pt-br', { year: 'numeric' });
   const options = {
     minimumFractionDigits: 2,
@@ -52,8 +54,8 @@ export default  function MonthlyGoals() {
   
   async function fetchData() {
     try {
-      const response = await api.get(`/transactions/reports-monthly?userId=${userAccess.id}&yearMonth=${Year +'-'+ 0 + CapturMonth}`);
-      setDatasMonthly([response.data.reportMonthly]);
+      const response = await api.get(`/transactions/reports-monthly?userId=${userAccess.id}&yearMonth=${Year}-${zerolocation}`);
+      setDatasMonthly(response.data.reportMonthly);
     } catch (error) {
       console.error('Error fetching monthly reports:', error);
     }
@@ -63,26 +65,35 @@ export default  function MonthlyGoals() {
     fetchData();
   }, []);
   
+console.log(datasMonthly)
+
   return (
-    <S.ContainerCard>
-  {datasMonthly.length === 0 ? (
-    <p>carregando</p>
+  
+    <div>
+  {!datasMonthly ? (
+    <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+      <h1>carregando ..</h1>
+    </div>
   ) : (
-    datasMonthly.map(item => (
+    <S.ContainerCard>
       <>
         <S.MonthlyValue>
           <div>
             <S.Valuespan>
               R${' '}
-              {item.recipeValue.toLocaleString('pt-br', options)}
+              {datasMonthly?.recipeValue.toLocaleString('pt-br', options)}
             </S.Valuespan>
             <button onClick={() => setOpenModal(!openModal)}>
               <img src={IconMonthly} alt="Caneta para modificar" />
             </button>
-            <ModalMonthly datasMonthly={datasMonthly} openModal={openModal} setOpenModal={setOpenModal} />
+            <ModalMonthly
+              datasMonthly={datasMonthly}
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            />
           </div>
           <S.Datespan>
-             {selectMonth}, {item.year}
+            {selectMonth}, {datasMonthly?.year}
           </S.Datespan>
         </S.MonthlyValue>
         <S.BarDivision />
@@ -94,8 +105,8 @@ export default  function MonthlyGoals() {
                 <p> Valor atual</p>
               </S.ImgStyle>
               <span>
-                R${' '}
-                {item.recipeValue.toLocaleString('pt-br', options)}
+                R$
+                {datasMonthly?.recipeValue.toLocaleString('pt-br', options)}
               </span>
             </div>
             <div style={{ marginTop: '20px' }}>
@@ -104,8 +115,8 @@ export default  function MonthlyGoals() {
                 <p> Meta mensal</p>
               </S.ImgStyle>
               <span>
-                R${' '}
-                {item.goal.toLocaleString('pt-br', {
+                R$
+                {datasMonthly?.goal.toLocaleString('pt-br', {
                   minimumFractionDigits: 2,
                 })}
               </span>
@@ -115,20 +126,21 @@ export default  function MonthlyGoals() {
             <ReactSpeedometer
               width={180}
               height={115}
-              maxValue={item.goal}
+              maxValue={datasMonthly?.goal}
               maxSegmentLabels={1}
               segments={6}
-              value={item.recipeValue}
+              value={datasMonthly?.recipeValue}
               startColor={'#293DC7'}
               endColor={'#2f52d4 '}
               needleColor="#001dd8"
             />
-            <S.Stylespan style={{fontSize:'12px'}}>valor atual vs meta mensal</S.Stylespan>
+            <S.Stylespan style={{ fontSize: '12px' }}>
+              valor atual vs meta mensal
+            </S.Stylespan>
           </S.DirectionSpeedMater>
         </div>
       </>
-    ))
+    </S.ContainerCard>
   )}
-</S.ContainerCard>
-  );
-}
+</div>
+  )}

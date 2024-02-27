@@ -78,7 +78,9 @@ span{
 
 
 export const DirectionSpeedMater = styled.div`
+
 display: flex;
+margin-top: 10px;
 margin-left: 40px;
 flex-direction: column;
 
