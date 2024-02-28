@@ -24,9 +24,8 @@ export default function MonthlyGoals() {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const { userAccess } = useUser();
   const [dataMonthly, setDataMonthly] = useState<IDataMonthly | null>(null);
-  
-  const FormattednegativeValue =  (dataMonthly?.expenseValue ?? 0) * -1;
-  console.log(FormattednegativeValue)
+
+  const formattedExpenseValue = (dataMonthly?.expenseValue ?? 0) * -1;
 
   const dateAt = new Date();
   const captureMonth = dateAt.getMonth() + 1;
@@ -66,7 +65,6 @@ export default function MonthlyGoals() {
     fetchData();
   }, []);
 
-
   return (
     <div>
       {!dataMonthly ? (
@@ -85,7 +83,7 @@ export default function MonthlyGoals() {
             <S.MonthlyValue>
               <div>
                 <S.Valuespan>
-                  R$ {dataMonthly?.recipeValue.toLocaleString('pt-br', options)}
+                  R$ {formattedExpenseValue.toLocaleString('pt-br', options)}
                 </S.Valuespan>
                 <button onClick={() => setOpenModal(!openModal)}>
                   <img src={IconMonthly} alt="Caneta para modificar" />
@@ -110,7 +108,7 @@ export default function MonthlyGoals() {
                   </S.ImgStyle>
                   <span>
                     R$
-                    {FormattednegativeValue.toLocaleString('pt-br', options)}
+                    {formattedExpenseValue.toLocaleString('pt-br', options)}
                   </span>
                 </div>
                 <div style={{ marginTop: '20px' }}>
@@ -133,7 +131,7 @@ export default function MonthlyGoals() {
                   maxValue={dataMonthly?.goal}
                   maxSegmentLabels={1}
                   segments={6}
-                  value={FormattednegativeValue}
+                  value={formattedExpenseValue}
                   startColor={'#293DC7'}
                   endColor={'#2f52d4 '}
                   needleColor="#001dd8"
