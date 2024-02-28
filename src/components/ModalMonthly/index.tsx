@@ -52,7 +52,7 @@ export default function ModalMonthly({
             <S.InputsPart>
               <span>Meta mensal</span>
               <input
-                type="text"
+                type='number'
                 value={modificationMonthly}
                 onChange={handleValueGoal}
                 placeholder={dataMonthly?.goal.toLocaleString('pt-br', options)}

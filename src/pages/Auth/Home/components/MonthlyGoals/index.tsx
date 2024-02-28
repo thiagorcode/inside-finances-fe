@@ -63,6 +63,7 @@ export default function MonthlyGoals() {
     fetchData();
   }, []);
 
+
   return (
     <div>
       {!dataMonthly ? (
@@ -106,7 +107,7 @@ export default function MonthlyGoals() {
                   </S.ImgStyle>
                   <span>
                     R$
-                    {dataMonthly?.recipeValue.toLocaleString('pt-br', options)}
+                    {dataMonthly?.expenseValue.toLocaleString('pt-br', options)}
                   </span>
                 </div>
                 <div style={{ marginTop: '20px' }}>
@@ -129,7 +130,7 @@ export default function MonthlyGoals() {
                   maxValue={dataMonthly?.goal}
                   maxSegmentLabels={1}
                   segments={6}
-                  value={dataMonthly?.recipeValue}
+                  value={dataMonthly?.expenseValue}
                   startColor={'#293DC7'}
                   endColor={'#2f52d4 '}
                   needleColor="#001dd8"
