@@ -5,6 +5,7 @@ import { Transactions } from './components/Transactions';
 import { Investments } from './components/Investments';
 import { Cards } from './components/Cards';
 import { useModal } from '@/context/modal';
+import MonthlyGoals from './components/MonthlyGoals';
 
 const Dashboard = () => {
   const { modal } = useModal();
@@ -21,6 +22,7 @@ const Dashboard = () => {
         <Investments />
         {/* <Cards />  */}
       </Box>
+      <MonthlyGoals/>
       {modal?.addTransaction?.isOpen && <AddTransaction />}
     </>
   );

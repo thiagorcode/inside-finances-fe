@@ -1,10 +1,12 @@
 :root {
   /* --main-bg-color: ; */
-  --secondary-bg-color: #2b2e35;
+  --secondary-bg-color: #2c2c3a;
   --secondary-hover-bg-color: rgba(255, 255, 255, 0.1);
+  --description-color: #9F9F9F;
   /* --main-text-color: ; */
   /* --main-secondary-color: ; */
   --main-bg-button-color: #233dc7;
+  --color-button-icon: #E1E1E6;
   --color-recipe: #00c614;
   --color-expense: #ff0404;
 }
