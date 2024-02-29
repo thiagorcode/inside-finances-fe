@@ -8,6 +8,7 @@ import {
   useMemo,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthLogin } from '@/api/auth/interface/auth.interface';
 
 interface AuthContextProps {
   login: (user: string, password: string) => Promise<void>;
@@ -21,14 +22,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = useCallback(async (user: string, password: string) => {
     try {
-      const response = await authService.login(user, password);
+      const response: AuthLogin = await authService.login(user, password);
 
-      // if (response.status) {
-      //   console.log('No Auth');
-      //   return;
-      // }
-
-      increase(response.data.user);
+      increase(response.userAccess);
       navigate('/');
 
       return;

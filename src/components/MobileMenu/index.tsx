@@ -1,42 +1,43 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
-  AccountBalance,
   Equalizer,
-  Logout,
-  Language,
-  DataUsage,
+  SpaceDashboard,
+  Article,
+  Inventory,
 } from '@mui/icons-material';
 import { Nav } from './styles';
 
 const MobileMenu: React.FC = () => {
+
+  const location = useLocation();
+  if (location.pathname === '/settings') {
+    return null; 
+  }
+
+  
   return (
     <Nav>
       <ul>
-        {/* <li>
+        <li>
           <Link to="/controle">
-            <Equalizer />
-          </Link>
-        </li> */}
-        {/* <li>
-          <Link to="/">
-            <AccountBalance />
-          </Link>
-        </li> */}
-        <li>
-          <Link to="/">
-            <DataUsage />
-          </Link>
-        </li>
-        {/* <li>
-          <Link to="/">
-            <Language />
+            <SpaceDashboard sx={{ color: '#523CF8' }} />
           </Link>
         </li>
         <li>
           <Link to="/">
-            <Logout />
+            <Inventory sx={{ color: '#646464' }} />
           </Link>
-        </li> */}
+        </li>
+        <li>
+          <Link to="/">
+            <Equalizer sx={{ color: '#646464' }} />
+          </Link>
+        </li>
+        <li>
+          <Link to="/">
+            <Article sx={{ color: '#646464' }} />
+          </Link>
+        </li>
       </ul>
     </Nav>
   );
