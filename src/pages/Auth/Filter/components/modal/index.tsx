@@ -1,6 +1,8 @@
 import { useModal } from '@/context/modal';
 import { Modal } from '@mui/material';
 import { ModalContent } from './style';
+import { Input } from '@/components/Input';
+import { DateForm } from '../DateForm';
 
 export function FilterModal() {
   const { toggleModal } = useModal();
@@ -19,7 +21,9 @@ export function FilterModal() {
       onClose={closeModal}
       sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
     >
-      <ModalContent>teste</ModalContent>
+      <ModalContent>
+        <DateForm />
+      </ModalContent>
     </Modal>
   );
 }
