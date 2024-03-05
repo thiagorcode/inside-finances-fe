@@ -1,18 +1,38 @@
 import styled from 'styled-components';
 
+interface ButtonProps {
+  checked?: boolean;
+}
+
+export const Button = styled.button<ButtonProps>`
+  padding: 10px 20px;
+  background-color: ${({ checked }) => (checked ? '#233DC7' : '')};
+  color: white;
+  border: ${({ checked }) => (checked ? '' : '1px solid #ffff')};
+  border-radius: 5px;
+`;
+
 export const Container = styled.div`
   margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+
+  .form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
 
   .root {
     width: 90%;
     padding: 8px 14px;
     border-radius: 8px;
     border: 1px solid #646464;
+  }
+
+  .input {
+    display: none;
   }
 
   .trigger {

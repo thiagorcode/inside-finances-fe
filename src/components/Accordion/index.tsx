@@ -58,7 +58,7 @@ export const AccordionTrigger = React.forwardRef<
   const { handleState, isOpen } = React.useContext(AccordionContext);
 
   return (
-    <Button {...props} ref={ref} onClick={handleState}>
+    <Button type="button" {...props} ref={ref} onClick={handleState}>
       {children}
       <KeyboardArrowDown
         sx={{ color: 'white' }}
