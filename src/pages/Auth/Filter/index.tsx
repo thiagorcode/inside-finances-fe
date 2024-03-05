@@ -10,9 +10,11 @@ import { FilterModal } from './components/modal';
 import { useModal } from '@/context/modal';
 import { useFormik } from 'formik';
 import { selectSchema } from './selectSchema';
+import { useDate } from '@/hooks/useFilter';
 
 export const Filter = () => {
   const { modal, toggleModal } = useModal();
+  const { dates } = useDate();
 
   function openModal(key: string) {
     toggleModal({
@@ -50,7 +52,13 @@ export const Filter = () => {
                 </div>
                 <div className="text">
                   <h4>Data da Transição</h4>
-                  <p>01/07</p>
+                  <p>{`${dates.initDate?.toLocaleDateString('pt-br', {
+                    day: 'numeric',
+                    month: 'numeric',
+                  })} - ${dates.endDate?.toLocaleDateString('pt-br', {
+                    day: 'numeric',
+                    month: 'numeric',
+                  })}`}</p>
                 </div>
               </div>
             </div>

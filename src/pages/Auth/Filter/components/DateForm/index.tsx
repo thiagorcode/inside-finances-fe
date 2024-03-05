@@ -2,8 +2,11 @@ import { Input } from '@/components/Input';
 import { Container } from './style';
 import { useFormik } from 'formik';
 import { dateSchema } from './dateSchema';
+import { useDate } from '@/hooks/useFilter';
 
 export const DateForm = () => {
+  const { saveDates } = useDate();
+
   const formik = useFormik({
     initialValues: {
       initDate: '',
@@ -11,7 +14,10 @@ export const DateForm = () => {
     },
     validationSchema: dateSchema,
     onSubmit: values => {
-      console.log(values);
+      const initDate = new Date(values.initDate);
+      const endDate = new Date(values.endDate);
+      console.log(initDate, endDate);
+      saveDates({ initDate, endDate });
     },
   });
   return (
