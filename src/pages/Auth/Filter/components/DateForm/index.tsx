@@ -3,9 +3,19 @@ import { Container } from './style';
 import { useFormik } from 'formik';
 import { dateSchema } from './dateSchema';
 import { useDate } from '@/hooks/useFilter';
+import { useModal } from '@/context/modal';
 
 export const DateForm = () => {
   const { saveDates } = useDate();
+  const { toggleModal } = useModal();
+
+  function closeModal() {
+    toggleModal({
+      addFilter: {
+        isOpen: false,
+      },
+    });
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -14,10 +24,15 @@ export const DateForm = () => {
     },
     validationSchema: dateSchema,
     onSubmit: values => {
-      const initDate = new Date(values.initDate);
-      const endDate = new Date(values.endDate);
-      console.log(initDate, endDate);
+      const splitInit = values.initDate.split('-');
+      const splitEnd = values.endDate.split('-');
+
+      const initDate = new Date(
+        `${splitInit[1]}-${splitInit[2]}-${splitInit[0]}`,
+      );
+      const endDate = new Date(`${splitEnd[1]}-${splitEnd[2]}-${splitEnd[0]}`);
       saveDates({ initDate, endDate });
+      closeModal();
     },
   });
   return (

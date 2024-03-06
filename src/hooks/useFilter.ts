@@ -23,3 +23,27 @@ export const useDate = create<DateState>()(
     },
   ),
 );
+
+export interface SelectProps {
+  category?: string;
+  type?: string;
+  status?: string;
+}
+
+interface SelectState {
+  select: SelectProps;
+  saveSelect: (select: SelectProps) => void;
+}
+
+export const useSelect = create<SelectState>()(
+  persist(
+    set => ({
+      select: {},
+      saveSelect: select => set({ select: select }),
+    }),
+    {
+      name: 'filterSelect',
+      getStorage: () => localStorage,
+    },
+  ),
+);
