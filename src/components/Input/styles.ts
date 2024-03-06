@@ -9,4 +9,8 @@ export const Container = styled.input`
   border: 1px solid #d1d1d1;
   color: white;
   font-size: 16px;
+
+  @media (max-width: 458px) {
+    width: 100%;
+  }
 `;
