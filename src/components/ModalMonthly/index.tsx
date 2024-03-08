@@ -1,29 +1,20 @@
 import React, { useState } from 'react';
 import * as S from './style';
 import { IoClose } from 'react-icons/io5';
+import { useModal } from '@/context/modal';
 
 interface IModal {
-  openModal: boolean;
-  setOpenModal: (openModal: boolean) => void;
   dataMonthly: {
-    expenseValue: number;
     goal: number;
     id: string;
     userId: string;
-    year: string;
-    yearMonth: string;
   };
 }
 
-export default function ModalMonthly({
-  openModal,
-  setOpenModal,
-  dataMonthly,
-}: IModal) {
+export default function ModalMonthly({ dataMonthly }: IModal) {
+  const { toggleModal } = useModal();
+
   const [modificationMonthly, setModificationMonthly] = useState('');
-  const options = {
-    minimumFractionDigits: 2,
-  };
 
   function handleValueGoal(e: {
     target: { value: React.SetStateAction<string> };
@@ -31,39 +22,42 @@ export default function ModalMonthly({
     setModificationMonthly(e.target.value);
   }
 
-  function handleSaveClick() {
+  const handleCloseModal = () => {
+    toggleModal({
+      updateGoal: {
+        isOpen: false,
+      },
+    });
+  };
+  const handleSaveClick = () => {
     if (modificationMonthly == '') {
       alert('insira alguma meta');
     } else {
-      setOpenModal(!openModal);
+      handleCloseModal();
     }
-  }
+  };
 
-  if (openModal) {
-    return (
-      <S.Background>
-        <S.ContainerModal>
-          <>
-            <S.ButtonClose>
-              <button onClick={() => setOpenModal(!openModal)}>
-                <IoClose style={{ color: 'white' }} size={40} />
-              </button>
-            </S.ButtonClose>
-            <S.InputsPart>
-              <span>Meta mensal</span>
-              <input
-                type='number'
-                value={modificationMonthly}
-                onChange={handleValueGoal}
-                placeholder={dataMonthly?.goal.toLocaleString('pt-br', options)}
-              ></input>
-              <button onClick={handleSaveClick}>Salvar</button>
-            </S.InputsPart>
-          </>
-        </S.ContainerModal>
-      </S.Background>
-    );
-  } else {
-    return <></>;
-  }
+  return (
+    <S.Background>
+      <S.ContainerModal>
+        <>
+          <S.ButtonClose>
+            <button onClick={handleCloseModal}>
+              <IoClose style={{ color: 'white' }} size={40} />
+            </button>
+          </S.ButtonClose>
+          <S.InputsPart>
+            <span>Meta mensal</span>
+            <input
+              type="number"
+              value={modificationMonthly}
+              onChange={handleValueGoal}
+              placeholder={dataMonthly?.goal.toString()}
+            ></input>
+            <button onClick={handleSaveClick}>Salvar</button>
+          </S.InputsPart>
+        </>
+      </S.ContainerModal>
+    </S.Background>
+  );
 }
