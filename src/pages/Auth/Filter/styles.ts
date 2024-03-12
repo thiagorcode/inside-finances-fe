@@ -78,8 +78,9 @@ export const Container = styled.div`
   }
 
   .button-content {
+    position: fixed;
+    bottom: 6rem;
     width: 90%;
-    margin-top: 10rem;
     gap: 15px;
     display: flex;
     flex-direction: column;

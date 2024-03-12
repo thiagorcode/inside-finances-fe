@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface ButtonProps {
+  checked?: boolean;
+}
+
 export const Container = styled.div`
   width: 100%;
   margin-top: 2rem;
@@ -43,7 +47,8 @@ export const Container = styled.div`
   }
 `;
 
-export const Button = styled.button`
+export const Button = styled.button<ButtonProps>`
+  background-color: ${({ checked }) => (checked ? '#233DC7' : '')};
   color: #ffffff;
   margin-left: 1rem;
   margin-top: 1rem;
@@ -51,7 +56,7 @@ export const Button = styled.button`
   padding-right: 15px;
   padding-top: 3px;
   padding-bottom: 3px;
-  border: 1px solid #ffffff;
+  border: ${({ checked }) => (checked ? '' : '1px solid #ffff')};
   border-radius: 50px;
   display: flex;
   justify-content: center;

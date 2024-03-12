@@ -9,13 +9,14 @@ import { Button, Container } from './styles';
 import { FilterModal } from './components/modal';
 import { useModal } from '@/context/modal';
 import { useFormik } from 'formik';
-import { selectSchema } from './selectSchema';
-import { useDate, useSelect } from '@/hooks/useFilter';
+import { useNavigate } from 'react-router-dom';
+import { useDate, useFilter } from '@/hooks/useFilter';
 
 export const Filter = () => {
   const { modal, toggleModal } = useModal();
-  const { dates } = useDate();
-  const { select, saveSelect } = useSelect();
+  const { dates, resetDate } = useDate();
+  const { filter, saveFilter, resetFilter } = useFilter();
+  const navigate = useNavigate();
 
   function openModal(key: string) {
     toggleModal({
@@ -71,20 +72,26 @@ export const Filter = () => {
   }
 
   function reset() {
-    localStorage.removeItem('filterDate');
-    localStorage.removeItem('filterSelect');
-    window.location.reload();
+    resetFilter();
+    resetDate();
+    navigate('/transactions');
   }
 
   const formik = useFormik({
     initialValues: {
-      category: '',
-      type: '',
-      status: '',
+      category: filter.category,
+      type: filter.type,
+      status: filter.status,
     },
-    validationSchema: selectSchema,
     onSubmit: values => {
-      saveSelect(values);
+      saveFilter({
+        initDate: dates.initDate,
+        endDate: dates.endDate,
+        category: values.category,
+        type: values.type,
+        status: values.status,
+      });
+      navigate('/transactions');
     },
   });
 
@@ -105,7 +112,7 @@ export const Filter = () => {
                   </div>
                   <div className="text">
                     <h4>Data da Transição</h4>
-                    <div>{dateText(dates.initDate, dates.endDate)}</div>
+                    <div>{dateText(filter.initDate, filter.endDate)}</div>
                   </div>
                 </div>
               </div>
@@ -118,7 +125,7 @@ export const Filter = () => {
                   </div>
                   <div className="text">
                     <h4>Categoria</h4>
-                    <div>{selectText(select.category)}</div>
+                    <div>{selectText(filter.category)}</div>
                   </div>
                 </div>
               </AccordionTrigger>
@@ -166,9 +173,6 @@ export const Filter = () => {
                   Trasporte
                 </Button>
               </AccordionContent>
-              {formik.touched.category && formik.errors.category ? (
-                <div>{formik.errors.category}</div>
-              ) : null}
             </AccordionRoot>
             <AccordionRoot className="root">
               <AccordionTrigger className="trigger">
@@ -178,7 +182,7 @@ export const Filter = () => {
                   </div>
                   <div className="text">
                     <h4>Tipo</h4>
-                    <div>{selectText(select.type)}</div>
+                    <div>{selectText(filter.type)}</div>
                   </div>
                 </div>
               </AccordionTrigger>
@@ -226,9 +230,6 @@ export const Filter = () => {
                   Todos
                 </Button>
               </AccordionContent>
-              {formik.touched.type && formik.errors.type ? (
-                <div>{formik.errors.type}</div>
-              ) : null}
             </AccordionRoot>
             <AccordionRoot className="root">
               <AccordionTrigger className="trigger">
@@ -238,7 +239,7 @@ export const Filter = () => {
                   </div>
                   <div className="text">
                     <h4>Status</h4>
-                    <div>{selectText(select.status)}</div>
+                    <div>{selectText(filter.status)}</div>
                   </div>
                 </div>
               </AccordionTrigger>
@@ -286,9 +287,6 @@ export const Filter = () => {
                   Todos
                 </Button>
               </AccordionContent>
-              {formik.touched.status && formik.errors.status ? (
-                <div>{formik.errors.status}</div>
-              ) : null}
             </AccordionRoot>
             <div className="button-content">
               <button type="submit" className="button-submit">

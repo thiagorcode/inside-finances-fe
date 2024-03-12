@@ -1,6 +1,34 @@
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
+export interface FilterProps {
+  category?: string;
+  type?: string;
+  status?: string;
+  initDate?: Date;
+  endDate?: Date;
+}
+
+interface FilterState {
+  filter: FilterProps;
+  saveFilter: (filter: FilterProps) => void;
+  resetFilter: () => void;
+}
+
+export const useFilter = create<FilterState>()(
+  persist(
+    set => ({
+      filter: {},
+      saveFilter: filter => set({ filter: filter }),
+      resetFilter: () => set({ filter: {} }),
+    }),
+    {
+      name: 'filter',
+      getStorage: () => sessionStorage,
+    },
+  ),
+);
+
 interface DateProps {
   initDate?: Date;
   endDate?: Date;
@@ -8,42 +36,12 @@ interface DateProps {
 
 interface DateState {
   dates: DateProps;
-  saveDates: (dates: DateProps) => void;
+  saveDate: (dates: DateProps) => void;
+  resetDate: () => void;
 }
 
-export const useDate = create<DateState>()(
-  persist(
-    set => ({
-      dates: {},
-      saveDates: dates => set({ dates: dates }),
-    }),
-    {
-      name: 'filterDate',
-      getStorage: () => localStorage,
-    },
-  ),
-);
-
-export interface SelectProps {
-  category?: string;
-  type?: string;
-  status?: string;
-}
-
-interface SelectState {
-  select: SelectProps;
-  saveSelect: (select: SelectProps) => void;
-}
-
-export const useSelect = create<SelectState>()(
-  persist(
-    set => ({
-      select: {},
-      saveSelect: select => set({ select: select }),
-    }),
-    {
-      name: 'filterSelect',
-      getStorage: () => localStorage,
-    },
-  ),
-);
+export const useDate = create<DateState>()(set => ({
+  dates: {},
+  saveDate: dates => set({ dates: dates }),
+  resetDate: () => set({ dates: {} }),
+}));

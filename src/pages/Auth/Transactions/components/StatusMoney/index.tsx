@@ -1,3 +1,4 @@
+import { useFilter } from '@/hooks/useFilter';
 import { Button, Container } from './styles';
 import { ArrowCircleUp } from '@mui/icons-material/';
 import { ArrowCircleDown } from '@mui/icons-material/';
@@ -9,7 +10,16 @@ import { useNavigate } from 'react-router-dom';
 
 export const StatusMoney = () => {
   const [sliderRef] = useKeenSlider();
+  const { filter } = useFilter();
   const navigate = useNavigate();
+
+  const selectedFilters: string[] = [];
+
+  if (filter?.category) selectedFilters.push('category');
+  if (filter?.type) selectedFilters.push('type');
+  if (filter?.status) selectedFilters.push('status');
+  if (filter?.initDate) selectedFilters.push('initDate');
+  if (filter?.endDate) selectedFilters.push('endDate');
 
   return (
     <>
@@ -44,9 +54,17 @@ export const StatusMoney = () => {
           </div>
         </div>
       </Container>
-      <Button onClick={() => navigate('/filter')}>
+      <Button
+        checked={selectedFilters.length != 0}
+        onClick={() => navigate('/filter')}
+      >
         <FilterAltOutlined sx={{ color: 'white' }} />
         <span className="text">Filtro</span>
+        {selectedFilters.length != 0 ? (
+          <p className="text">({selectedFilters.length})</p>
+        ) : (
+          <p></p>
+        )}
       </Button>
     </>
   );

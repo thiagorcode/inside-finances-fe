@@ -2,11 +2,12 @@ import { Input } from '@/components/Input';
 import { Container } from './style';
 import { useFormik } from 'formik';
 import { dateSchema } from './dateSchema';
-import { useDate } from '@/hooks/useFilter';
 import { useModal } from '@/context/modal';
+import { useDate, useFilter } from '@/hooks/useFilter';
 
 export const DateForm = () => {
-  const { saveDates } = useDate();
+  const { saveDate } = useDate();
+  const { saveFilter } = useFilter();
   const { toggleModal } = useModal();
 
   function closeModal() {
@@ -31,7 +32,8 @@ export const DateForm = () => {
         `${splitInit[1]}-${splitInit[2]}-${splitInit[0]}`,
       );
       const endDate = new Date(`${splitEnd[1]}-${splitEnd[2]}-${splitEnd[0]}`);
-      saveDates({ initDate, endDate });
+      saveDate({ initDate, endDate });
+      saveFilter({ initDate, endDate });
       closeModal();
     },
   });
