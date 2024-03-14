@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 
 import { AddTransaction } from './AddTransaction';
 import { Transactions } from './components/Transactions';
@@ -8,6 +8,7 @@ import MonthlyGoals from './components/MonthlyGoals';
 import api from '../../../services/api';
 import { useUser } from '@/hooks/useUser';
 import ModalMonthly from '@/components/ModalMonthly';
+import ClipLoader from 'react-spinners/MoonLoader';
 
 export interface IReportMonthly {
   expenseValue: number;
@@ -27,6 +28,13 @@ const Dashboard = () => {
   const [reportMonthly, setReportMonthly] = useState<IReportMonthly | null>(
     null,
   );
+  const override: CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
+  };
+
+  const [loading, setLoading] = useState<boolean>(true);
   const dateAt = new Date();
   const captureMonth = dateAt.getMonth() + 1;
   const monthFormatted = captureMonth <= 9 ? '0' + captureMonth : captureMonth;
@@ -45,6 +53,15 @@ const Dashboard = () => {
   useEffect(() => {
     loadReportMonthly();
   }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 8000);
+  }, []);
+
+
   return (
     <>
       <div
@@ -60,11 +77,23 @@ const Dashboard = () => {
         <Investments />
         {/* <Cards />  */}
       </div>
-      <MonthlyGoals
-        expenseValue={reportMonthly?.expenseValue}
-        goalValue={reportMonthly?.goal}
-        year={reportMonthly?.year ?? '1999'}
-      />
+      {!reportMonthly ? (
+   
+          <ClipLoader
+            color={'#233dc7'}
+            cssOverride={override}
+            loading={loading}
+            size={60}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+      ) : (
+        <MonthlyGoals
+          expenseValue={reportMonthly?.expenseValue}
+          goalValue={reportMonthly?.goal}
+          year={reportMonthly?.year ?? '1999'}
+        />
+      )}
       {modal?.addTransaction?.isOpen && <AddTransaction />}
       {modal?.updateGoal?.isOpen && reportMonthly?.id && (
         <ModalMonthly
