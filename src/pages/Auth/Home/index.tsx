@@ -8,7 +8,7 @@ import MonthlyGoals from './components/MonthlyGoals';
 import api from '../../../services/api';
 import { useUser } from '@/hooks/useUser';
 import ModalMonthly from '@/components/ModalMonthly';
-import ClipLoader from 'react-spinners/MoonLoader';
+import LoandingSpinner from '@/components/LoadingSpinner';
 
 export interface IReportMonthly {
   expenseValue: number;
@@ -24,7 +24,6 @@ export interface IReportMonthly {
 const Dashboard = () => {
   const { modal } = useModal();
   const { userAccess } = useUser();
-
   const [reportMonthly, setReportMonthly] = useState<IReportMonthly | null>(
     null,
   );
@@ -34,7 +33,6 @@ const Dashboard = () => {
     borderColor: "red",
   };
 
-  const [loading, setLoading] = useState<boolean>(true);
   const dateAt = new Date();
   const captureMonth = dateAt.getMonth() + 1;
   const monthFormatted = captureMonth <= 9 ? '0' + captureMonth : captureMonth;
@@ -54,14 +52,6 @@ const Dashboard = () => {
     loadReportMonthly();
   }, []);
 
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 8000);
-  }, []);
-
-
   return (
     <>
       <div
@@ -78,15 +68,7 @@ const Dashboard = () => {
         {/* <Cards />  */}
       </div>
       {!reportMonthly ? (
-   
-          <ClipLoader
-            color={'#233dc7'}
-            cssOverride={override}
-            loading={loading}
-            size={60}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
+         <LoandingSpinner/>
       ) : (
         <MonthlyGoals
           expenseValue={reportMonthly?.expenseValue}
