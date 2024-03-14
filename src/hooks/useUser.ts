@@ -5,7 +5,7 @@ export interface User {
   id?: string;
   username?: string;
   email?: string;
-  active?: boolean;
+  token?: string;
 }
 
 interface UserState {
@@ -15,7 +15,7 @@ interface UserState {
 
 export const useUser = create<UserState>()(
   persist(
-    (set, get) => ({
+    set => ({
       userAccess: {},
       increase: (user: User) => set({ userAccess: user }),
     }),

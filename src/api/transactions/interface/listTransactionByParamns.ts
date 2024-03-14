@@ -17,14 +17,13 @@ type QueryTransactions = {
 //   };
 // }
 export interface ResponseTransactionsByParams {
-  transactions: Transactions[];
+  transactions: Transactions;
 }
 
 export interface RequestTransactions {
-  limit?: number;
-  page?: number;
-  userId: string;
-  query: QueryTransactions;
+  startDate?: string;
+  endDate?: string;
+  token: string;
 }
 
 export interface ResponseTotalizer {
