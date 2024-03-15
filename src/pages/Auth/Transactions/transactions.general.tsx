@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { transactionsService } from '@/api/transactions/service';
 import { useUser } from '@/hooks/useUser';
 import { ManageTransaction } from '@/components/ManageTransactions';
-import { Transactions } from '@/interface/transactions.interface';
+import { Totalizes, Transition } from '@/interface/transactions.interface';
 import { Button, Container, Container2 } from './styles';
 import { useKeenSlider } from 'keen-slider/react';
 import { useFilter } from '@/hooks/useFilter';
@@ -22,7 +22,8 @@ export const TransactionsGeneral = () => {
   const [sliderRef] = useKeenSlider();
   const { filter } = useFilter();
   const navigate = useNavigate();
-  const [response, setResponse] = useState<Transactions[]>([]);
+  const [totalizer, setTotalizer] = useState<Totalizes>();
+  const [transition, setTransition] = useState<Transition[]>([]);
 
   const selectedFilters: string[] = [];
 
@@ -36,46 +37,26 @@ export const TransactionsGeneral = () => {
     const response = await transactionsService.listTransactionsByParams({
       token: userAccess.token!,
     });
-    setResponse(response.data.transactions);
+    setTotalizer(response.data.transactions.totalizers);
+    setTransition(response.data.transactions.transactions);
   }, []);
 
-  /*  useEffect(() => {
+  useEffect(() => {
     loadTransaction();
-  }, [userAccess.token]); */
-  console.log(response);
+  }, [userAccess.token]);
 
-  const data = [
-    {
-      title: 'Gasolina',
-      description: 'Transporte',
-      price: 'R$ 160,00',
-      date: '17 Maio 2023',
-    },
-    {
-      title: 'Gasolina',
-      description: 'Saude',
-      price: 'R$ 160,00',
-      date: '17 Maio 2023',
-    },
-    {
-      title: 'Gasolina',
-      description: 'Transporte',
-      price: 'R$ 160,00',
-      date: '17 Maio 2023',
-    },
-    {
-      title: 'Gasolina',
-      description: 'Saude',
-      price: 'R$ 160,00',
-      date: '17 Maio 2023',
-    },
-    {
-      title: 'Gasolina',
-      description: 'Transporte',
-      price: 'R$ 160,00',
-      date: '17 Maio 2023',
-    },
-  ];
+  function convertDate(dateString: string) {
+    const sliceDate = dateString.slice(0, 10);
+    const splitDate = sliceDate.split('-');
+    const date = new Date(`${splitDate[1]}-${splitDate[2]}-${splitDate[0]}`);
+
+    return date.toLocaleDateString('pt-BR', {
+      timeZone: 'UTC',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+  }
 
   return (
     <>
@@ -87,7 +68,7 @@ export const TransactionsGeneral = () => {
               <ArrowCircleUp sx={{ color: '#00B37E' }} />
             </div>
             <div className="container-title">
-              <h2>R$ 17.400,00</h2>
+              <h2>R${totalizer?.recipe}</h2>
             </div>
           </div>
           <div className="default keen-slider__slide">
@@ -96,7 +77,7 @@ export const TransactionsGeneral = () => {
               <ArrowCircleDown sx={{ color: '#F75A68' }} />
             </div>
             <div className="container-title">
-              <h2>R$ 1.259,00</h2>
+              <h2>R${totalizer?.expense}</h2>
             </div>
           </div>
           <div className="green keen-slider__slide">
@@ -105,7 +86,7 @@ export const TransactionsGeneral = () => {
               <AttachMoney sx={{ color: 'white' }} />
             </div>
             <div className="container-title">
-              <h2>R$ 16.141,00</h2>
+              <h2>R${totalizer?.totalBalance}</h2>
             </div>
           </div>
         </div>
@@ -123,23 +104,19 @@ export const TransactionsGeneral = () => {
         )}
       </Button>
       <Container2>
-        {data.map((data, index) => (
+        {transition.map((data, index) => (
           <div key={index} className="container">
             <div className="spanding-container">
               <div className="icon-container">
-                <img
-                  className="icon"
-                  src={`assets/svg/${data.description}.svg`}
-                  alt="icon"
-                />
+                <img className="icon" src={`assets/svg/Saude.svg`} alt="icon" />
                 <div>
-                  <h3 className="title">{data.title}</h3>
+                  <h3 className="title">{data.category.name}</h3>
                   <p className="description">{data.description}</p>
                 </div>
               </div>
               <div>
-                <h3 className="title">{data.price}</h3>
-                <p className="description">{data.date}</p>
+                <h3 className="title">R${data.value}</h3>
+                <p className="description">{convertDate(data.date)}</p>
               </div>
             </div>
           </div>

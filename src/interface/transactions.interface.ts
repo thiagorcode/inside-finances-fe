@@ -1,6 +1,6 @@
 import { TransactionCategory } from './transactionCategory.interface';
 
-interface Totalizes {
+export interface Totalizes {
   recipe: number;
   expense: number;
   totalBalance: number;
@@ -16,7 +16,7 @@ interface Card {
   id: string;
 }
 
-interface Transition {
+export interface Transition {
   value: number;
   date: string;
   userId: string;
