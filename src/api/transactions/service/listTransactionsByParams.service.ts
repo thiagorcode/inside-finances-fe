@@ -1,4 +1,4 @@
-import { useUser } from '@/hooks/useUser';
+import { queryStringBuilder } from '@/utils/queryStringBuilder';
 import api from '../../../services/api';
 import {
   RequestTransactions,
@@ -9,13 +9,20 @@ export const listTransactionsByParams = ({
   endDate,
   startDate,
   token,
+  categoryId,
+  isPaid,
+  type,
 }: RequestTransactions) => {
-  return api.get<ResponseTransactionsByParams>(
-    `transactions/list?${startDate}&?${endDate}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  const teste = queryStringBuilder({
+    categoryId,
+    type,
+    isPaid,
+    startDate,
+    endDate,
+  });
+  return api.get<ResponseTransactionsByParams>(`transactions/list?${teste}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-  );
+  });
 };

@@ -25,15 +25,8 @@ export const DateForm = () => {
     },
     validationSchema: dateSchema,
     onSubmit: values => {
-      const splitInit = values.initDate.split('-');
-      const splitEnd = values.endDate.split('-');
-
-      const initDate = new Date(
-        `${splitInit[1]}-${splitInit[2]}-${splitInit[0]}`,
-      );
-      const endDate = new Date(`${splitEnd[1]}-${splitEnd[2]}-${splitEnd[0]}`);
-      saveDate({ initDate, endDate });
-      saveFilter({ initDate, endDate });
+      saveDate(values);
+      saveFilter(values);
       closeModal();
     },
   });

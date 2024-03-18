@@ -23,6 +23,9 @@ export interface ResponseTransactionsByParams {
 export interface RequestTransactions {
   startDate?: string;
   endDate?: string;
+  type?: string;
+  isPaid?: boolean;
+  categoryId?: string;
   token: string;
 }
 

@@ -36,6 +36,11 @@ export const TransactionsGeneral = () => {
   const loadTransaction = useCallback(async () => {
     const response = await transactionsService.listTransactionsByParams({
       token: userAccess.token!,
+      startDate: filter?.initDate,
+      endDate: filter?.endDate,
+      isPaid: filter?.status,
+      type: filter?.type,
+      categoryId: filter?.category,
     });
     setTotalizer(response.data.transactions.totalizers);
     setTransition(response.data.transactions.transactions);

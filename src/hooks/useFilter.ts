@@ -4,9 +4,9 @@ import { persist } from 'zustand/middleware';
 export interface FilterProps {
   category?: string;
   type?: string;
-  status?: string;
-  initDate?: Date;
-  endDate?: Date;
+  status?: boolean;
+  initDate?: string;
+  endDate?: string;
 }
 
 interface FilterState {
@@ -30,8 +30,8 @@ export const useFilter = create<FilterState>()(
 );
 
 interface DateProps {
-  initDate?: Date;
-  endDate?: Date;
+  initDate?: string;
+  endDate?: string;
 }
 
 interface DateState {
