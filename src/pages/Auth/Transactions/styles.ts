@@ -1,32 +1,112 @@
 import styled from 'styled-components';
 
-export const ContainerFilters = styled.section`
+interface ButtonProps {
+  checked?: boolean;
+}
+
+export const Container = styled.div`
+  width: 100%;
+  margin-top: 2rem;
+  border-radius: 5px;
   display: flex;
-  align-items: stretch;
   justify-content: center;
+
+  .container {
+    width: 80%;
+  }
+
+  .default {
+    padding: 1rem;
+    background-color: #323238;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 5px;
+  }
+
+  .green {
+    padding: 1rem;
+    background-color: #015f43;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 5px;
+  }
+
+  .container-icon {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color: #c4c4cc;
+  }
+
+  .container-title {
+    padding-top: 6px;
+    display: flex;
+    justify-content: center;
+  }
+`;
+
+export const Button = styled.button<ButtonProps>`
+  background-color: ${({ checked }) => (checked ? '#233DC7' : '')};
+  color: #ffffff;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border: ${({ checked }) => (checked ? '' : '1px solid #ffff')};
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .text {
+    margin-left: 3px;
+  }
+`;
+export const WrapperListTransactions = styled.div`
+  align-items: center;
+  justify-content: center;
+  display: flex;
+`;
+export const ListTransactions = styled.div`
+  width: 95%;
+  display: flex;
   flex-direction: column;
-  background-color: var(--secondary-bg-color);
-  border-radius: 14px;
-  margin: 10px auto;
-  padding: 20px 30px;
-`;
+  margin-top: 2rem;
+  padding-bottom: 5rem;
 
-export const ContainerDate = styled.div`
-  .ant-picker-input input {
-    color: #fff;
-    font-weight: bold;
+  .container {
+    display: flex;
+    flex-direction: column;
   }
-`;
 
-export const ContainerCards = styled.div`
-  div.ant-statistic-title {
-    color: #fff;
-    font-weight: bold;
+  .spanding-container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
   }
-`;
 
-export const ContainerTable = styled.div`
-  .ant-tables-transactions {
-    margin-bottom: 1rem;
+  .icon-container {
+    display: flex;
+  }
+
+  .icon {
+    margin-right: 1rem;
+  }
+
+  .title {
+    color: #e1e1e6;
+  }
+  .wrapper-value {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .description {
+    color: #c4c4cc;
   }
 `;

@@ -1,167 +1,146 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
-import { Radio, RadioChangeEvent } from 'antd';
-import { useModal } from '@/context/modal';
-import dayjs from 'dayjs';
-import { TransactionCategory } from '@/interface/transactionCategory.interface';
-import * as S from './styles';
-
 import { transactionsService } from '@/api/transactions/service';
-import { transactionCategoryService } from '@/api/transactionCategory/service';
-import { TransactionsCard } from './transactions.card';
 import { useUser } from '@/hooks/useUser';
 import { ManageTransaction } from '@/components/ManageTransactions';
-import { TransactionsFilters } from './transactions.filters';
-import { Transactions } from '@/interface/transactions.interface';
-import { TransactionTableDay, TransactionTableMonth } from './tables';
-import { StatusMoney } from './components/StatusMoney';
-import { Spending } from './components/Spending';
-
-export interface InitialValueForm {
-  type: string;
-  date: dayjs.Dayjs;
-  categoryId: number;
-  dateFormatted: string | null;
-}
+import { Totalizes, Transaction } from '@/interface/transactions.interface';
+import {
+  Button,
+  Container,
+  ListTransactions,
+  WrapperListTransactions,
+} from './styles';
+import { useKeenSlider } from 'keen-slider/react';
+import { useFilter } from '@/hooks/useFilter';
+import { useNavigate } from 'react-router-dom';
+import {
+  ArrowCircleDown,
+  ArrowCircleUp,
+  AttachMoney,
+  FilterAltOutlined,
+} from '@mui/icons-material';
+import 'keen-slider/keen-slider.min.css';
+import { useModal } from '@/context/modal';
+import { formatMoney } from '@/utils/formatMoney';
 
 export const TransactionsGeneral = () => {
   const { userAccess } = useUser();
   const { modal } = useModal();
+  const [sliderRef] = useKeenSlider();
+  const { filter } = useFilter();
+  const navigate = useNavigate();
+  const [totalizer, setTotalizer] = useState<Totalizes>();
+  const [transaction, setTransaction] = useState<Transaction[]>([]);
 
-  const [transactions, setTransactions] = useState<Transactions[]>([]);
-  const [totalizers, setTotalizers] = useState<any>(null);
-  // const [hasNext, setHasNext] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [selectTypeSummary, setSelectTypeSummary] = useState<string>('day');
+  const selectedFilters: string[] = [];
 
-  const handleChangeTypeSummary = (e: RadioChangeEvent) => {
-    setSelectTypeSummary(e.target.value);
-  };
-  const [category, setCategory] = useState<TransactionCategory[]>([]);
-  const [categoryFiltered, setCategoryFiltered] = useState<
-    TransactionCategory[]
-  >([]);
+  if (filter?.category) selectedFilters.push('category');
+  if (filter?.type) selectedFilters.push('type');
+  if (filter?.status) selectedFilters.push('status');
+  if (filter?.initDate) selectedFilters.push('initDate');
+  if (filter?.endDate) selectedFilters.push('endDate');
 
-  const initialValueForm = {
-    type: '',
-    date: dayjs(new Date()),
-    categoryId: 0,
-    dateFormatted: null,
-  };
-
-  const [valueForm, setValueForm] =
-    useState<InitialValueForm>(initialValueForm);
-
-  const loadTransactions = useCallback(async () => {
-    setLoading(true);
-    const { categoryId, dateFormatted, type } = valueForm;
-
-    try {
-      const { data } = await transactionsService.listTransactionsByParams({
-        limit: 50,
-        page,
-        userId: userAccess.id!,
-        query: {
-          categoryId,
-          date: dateFormatted,
-          type,
-        },
-      });
-
-      setTransactions(data.transactions);
-      // setHasNext(data.transactions.hasNext);
-      // setPage(value => value + 1);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  }, [page, valueForm]);
-
-  const loadTotalizers = useCallback(async () => {
-    const { categoryId, dateFormatted, type } = valueForm;
-    const query: { [key: string]: any } = {};
-    if (categoryId) query.categoryId = categoryId;
-    if (dateFormatted) query.date = dateFormatted;
-    if (type) query.type = type;
-
-    try {
-      const { data } = await transactionsService.loadTotalizers({
-        limit: 0,
-        page: 0,
-        userId: userAccess.id!,
-        query,
-      });
-
-      setTotalizers(data.totalizers);
-      // setHasNext(data.transactions.hasNext);
-      // setPage(value => value + 1);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [valueForm, userAccess.id]);
-  // está sendo utilizado no add transaction
-  const loadCategory = useCallback(async () => {
-    try {
-      const response = await transactionCategoryService.listCategory();
-
-      if (response.status !== 200) {
-        console.log('error');
-        return;
-      }
-
-      setCategory(response.data.category);
-    } catch (error) {
-      console.log(error);
-    }
+  const loadTransaction = useCallback(async () => {
+    const response = await transactionsService.listTransactionsByParams({
+      token: userAccess.token!,
+      startDate: filter?.initDate,
+      endDate: filter?.endDate,
+      isPaid: filter?.status,
+      type: filter?.type,
+      categoryId: filter?.category,
+    });
+    setTotalizer(response.data.transactions.totalizers);
+    setTransaction(response.data.transactions.transactions);
   }, []);
 
-  const filterCategory = useCallback(() => {
-    const categoryByType = category.filter(
-      _category => _category.type === valueForm.type,
-    );
-
-    setCategoryFiltered(categoryByType);
-  }, [category, valueForm.type]);
-
   useEffect(() => {
-    filterCategory();
-  }, [valueForm.type]);
+    loadTransaction();
+  }, []);
 
-  useEffect(() => {
-    loadCategory();
-    loadTransactions();
-    loadTotalizers();
-  }, [valueForm]);
+  function convertDate(dateString: string) {
+    const sliceDate = dateString.slice(0, 10);
+    const splitDate = sliceDate.split('-');
+    const date = new Date(`${splitDate[1]}-${splitDate[2]}-${splitDate[0]}`);
 
-  const handleChangeForm = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValueForm(value => ({
-        ...value,
-        [event.target.name]: event.target.value,
-      }));
-    },
-    [],
-  );
-
-  const handleChangeDateForm = useCallback(
-    (date: dayjs.Dayjs | null, dateString: string) => {
-      if (!date) return;
-
-      setValueForm(value => ({
-        ...value,
-        date: date,
-        dateFormatted: dateString,
-      }));
-    },
-    [],
-  );
+    return date
+      .toLocaleDateString('pt-BR', {
+        timeZone: 'UTC',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      })
+      .replaceAll(' de ', ' ');
+  }
 
   return (
     <>
-      <StatusMoney />
-      <Spending />
+      <Container>
+        <div ref={sliderRef} className="container keen-slider">
+          <div className="default keen-slider__slide">
+            <div className="container-icon">
+              <p>Entrada</p>
+              <ArrowCircleUp sx={{ color: '#00B37E' }} />
+            </div>
+            <div className="container-title">
+              <h2>{formatMoney(totalizer?.recipe ?? 0)}</h2>
+            </div>
+          </div>
+          <div className="default keen-slider__slide">
+            <div className="container-icon">
+              <p>Saida</p>
+              <ArrowCircleDown sx={{ color: '#F75A68' }} />
+            </div>
+            <div className="container-title">
+              <h2>{formatMoney(totalizer?.expense ?? 0)}</h2>
+            </div>
+          </div>
+          <div className="green keen-slider__slide">
+            <div className="container-icon">
+              <p>Total</p>
+              <AttachMoney sx={{ color: 'white' }} />
+            </div>
+            <div className="container-title">
+              <h2>{formatMoney(totalizer?.totalBalance ?? 0)}</h2>
+            </div>
+          </div>
+        </div>
+      </Container>
+      <Button
+        checked={selectedFilters.length != 0}
+        onClick={() => navigate('/filter')}
+      >
+        <FilterAltOutlined sx={{ color: 'white' }} />
+        <span className="text">Filtro</span>
+        {!!selectedFilters.length && (
+          <p className="text">({selectedFilters.length})</p>
+        )}
+      </Button>
+      <WrapperListTransactions>
+        <ListTransactions>
+          {transaction.map((data, index) => (
+            <div key={index} className="container">
+              <div className="spanding-container">
+                <div className="icon-container">
+                  <img
+                    className="icon"
+                    src={`assets/svg/Saude.svg`}
+                    alt="icon"
+                    width={50}
+                    height={50}
+                  />
+                  <div>
+                    <h3 className="title">{data.category.name}</h3>
+                    <p className="description">{data.description}</p>
+                  </div>
+                </div>
+                <div className="wrapper-value">
+                  <h3 className="title">{formatMoney(data.value)}</h3>
+                  <p className="description">{convertDate(data.date)}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </ListTransactions>
+      </WrapperListTransactions>
       {modal?.manageTransaction?.isOpen && <ManageTransaction />}
     </>
   );

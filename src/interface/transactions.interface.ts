@@ -1,20 +1,33 @@
 import { TransactionCategory } from './transactionCategory.interface';
 
-export interface Transactions {
+export interface Totalizes {
+  recipe: number;
+  expense: number;
+  totalBalance: number;
+}
+
+interface Category {
+  name: string;
   id: string;
-  description: string;
+}
+
+interface Card {
+  name: string;
+  id: string;
+}
+
+export interface Transaction {
   value: number;
-  categoryId: string;
-  category: Partial<TransactionCategory>;
-  year: number;
-  month: number;
-  day: number;
-  yearMonth: string;
   date: string;
-  dtCreate: Date;
+  userId: string;
+  category: Category;
   isPaid: boolean;
-  originCreate?: 'web' | 'telegram';
+  description: string;
+  id: string;
+  card: Card;
   type: string;
-  specification: string;
-  bank: string;
+}
+export interface Transactions {
+  totalizers: Totalizes;
+  transactions: Transaction[];
 }
