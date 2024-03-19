@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 
 import { AddTransaction } from './AddTransaction';
 import { Transactions } from './components/Transactions';
@@ -8,6 +8,7 @@ import MonthlyGoals from './components/MonthlyGoals';
 import api from '../../../services/api';
 import { useUser } from '@/hooks/useUser';
 import ModalMonthly from '@/components/ModalMonthly';
+import LoandingSpinner from '@/components/LoadingSpinner';
 
 export interface IReportMonthly {
   expenseValue: number;
@@ -23,10 +24,15 @@ export interface IReportMonthly {
 const Dashboard = () => {
   const { modal } = useModal();
   const { userAccess } = useUser();
-
   const [reportMonthly, setReportMonthly] = useState<IReportMonthly | null>(
     null,
   );
+  const override: CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
+  };
+
   const dateAt = new Date();
   const captureMonth = dateAt.getMonth() + 1;
   const monthFormatted = captureMonth <= 9 ? '0' + captureMonth : captureMonth;
@@ -45,6 +51,7 @@ const Dashboard = () => {
   useEffect(() => {
     loadReportMonthly();
   }, []);
+
   return (
     <>
       <div
@@ -60,11 +67,15 @@ const Dashboard = () => {
         <Investments />
         {/* <Cards />  */}
       </div>
-      <MonthlyGoals
-        expenseValue={reportMonthly?.expenseValue}
-        goalValue={reportMonthly?.goal}
-        year={reportMonthly?.year ?? '1999'}
-      />
+      {!reportMonthly ? (
+         <LoandingSpinner/>
+      ) : (
+        <MonthlyGoals
+          expenseValue={reportMonthly?.expenseValue}
+          goalValue={reportMonthly?.goal}
+          year={reportMonthly?.year ?? '1999'}
+        />
+      )}
       {modal?.addTransaction?.isOpen && <AddTransaction />}
       {modal?.updateGoal?.isOpen && reportMonthly?.id && (
         <ModalMonthly
