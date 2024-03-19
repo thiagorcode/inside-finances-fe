@@ -102,7 +102,7 @@ export const TransactionsGeneral = () => {
       >
         <FilterAltOutlined sx={{ color: 'white' }} />
         <span className="text">Filtro</span>
-        {selectedFilters.length != 0 ? (
+        {selectedFilters.length !== 0 ? (
           <p className="text">({selectedFilters.length})</p>
         ) : (
           <p></p>
@@ -113,7 +113,13 @@ export const TransactionsGeneral = () => {
           <div key={index} className="container">
             <div className="spanding-container">
               <div className="icon-container">
-                <img className="icon" src={`assets/svg/Saude.svg`} alt="icon" />
+                <img
+                  className="icon"
+                  src={`assets/svg/Saude.svg`}
+                  alt="icon"
+                  width={50}
+                  height={50}
+                />
                 <div>
                   <h3 className="title">{data.category.name}</h3>
                   <p className="description">{data.description}</p>
