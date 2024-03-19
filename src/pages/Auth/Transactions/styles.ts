@@ -66,9 +66,13 @@ export const Button = styled.button<ButtonProps>`
     margin-left: 3px;
   }
 `;
-
-export const Container2 = styled.div`
-  width: 100%;
+export const WrapperListTransactions = styled.div`
+  align-items: center;
+  justify-content: center;
+  display: flex;
+`;
+export const ListTransactions = styled.div`
+  width: 95%;
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
@@ -84,7 +88,6 @@ export const Container2 = styled.div`
     padding-bottom: 1rem;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #f3f3f3;
   }
 
   .icon-container {
@@ -98,7 +101,11 @@ export const Container2 = styled.div`
   .title {
     color: #e1e1e6;
   }
-
+  .wrapper-value {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
   .description {
     color: #c4c4cc;
   }

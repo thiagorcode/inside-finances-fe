@@ -2,8 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { transactionsService } from '@/api/transactions/service';
 import { useUser } from '@/hooks/useUser';
 import { ManageTransaction } from '@/components/ManageTransactions';
-import { Totalizes, Transition } from '@/interface/transactions.interface';
-import { Button, Container, Container2 } from './styles';
+import { Totalizes, Transaction } from '@/interface/transactions.interface';
+import {
+  Button,
+  Container,
+  ListTransactions,
+  WrapperListTransactions,
+} from './styles';
 import { useKeenSlider } from 'keen-slider/react';
 import { useFilter } from '@/hooks/useFilter';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +20,7 @@ import {
 } from '@mui/icons-material';
 import 'keen-slider/keen-slider.min.css';
 import { useModal } from '@/context/modal';
+import { formatMoney } from '@/utils/formatMoney';
 
 export const TransactionsGeneral = () => {
   const { userAccess } = useUser();
@@ -23,7 +29,7 @@ export const TransactionsGeneral = () => {
   const { filter } = useFilter();
   const navigate = useNavigate();
   const [totalizer, setTotalizer] = useState<Totalizes>();
-  const [transition, setTransition] = useState<Transition[]>([]);
+  const [transaction, setTransaction] = useState<Transaction[]>([]);
 
   const selectedFilters: string[] = [];
 
@@ -43,24 +49,26 @@ export const TransactionsGeneral = () => {
       categoryId: filter?.category,
     });
     setTotalizer(response.data.transactions.totalizers);
-    setTransition(response.data.transactions.transactions);
+    setTransaction(response.data.transactions.transactions);
   }, []);
 
   useEffect(() => {
     loadTransaction();
-  }, [userAccess.token]);
+  }, []);
 
   function convertDate(dateString: string) {
     const sliceDate = dateString.slice(0, 10);
     const splitDate = sliceDate.split('-');
     const date = new Date(`${splitDate[1]}-${splitDate[2]}-${splitDate[0]}`);
 
-    return date.toLocaleDateString('pt-BR', {
-      timeZone: 'UTC',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    });
+    return date
+      .toLocaleDateString('pt-BR', {
+        timeZone: 'UTC',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      })
+      .replaceAll(' de ', ' ');
   }
 
   return (
@@ -73,7 +81,7 @@ export const TransactionsGeneral = () => {
               <ArrowCircleUp sx={{ color: '#00B37E' }} />
             </div>
             <div className="container-title">
-              <h2>R${totalizer?.recipe}</h2>
+              <h2>{formatMoney(totalizer?.recipe ?? 0)}</h2>
             </div>
           </div>
           <div className="default keen-slider__slide">
@@ -82,7 +90,7 @@ export const TransactionsGeneral = () => {
               <ArrowCircleDown sx={{ color: '#F75A68' }} />
             </div>
             <div className="container-title">
-              <h2>R${totalizer?.expense}</h2>
+              <h2>{formatMoney(totalizer?.expense ?? 0)}</h2>
             </div>
           </div>
           <div className="green keen-slider__slide">
@@ -91,7 +99,7 @@ export const TransactionsGeneral = () => {
               <AttachMoney sx={{ color: 'white' }} />
             </div>
             <div className="container-title">
-              <h2>R${totalizer?.totalBalance}</h2>
+              <h2>{formatMoney(totalizer?.totalBalance ?? 0)}</h2>
             </div>
           </div>
         </div>
@@ -102,37 +110,37 @@ export const TransactionsGeneral = () => {
       >
         <FilterAltOutlined sx={{ color: 'white' }} />
         <span className="text">Filtro</span>
-        {selectedFilters.length !== 0 ? (
+        {!!selectedFilters.length && (
           <p className="text">({selectedFilters.length})</p>
-        ) : (
-          <p></p>
         )}
       </Button>
-      <Container2>
-        {transition.map((data, index) => (
-          <div key={index} className="container">
-            <div className="spanding-container">
-              <div className="icon-container">
-                <img
-                  className="icon"
-                  src={`assets/svg/Saude.svg`}
-                  alt="icon"
-                  width={50}
-                  height={50}
-                />
-                <div>
-                  <h3 className="title">{data.category.name}</h3>
-                  <p className="description">{data.description}</p>
+      <WrapperListTransactions>
+        <ListTransactions>
+          {transaction.map((data, index) => (
+            <div key={index} className="container">
+              <div className="spanding-container">
+                <div className="icon-container">
+                  <img
+                    className="icon"
+                    src={`assets/svg/Saude.svg`}
+                    alt="icon"
+                    width={50}
+                    height={50}
+                  />
+                  <div>
+                    <h3 className="title">{data.category.name}</h3>
+                    <p className="description">{data.description}</p>
+                  </div>
+                </div>
+                <div className="wrapper-value">
+                  <h3 className="title">{formatMoney(data.value)}</h3>
+                  <p className="description">{convertDate(data.date)}</p>
                 </div>
               </div>
-              <div>
-                <h3 className="title">R${data.value}</h3>
-                <p className="description">{convertDate(data.date)}</p>
-              </div>
             </div>
-          </div>
-        ))}
-      </Container2>
+          ))}
+        </ListTransactions>
+      </WrapperListTransactions>
       {modal?.manageTransaction?.isOpen && <ManageTransaction />}
     </>
   );

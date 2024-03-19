@@ -16,7 +16,7 @@ interface Card {
   id: string;
 }
 
-export interface Transition {
+export interface Transaction {
   value: number;
   date: string;
   userId: string;
@@ -29,5 +29,5 @@ export interface Transition {
 }
 export interface Transactions {
   totalizers: Totalizes;
-  transactions: Transition[];
+  transactions: Transaction[];
 }
