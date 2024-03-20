@@ -30,6 +30,8 @@ export const TransactionsGeneral = () => {
   const navigate = useNavigate();
   const [totalizer, setTotalizer] = useState<Totalizes>();
   const [transaction, setTransaction] = useState<Transaction[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 30;
 
   const selectedFilters: string[] = [];
 
@@ -69,6 +71,13 @@ export const TransactionsGeneral = () => {
         year: 'numeric',
       })
       .replaceAll(' de ', ' ');
+  }
+
+  function pagination() {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    return transaction.slice(startIndex, endIndex);
   }
 
   return (
@@ -115,8 +124,11 @@ export const TransactionsGeneral = () => {
         )}
       </Button>
       <WrapperListTransactions>
-        <ListTransactions>
-          {transaction.map((data, index) => (
+        <ListTransactions
+          prev={currentPage == 1}
+          next={currentPage === Math.ceil(transaction.length / itemsPerPage)}
+        >
+          {pagination().map((data, index) => (
             <div key={index} className="container">
               <div className="spanding-container">
                 <div className="icon-container">
@@ -139,6 +151,24 @@ export const TransactionsGeneral = () => {
               </div>
             </div>
           ))}
+          <div className="button-container">
+            <button
+              className="button-prev"
+              onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={currentPage == 1}
+            >
+              Voltar
+            </button>
+            <button
+              className="button-next"
+              onClick={() => setCurrentPage(currentPage + 1)}
+              disabled={
+                currentPage === Math.ceil(transaction.length / itemsPerPage)
+              }
+            >
+              Avançar
+            </button>
+          </div>
         </ListTransactions>
       </WrapperListTransactions>
       {modal?.manageTransaction?.isOpen && <ManageTransaction />}

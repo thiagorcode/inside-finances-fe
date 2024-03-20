@@ -4,7 +4,6 @@ export const formatMoney = (value: number) => {
     currency: 'BRL',
     minimumFractionDigits: 2,
   });
-   
+
   return formatter.format(value);
 };
-
