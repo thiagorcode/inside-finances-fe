@@ -4,6 +4,11 @@ interface ButtonProps {
   checked?: boolean;
 }
 
+interface ButtonPaginationProps {
+  prev?: boolean;
+  next?: boolean;
+}
+
 export const Container = styled.div`
   width: 100%;
   margin-top: 2rem;
@@ -71,7 +76,7 @@ export const WrapperListTransactions = styled.div`
   justify-content: center;
   display: flex;
 `;
-export const ListTransactions = styled.div`
+export const ListTransactions = styled.div<ButtonPaginationProps>`
   width: 95%;
   display: flex;
   flex-direction: column;
@@ -108,5 +113,42 @@ export const ListTransactions = styled.div`
   }
   .description {
     color: #c4c4cc;
+  }
+
+  .button-container {
+    width: 100%;
+    display: flex;
+  }
+
+  .button-prev {
+    color: #ffffff;
+    margin-left: 1rem;
+    margin-top: 1rem;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border: 1px solid #ffff;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: ${({ prev }) => (prev ? '0.5' : '')};
+  }
+
+  .button-next {
+    color: #ffffff;
+    margin-left: 1rem;
+    margin-top: 1rem;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border: 1px solid #ffff;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: ${({ next }) => (next ? '0.5' : '')};
   }
 `;
